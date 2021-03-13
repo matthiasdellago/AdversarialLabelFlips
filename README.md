@@ -1,1 +1,1 @@
-# AdversarialLabelFlips
+# Adversarial Label Flips
