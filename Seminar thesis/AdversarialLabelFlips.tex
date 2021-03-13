@@ -1,0 +1,54 @@
+\documentclass{article}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs} 
+\usepackage{hyperref}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage{diagbox}
+\usepackage{float, multirow}
+\usepackage{tikz, pgfplots}
+\usepackage{tikzsymbols}
+\usetikzlibrary{spy}
+\usepackage{subcaption}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=newest}
+\usepackage{blindtext}
+
+
+\begin{document}
+
+\begin{titlepage}
+	\noindent\makebox[\textwidth][l]{\includegraphics{universitaet-innsbruck-logo-cmyk-farbe.pdf}}
+	\vspace{3cm}
+	\begin{center}
+		{\Large Seminar thesis}
+		\vspace{50pt}\\
+		\textbf{\Huge Adversarial Label Flips}
+		\vspace{40pt}\\
+		\textbf{\Large Matthias Dellago \& Maximilian Samsinger}\vspace{20pt}\\
+		{\large\today}
+		\vspace{120pt}
+	\end{center}
+\end{titlepage}
+	
+	\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+	\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+	\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+	\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+	
+\begin{abstract}
+	\blindtext
+\end{abstract}
+
+\section{Introduction}
+\blindtext Example citations \cite{madry2017towards}.
+
+\bibliographystyle{unsrt}
+\bibliography{literature}
+
+\end{document}

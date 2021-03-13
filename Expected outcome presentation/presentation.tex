@@ -1,0 +1,65 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt,usepdftitle=false,aspectratio=169]{beamer}
+\usepackage[left]{muibkitsec}
+\usepackage{listings}
+
+\usepackage{microtype}
+\usepackage{graphbox}
+\usepackage{booktabs} 
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{diagbox}
+\usepackage{float, multirow}
+\usepackage{tikz, pgfplots}
+\usepackage{tikzsymbols}
+\usetikzlibrary{spy}
+\usepackage{subcaption}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=newest}
+
+% ------------------------------------------------------------------------
+\title{Adversarial Label Flips}
+%\subtitle{modified new beamer template}
+\author{Matthias Dellago \& Maximilian Samsinger}
+\date{22 January 2021}
+
+% ------------------------------------------------------------------------
+
+\begin{document}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\begin{frame}[plain]
+	\maketitle
+\end{frame}	
+
+\begin{frame}[fragile]
+	\frametitle{Example Slide}
+	\begin{columns}
+		\begin{column}{.5\columnwidth}
+			\begin{block}{Block}
+				This is a block
+			\end{block}
+			\begin{alertblock}{Alert block}
+				This is a alertblock
+			\end{alertblock}
+		\end{column}
+		\begin{column}{.5\columnwidth}
+			\begin{exampleblock}{Example block}
+				Examples show up one by one$\dots$.
+				\begin{itemize}
+					\visible<1->{\item Example 1}
+					\visible<2->{\item Example 2}
+					\visible<3->{\item Example 3}
+				\end{itemize}
+			\end{exampleblock}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\end{document}

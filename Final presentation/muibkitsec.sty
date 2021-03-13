@@ -1,0 +1,331 @@
+% ------------------------------------------------------------------------
+% Style file for ITSEC slide repository using the UIBK beamer template
+% ------------------------------------------------------------------------
+
+\ProvidesPackage{muibkitsec}[2017/09/26]
+
+\usetheme[nototalframenumber,foot,bigfoot,logo,nosectiontitlepage]{uibk}
+
+\setkeys{Gin}{keepaspectratio=true,width=!}
+
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{%
+	family=MUIBK,
+	prefix=MUIBK@
+}
+
+%%%%%%%%%%%%%%%%%
+%%% NEW STYLE FILE %%%
+%%%%%%%%%%%%%%%%%
+
+% -------------------------------------------------------------------------------
+% package options and according macros
+% -------------------------------------------------------------------------------
+
+\DeclareVoidOption{left}{\newcommand{\myleftbool}{x}}
+\DeclareVoidOption{center}{\newcommand{\mycenterbool}{x}}
+\DeclareStringOption{headimage}
+\DeclareVoidOption{english}{\switchtoenglish}
+
+\ProcessKeyvalOptions*
+
+%aspectratio - widethinmacro and marginsets
+\newcommand{\leftcenter}[2]{#2}
+\newcommand{\leftcenterTwo}[2]{#2}
+\ifdim\beamer@paperwidth=16.00cm
+\newcommand{\widethin}[2]{#1}
+\newcommand{\mycenter}{
+	\renewcommand{\widethin}[2]{##2}
+	\setbeamersize{text margin left=25.83mm,text margin right=25.83mm}
+}
+\newcommand{\myleft}{
+	\renewcommand{\widethin}[2]{##2}
+	\renewcommand{\leftcenter}[2]{##1}
+	\renewcommand{\leftcenterTwo}[2]{##1}
+	\setbeamersize{text margin left=10mm,text margin right=41.66mm}
+}
+\else
+\newcommand{\widethin}[2]{#2}
+\newcommand{\myleft}{}
+\newcommand{\mycenter}{}
+\fi
+
+% dirty... as \setbeamersize conflicts with \ProcessKeyvalOptions and previously declared string options, beamersize modifications are run after processing keys
+\ifdefined\myleftbool
+\myleft
+\fi
+\ifdefined\mycenterbool
+\mycenter
+\fi
+
+% deen
+\newcommand{\deen}[2]{#1}
+\newcommand{\switchtoenglish}{
+	\renewcommand{\deen}[2]{##2}
+}
+
+% -------------------------------------------------------------------------------
+% macros
+% -------------------------------------------------------------------------------
+
+%source
+\newcommand{\source}[1]{
+	\begin{tikzpicture}[remember picture,overlay,anchor=north west,inner sep=0pt]
+	\node[xshift=\leftcenter{-15.83mm}{0mm},yshift=1cm,anchor=south,text width=\textwidth,font=\scriptsize] at (current page.south) {\baselineskip=30pt #1};
+	\end{tikzpicture}}
+
+%redefine frametitle so it can be wide even though margins
+\expandafter\let\csname beamer@@tmpop@frametitle@UIBK\endcsname\relax
+\defbeamertemplate*{frametitle}{UIBK}
+{
+	{\begin{minipage}{\paperwidth-20mm\relax}\usebeamerfont{frametitle}\rule[-.4em]{0pt}{10mm}\insertframetitle\par\end{minipage}}%
+	\ifx\insertframesubtitle\@empty%
+	\else%
+	{\begin{minipage}{\paperwidth-20mm\relax}\usebeamerfont{framesubtitle}\rule[-1.3em]{0pt}{9mm}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par\end{minipage}}%
+	\fi
+
+}
+
+
+
+
+% -------------------------------------------------------------------------------
+% footer text
+% -------------------------------------------------------------------------------
+
+\renewcommand{\myfootertext}{
+	\ifx\insertdate\@empty
+		\inserttitle
+	\else
+		\inserttitle,
+	\fi
+}
+
+% -------------------------------------------------------------------------------
+% header image for title slide
+% -------------------------------------------------------------------------------
+
+
+\newcommand{\uibkHeaderImage}[1]{
+	\renewcommand{\MUIBK@headimage}{#1}
+}
+
+\ifx\MUIBK@headimage\@empty
+	\headerimage{3}
+\else
+	\gdef\myheaderimageid{1}\gdef\myheaderimageposition{ne}\gdef\myheaderimage{\MUIBK@headimage}
+\fi
+
+% -------------------------------------------------------------------------------
+% environments
+% -------------------------------------------------------------------------------
+
+\ifdim\beamer@paperwidth=16.00cm
+	\newenvironment{widenow}{
+		\leftcenter{}{\hspace*{-15.83mm}}
+		\renewcommand{\widethin}[2]{##1}
+		\renewcommand{\leftcenter}[2]{{##2}}
+		\begin{minipage}{\paperwidth-20mm\relax}
+	}{
+		\end{minipage}
+		\renewcommand{\widethin}[2]{##2}
+		\renewcommand{\leftcenter}[2]{\leftcentertwo{##1}{##2}}
+	}
+\else
+	\newenvironment{widenow}{}{}
+\fi
+
+% -------------------------------------------------------------------------------
+% help text for old commands
+% -------------------------------------------------------------------------------
+
+%\renewcommand{\maketitle}{please replace \textbf{\textbackslash begin\{frame\}\ \textbackslash maketitle\ \textbackslash end\{frame\}} \\ with \textbf{\textbackslash rendertitlepage} (this already includes the frame environment)}
+
+% ------------------------------------------------------------------------
+% Frame Styles for UIBK COMPATIBILITY
+% ------------------------------------------------------------------------
+
+\define@key{beamerframe}{fullHead}[true]{}
+\define@key{beamerframe}{thin}[true]{}
+
+% ------------------------------------------------------------------------
+% Itemize and Blocks for UIBK COMPATIBILITY
+% ------------------------------------------------------------------------
+
+%% http://www.tex.ac.uk/FAQ-chngmargonfly.html
+\newenvironment{changemargin}[2]{%
+	\begin{list}{}{%
+			\setlength{\topsep}{0pt}%
+			\setlength{\leftmargin}{#1}%
+			\setlength{\rightmargin}{#2}%
+			\setlength{\listparindent}{\parindent}%
+			\setlength{\itemindent}{\parindent}%
+			\setlength{\parsep}{\parskip}%
+		}%
+		\item[]}{\end{list}}
+
+
+%% environment to create better aligned imtemize in blocks
+\newenvironment{blockitemize}{
+	\begin{changemargin}{-.5em}{1em}
+		\begin{itemize}
+		}{
+	\end{itemize}
+\end{changemargin}
+}
+
+%% environment to create better aligned enumerate in blocks
+\newenvironment{blockenumerate}{
+	\begin{changemargin}{-.5em}{1em}
+		\begin{enumerate}
+		}{
+	\end{enumerate}
+\end{changemargin}
+}
+
+
+
+%%%%%%%%%%%%%%%%%
+%%% OLD STYLE FILE %%%
+%%%%%%%%%%%%%%%%%
+
+% ------------------------------------------------------------------------
+% superset of packages
+% ------------------------------------------------------------------------
+
+\RequirePackage{pgfplots}
+\RequirePackage{tikz}
+\RequirePackage{bm}
+\RequirePackage{booktabs}
+\RequirePackage{import}
+\RequirePackage{eurosym}
+\RequirePackage[english]{babel}
+\RequirePackage{listings}
+\RequirePackage{nicefrac}
+\RequirePackage{mathtools}
+\RequirePackage{algorithmic}
+\RequirePackage[utf8]{inputenc} % compile with UTF8 encoding
+\RequirePackage[normalem]{ulem}
+\RequirePackage{readarray}
+
+\usetikzlibrary{calendar}
+\usetikzlibrary{shadows}
+\usetikzlibrary{trees}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.callouts}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shapes.gates.logic.US}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{calc}
+\usetikzlibrary{fit}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+
+% -------------------------------------------------------------------------------
+% Provide definitions from uibkstyle so that slides can be used without uibkstyle
+% -------------------------------------------------------------------------------
+\definecolor{text-grey}{rgb}{0.45, 0.45, 0.45}
+\definecolor{fu-blue}{RGB}{0, 51, 102}
+\definecolor{fu-green}{RGB}{153, 204, 0}
+\definecolor{fu-red}{RGB}{204, 0, 0}
+\definecolor{pantoneblack7}{RGB}{62,62,59}
+\definecolor{pantone144}{cmyk}{0,0.5,1,0}
+\definecolor{pantone289}{cmyk}{1,0.6,0,0.56}
+\definecolor{inflime}{RGB}{174,192,58}
+\definecolor{infgray}{RGB}{215,218,221}
+\colorlet{maincolor}{pantone144}
+\colorlet{altcolor}{pantone289}
+\colorlet{mainlight}{maincolor!50}
+\colorlet{altlight}{altcolor!50}
+\providecommand{\switchToEnglish}{}
+
+% ------------------------------------------------------------------------
+% Colors
+% ------------------------------------------------------------------------
+
+\definecolor{wwu}{named}{maincolor}
+\definecolor{textcolor}{named}{pantoneblack7}
+\definecolor{alertred}{named}{fu-red}
+\definecolor{wwumed}{RGB}{97,117,147}% pantone289!50
+\setbeamercolor{alerted text}{fg=alertred}
+\definecolor{ancol}{RGB}{200,200,200}
+
+% ------------------------------------------------------------------------
+% PGF Layers (for plot order)
+% ------------------------------------------------------------------------
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+% ------------------------------------------------------------------------
+% Macros
+% ------------------------------------------------------------------------
+
+
+\newcommand*\conj[1]{\overline{#1}}
+
+\newcommand{\quelle}[1]{{\tiny{\color{wwumed}{\,#1}}}}
+\newcommand{\Aq}{\vphantom{Aq}}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node [above,inner sep=0] (#1) {\vphantom{A}};}
+
+% usage: \imagesource{title}{author}{URL}{copyright}; then makeindex to generate sources for appendix
+\newcommand{\imagesource}[4]{}
+
+% hook to \subimport in order to disable it temporarily (faster compile time)
+\newcommand{\wwusubimport}[2]{\subimport{#1}{#2}}
+\newcommand{\sliderepository}[2]{\wwusubimport{\repository #1}{#2}}
+
+\newcommand{\skipfromhere}{\renewcommand{\wwusubimport}[2]{\frametitle{[##1##2]}}}
+\newcommand{\skipuntilhere}{\renewcommand{\wwusubimport}[2]{\subimport{##1}{##2}}}
+
+% ------------------------------------------------------------------------
+% Colours
+% ------------------------------------------------------------------------
+
+%% wwu colours for legacy reasons
+\definecolor{pantone312}{RGB}{0,157,209}
+\definecolor{pantone315}{RGB}{0,110,137}
+\definecolor{pantone3282}{RGB}{0,142,150}
+\definecolor{pantone369}{RGB}{122,181,22}
+\definecolor{pantone390}{RGB}{177,200,0}
+\definecolor{pantone396}{RGB}{223,219,0}
+\definecolor{pantoneprozessyellow}{RGB}{255,237,0}
+
+
+% ------------------------------------------------------------------------
+% Options
+% ------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------
+% ARSnova codes for big lectures (UIBK only)
+% ------------------------------------------------------------------------
+\providecommand{\arsnovaETI}{24 82 94 16}
+\providecommand{\arsnovaRNIT}{87 78 93 81}
+
+% ------------------------------------------------------------------------
+% tikz libraries
+% ------------------------------------------------------------------------
+
+% Max Hils 11/2019:
+% \usetikzlibrary{gateextensions} now just works with our texmf tree.
+% We don't enable it by default as some folks are not using that yet.
+% In the future, remove the special case here and the entire tikzlibraries subfolder.
+\ifcsname repository\endcsname%
+	%% load gatextensions (use \input instead of \usetikzlibrary due to relative path)
+	\input{\repository include/tikzlibraries/tikzlibrarygateextensions.code}
+\else
+	%% issue warning if \repository command is not defined
+	\PackageWarning{uibkitsec}{Path to repository unknown. Please define \@backslashchar repository to contain the location of the repository folder.}
+\fi
+
+% ------------------------------------------------------------------------
+% library specific commands
+% ------------------------------------------------------------------------
+
+\providecommand{\onlywwu}[1]{}
+\providecommand{\onlyuibk}[1]{}
+\providecommand{\onlymuibk}[1]{#1}
+\providecommand{\onlyercis}[1]{}
