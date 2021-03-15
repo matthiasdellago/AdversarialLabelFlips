@@ -39,7 +39,59 @@
 \end{frame}	
 
 \begin{frame}[fragile]
-	\frametitle{Brainstorming}
+	\frametitle{Introduction}
+	Summarize what \#5 is about and recap what the students need to know. (Maybe needs an extra slide)
+	Explain (or visualize?) confusion matrix.
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Hypothesis}
+	\begin{columns}
+		\begin{column}{.5\columnwidth}
+			\begin{block}{Research question}
+				Does a relationship between ground truth and final predicted label exist given an untargeted attack?
+			\end{block}
+			\begin{block}{First question}
+				Does a relationship exist \textit{at all}.
+			\end{block}
+		\end{column}
+		\begin{column}{.5\columnwidth}
+			\begin{alertblock}{Null hypothesis}
+				The final predicted label is randomly (uniform) drawn from the set of all other labels.
+			\end{alertblock}
+			\begin{block}{Alternative hypothesis}
+				The final predicted label is not randomly (uniform) drawn from the set of all other labels.
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Methods}
+		\begin{block}{Datasets}
+			MNIST, Fashion MNIST, CIFAR-10
+		\end{block}
+		\begin{alertblock}{Alert block}
+			ResNet-18 for CIFAR-10.
+			Some simple convolutional neural network for MNIST \& Fashion MNIST.
+		\end{alertblock}
+		\begin{alertblock}{Attacks}
+			FGSM and PGD
+		\end{alertblock}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Stretch goals}
+	\begin{enumerate}
+		\item Study natural adversarial examples
+		\item Looking for applications
+		\item More attacks and/or architectures
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Brainstorming slide (will be removed)}
 	\begin{columns}
 		\begin{column}{.5\columnwidth}
 			\begin{alertblock}{What do you want to achieve till the end of semester?}
@@ -56,6 +108,7 @@
 				Contribution to basic research. 
 			\end{block}
 			\begin{alertblock}{Stretch goals}
+			More models/architectures.
 			Influence of adversarial training.
 			\end{alertblock}
 		\end{column}
@@ -66,8 +119,8 @@
 	\frametitle{Example Slide}
 	\begin{columns}
 		\begin{column}{.5\columnwidth}
-			\begin{block}{Block}
-				This is a block
+			\begin{block}{Null hypothesis}
+				Adversarial examples
 			\end{block}
 			\begin{alertblock}{Alert block}
 				This is a alertblock
@@ -85,5 +138,6 @@
 		\end{column}
 	\end{columns}
 \end{frame}
+
 
 \end{document}
