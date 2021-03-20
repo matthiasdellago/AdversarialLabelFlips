@@ -15,7 +15,7 @@
 \usepackage{float, multirow}
 \usepackage{tikz, pgfplots}
 \usepackage{tikzsymbols}
-\usetikzlibrary{spy}
+\usetikzlibrary{spy,matrix}
 \usepackage{subcaption}
 \usepgfplotslibrary{groupplots}
 \pgfplotsset{compat=newest}
@@ -40,30 +40,44 @@
 
 \begin{frame}[fragile]
 	\frametitle{Introduction}
+		\begin{block}{Evasion Attack}
+			As seen in Lecture. Insert lecture slides or explain anew?
+		\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\begin{block}{Confusion Matrix}
+		  \begin{table}
+			\setlength{\extrarowheight}{2pt}
+			\begin{tabular}{cc|c|c|c|}
+				& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Categorised as}\\
+				& \multicolumn{1}{c}{} & \multicolumn{1}{c}{Dog}  & \multicolumn{1}{c}{Cat} & \multicolumn{1}{c}{Plane} \\\cline{3-5}
+				\multirow{3}*{Adverserial Example}  & Dog & 0.0 & ? & ?\\\cline{3-5}
+				& Cat & ? & 0.0 &  ? \\\cline{3-5}
+				& Plane & ? & ? &  0.0 \\\cline{3-5}
+			\end{tabular}
+		\end{table}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Remove}
 	Summarize what \#5 is about and recap what the students need to know. (Maybe needs an extra slide)
 	Explain (or visualize?) confusion matrix.
 \end{frame}
 
 \begin{frame}[fragile]
 	\frametitle{Hypothesis}
-	\begin{columns}
-		\begin{column}{.5\columnwidth}
-			\begin{block}{Research question}
-				Does a relationship between ground truth and final predicted label exist given an untargeted attack?
+			\begin{block}{Uniform Distribution?}
+				Is post-attack label uniformly distributed over all other labels (null hypothesis) or not?
 			\end{block}
-			\begin{block}{First question}
-				Does a relationship exist \textit{at all}.
+			\begin{block}{Reasons?}	
+				\begin{itemize}
+					\item If uniform, why? If not, why not? Possible relationships between different classes.
+					\item Probably intractable, but interesting.
+				\end{itemize}
 			\end{block}
-		\end{column}
-		\begin{column}{.5\columnwidth}
-			\begin{alertblock}{Null hypothesis}
-				The final predicted label is randomly (uniform) drawn from the set of all other labels.
-			\end{alertblock}
-			\begin{block}{Alternative hypothesis}
-				The final predicted label is not randomly (uniform) drawn from the set of all other labels.
-			\end{block}
-		\end{column}
-	\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -83,12 +97,13 @@
 
 \begin{frame}[fragile]
 	\frametitle{Stretch goals}
-	\begin{enumerate}
+	\begin{itemize}
 		\item Study natural adversarial examples
-		\item Looking for applications
+		\item Look for applications (attacker and defender)
 		\item More attacks and/or architectures
-	\end{enumerate}
+	\end{itemize}
 \end{frame}
+
 
 \begin{frame}[fragile]
 	\frametitle{Brainstorming slide (will be removed)}
@@ -107,37 +122,10 @@
 			\begin{block}{Why is your topic relevant?}
 				Contribution to basic research. 
 			\end{block}
-			\begin{alertblock}{Stretch goals}
-			More models/architectures.
-			Influence of adversarial training.
-			\end{alertblock}
 		\end{column}
 	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]
-	\frametitle{Example Slide}
-	\begin{columns}
-		\begin{column}{.5\columnwidth}
-			\begin{block}{Null hypothesis}
-				Adversarial examples
-			\end{block}
-			\begin{alertblock}{Alert block}
-				This is a alertblock
-			\end{alertblock}
-		\end{column}
-		\begin{column}{.5\columnwidth}
-			\begin{exampleblock}{Example block}
-				Examples show up one by one$\dots$.
-				\begin{itemize}
-					\visible<1->{\item Example 1}
-					\visible<2->{\item Example 2}
-					\visible<3->{\item Example 3}
-				\end{itemize}
-			\end{exampleblock}
-		\end{column}
-	\end{columns}
-\end{frame}
 
 
 \end{document}
