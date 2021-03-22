@@ -24,7 +24,7 @@
 \title{Adversarial Label Flips}
 %\subtitle{modified new beamer template}
 \author{Matthias Dellago \& Maximilian Samsinger}
-\date{22 January 2021}
+\date{25 March 2021}
 
 % ------------------------------------------------------------------------
 
@@ -39,21 +39,33 @@
 \end{frame}	
 
 \begin{frame}[fragile]
-	\frametitle{Introduction}
+	\frametitle{Previously on InfoSec 2...}
+		\includegraphics[page=27,width=350pt]{lec2_adversarial_machine_learning}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Idea}
 		\begin{block}{Evasion Attack}
-			As seen in Lecture. Insert lecture slides or explain anew?
+			Use backpropagation with two significant differences:
+			\begin{enumerate}
+				\item change input values, instead of weights and biases
+				\item increase cost function, instead of decrease
+			\end{enumerate} 
+		\end{block}
+		\begin{block}{DeepDream}
+			DeepDream applies 1, but not 2. So we are doing modified DeepDreaming in a sense.
 		\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Introduction}
+	\frametitle{Expected Outcome}
 	\begin{block}{Confusion Matrix}
 		  \begin{table}
 			\setlength{\extrarowheight}{2pt}
 			\begin{tabular}{cc|c|c|c|}
-				& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Categorised as}\\
+				& \multicolumn{1}{c}{} & \multicolumn{3}{c}{Categorised as}\\
 				& \multicolumn{1}{c}{} & \multicolumn{1}{c}{Dog}  & \multicolumn{1}{c}{Cat} & \multicolumn{1}{c}{Plane} \\\cline{3-5}
-				\multirow{3}*{Adverserial Example}  & Dog & 0.0 & ? & ?\\\cline{3-5}
+				\multirow{3}*{Adversarial Example of a}  & Dog & 0.0 & ? & ?\\\cline{3-5}
 				& Cat & ? & 0.0 &  ? \\\cline{3-5}
 				& Plane & ? & ? &  0.0 \\\cline{3-5}
 			\end{tabular}
@@ -62,20 +74,11 @@
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Remove}
-	Summarize what \#5 is about and recap what the students need to know. (Maybe needs an extra slide)
-	Explain (or visualize?) confusion matrix.
-\end{frame}
-
-\begin{frame}[fragile]
 	\frametitle{Hypothesis}
 			\begin{block}{Uniform Distribution?}
-				Is post-attack label uniformly distributed over all other labels (null hypothesis) or not?
-			\end{block}
-			\begin{block}{Reasons?}	
 				\begin{itemize}
-					\item If uniform, why? If not, why not? Possible relationships between different classes.
-					\item Probably intractable, but interesting.
+					\item Is post-attack label uniformly distributed over all other labels (null hypothesis) or not?
+					\item If not, why?
 				\end{itemize}
 			\end{block}
 \end{frame}
@@ -85,10 +88,10 @@
 		\begin{block}{Datasets}
 			MNIST, Fashion MNIST, CIFAR-10
 		\end{block}
-		\begin{alertblock}{Alert block}
+		\begin{block}{Models}
 			ResNet-18 for CIFAR-10.
 			Some simple convolutional neural network for MNIST \& Fashion MNIST.
-		\end{alertblock}
+		\end{block}
 		\begin{alertblock}{Attacks}
 			FGSM and PGD
 		\end{alertblock}
@@ -98,8 +101,9 @@
 \begin{frame}[fragile]
 	\frametitle{Stretch goals}
 	\begin{itemize}
-		\item Study natural adversarial examples
-		\item Look for applications (attacker and defender)
+		\item Reverse Deep Dreaming
+		\item Consider natural adversarial examples
+		\item Think about applications (attacker and defender)
 		\item More attacks and/or architectures
 	\end{itemize}
 \end{frame}
