@@ -22,7 +22,7 @@
 
 % ------------------------------------------------------------------------
 \title{Adversarial Label Flips}
-%\subtitle{modified new beamer template}
+\subtitle{Related work presentation}
 \author{Matthias Dellago \& Maximilian Samsinger}
 \date{22 January 2021}
 
@@ -68,17 +68,17 @@
 	\frametitle{Standard sources on adversarial examples}
 	\begin{columns}
 		\begin{column}{.5\columnwidth}
-			\begin{block}{Adversarial examples}
-				Adversarial examples have been introduced in \cite{Szegedy13}.
+			\begin{block}{Adversarial examples \cite{Szegedy13}}
+				Deep neural networks are vulnerable to adversarial perturbations!
 			\end{block}
-			\only<1-2>{\begin{alertblock}{Fast gradient sign method}
-					FGSM is a very fast an simple attack, which was introduced in \cite{goodfellow2014explaining}.
+			\only<2-3>{\begin{alertblock}{Fast gradient sign method \cite{goodfellow2014explaining}}
+					Even worse: Adversarial examples generalize over multiple datasets and architectures. Even cheap attacks like FGSM can work.
 					\end{alertblock}}
-			\only<3->{\begin{alertblock}{Projected gradient descent}
-					Projected gradient descent (PGD) is a popular, strong attack, which iteratively computes FGSM \cite{madry2017towards}.
+			\only<4->{\begin{alertblock}{Projected gradient descent \cite{madry2017towards}}
+					Strong and cheap attacks therefore exist: Projected gradient descent (PGD) iteratively computes FGSM. 
 				\end{alertblock}}
 		\end{column}
-	\visible<2->{
+	\visible<3->{
 		\begin{column}{.5\columnwidth}
 			\begin{alertblock}{Fast gradient sign method}
 				Modify an input image $x$, with respective label $y$,
