@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs} 
+\usepackage{hyperref}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage{diagbox}
+\usepackage{float, multirow}
+\usepackage{tikz, pgfplots}
+\usepackage{tikzsymbols}
+\usetikzlibrary{spy}
+\usepackage{subcaption}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=newest}
+\usepackage{blindtext}
+
+
+\begin{document}
+
+\begin{titlepage}
+	\noindent\makebox[\textwidth][l]{\includegraphics{universitaet-innsbruck-logo-cmyk-farbe.pdf}}
+	\vspace{3cm}
+	\begin{center}
+		{\Large Related work}
+		\vspace{50pt}\\
+		\textbf{\Huge Adversarial Label Flips}
+		\vspace{40pt}\\
+		\textbf{\Large Matthias Dellago \& Maximilian Samsinger}\vspace{20pt}\\
+		{\large\today}
+		\vspace{120pt}
+	\end{center}
+\end{titlepage}
+	
+	\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+	\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+	\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+	\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+	
+\section{On adversarial attacks}
+
+\subsection{Attacks}
+\paragraph{Existence of adversarial examples}
+Demonstrated that attacking deep neural networks are susceptible to attacks \cite{Szegedy13}. They actually coined the term "adversarial examples".
+
+\paragraph{Fast gradient sign method}
+\cite{goodfellow2014explaining} developed the fast gradient sign method. They are the guys with the panda image.
+Modify an input image $x$, with respective label $y$,
+\[\operatorname{FGSM}(x) = x + \epsilon\operatorname{sign}(\nabla_x\ J(\theta,x,y)). \] 
+using the loss function $J$. 
+
+\paragraph{Projected gradient descent}
+The projected gradient descent, which is basically iterated FGSM, was first shown in \cite{madry2017towards}. Their experiments suggest that these attacks converge, i.e. they find a local maxima. This may require some restarts.
+
+\paragraph{Foolbox}
+A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
+
+\section{On neural networks}
+\subsection{Neural networks}
+First introduced in \cite{lecun1999object}. The authors of
+\cite{krizhevsky2012imagenet} demonstrated the effectiveness of deep convolutional neural networks on ImageNet.
+
+\paragraph{ResNets}
+Paradigm shift in deep learning. In \cite{he2016deep} they developed Residual Networks to train very deep neural networks. We will probably use ResNet18. If we do, we probably also cite \cite{he2016identity} for the "pre-activation" optimization. This is just a better architecture obtained by having BatchNorm-ReLU-Weights blocks instead of Weights-BatchNorm-ReLU blocks.
+
+
+\section{Methods}
+\subsection{Datasets}
+MNIST, Fashion MNIST, CIFAR-10
+
+\subsection{}
+We probably use \url{https://arxiv.org/pdf/1608.04644.pdf} Table 1 as a neural network for MNIST \& Fashion-MNIST.
+
+\bibliographystyle{unsrt}
+\bibliography{literature}
+
+\end{document}
