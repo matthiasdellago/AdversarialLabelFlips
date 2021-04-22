@@ -42,18 +42,18 @@
 	\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \section{Notation}
-We denote neural network classifiers with ${f_\theta\colon\mathcal{X}\to\mathcal{Y}, x\mapsto y}$ with trainable parameter $\theta$, where $\mathcal{X}$ are a set of images with corresponding labels (classes) $\mathcal{Y}$. The parameter $\theta$ are optimized by minimizing a training objective ${(\theta, x, y) \mapsto J(\theta, x, y)}$ with respect to $\theta$.
+We denote neural network classifiers as ${f_\theta\colon\mathcal{X}\to\mathcal{Y}, x\mapsto y}$ with trainable parameter $\theta$. $\mathcal{X}$ is a set of images with corresponding labels (classes) $\mathcal{Y}$. The parameter $\theta$ is optimized by minimizing a training objective ${(\theta, x, y) \mapsto J(\theta, x, y)}$ with respect to $\theta$.
 
 \section{On neural networks}	
-Convolutional neural networks are the de-facto standard in computer vision related tasks. They were first introduced in \cite{lecun1989backpropagation} to classify hand-written digits. In
-\cite{krizhevsky2012imagenet} demonstrated the effectiveness of deep convolutional neural networks on ImageNet dataset \cite{deng2009imagenet}, winning the ImageNet Large Scale Visual Recognition Challenge 2012 \cite{ILSVRC15}. The architecture of convolutional neural networks has since been further optimized. Residual neural networks \cite{he2016deep} and their variants are state-of-the-art for image recognition tasks and dominate the leaderboard on websites such as \url{https://paperswithcode.com/task/image-classification}.
+Convolutional neural networks are the de facto standard in computer vision related tasks. They were first introduced in \cite{lecun1989backpropagation} to classify handwritten digits. In
+\cite{krizhevsky2012imagenet}, Krizhevsky et al. demonstrated the effectiveness of deep convolutional neural networks on ImageNet dataset \cite{deng2009imagenet}, winning the ImageNet Large Scale Visual Recognition Challenge 2012 \cite{ILSVRC15}. The architecture of convolutional neural networks has since been further optimized. Residual neural networks \cite{he2016deep} and their variants are state-of-the-art for image recognition tasks and dominate the leaderboard on websites such as \url{https://paperswithcode.com/task/image-classification}.
 
 \paragraph{Experiments}
-For our experiments we will consider the MNIST \cite{deng2012mnist}, Fashion-MNIST \cite{xiao2017fashion} and CIFAR-10 \cite{krizhevsky2009learning} dataset. For MNIST and Fashion-MNIST we use the convolutional neural network described in \cite{carlini2017towards}, Table 1. For CIFAR-10 we may use a ResNet-18 architecture \cite{he2016deep} with the "pre-activation" optimization \cite{he2016identity}. 
+For our experiments we will consider the MNIST \cite{deng2012mnist}, Fashion-MNIST \cite{xiao2017fashion} and CIFAR-10 \cite{krizhevsky2009learning} datasets. For MNIST and Fashion-MNIST we will use the convolutional neural network described in \cite{carlini2017towards}, Table 1. For CIFAR-10 we may use a ResNet-18 architecture \cite{he2016deep} with the "pre-activation" optimization \cite{he2016identity}. 
 
 	
 \section{On adversarial attacks}
-Deep neural networks have been shown to be vulnerable to tiny, maliciously crafted perturbations applied to otherwise benign inputs. These so-called "adversarial examples" were first introduced in \cite{Szegedy13}. Further research showed that these adversarial examples generalize over multiple dataset and architectures \cite{goodfellow2014explaining}. Even very inexpensive attacks like the Fast Gradient Sign Method (FGSM) \cite{goodfellow2014explaining} can be used to fool neural networks. FGSM requires white-box access to the targeted neural networks architecture and its weights. Adversarial examples are computed by performing a gradient ascent step with respect to the sign of the gradient
+Deep neural networks have been shown to be vulnerable to tiny, maliciously crafted perturbations applied to otherwise benign inputs. These so-called "adversarial examples" were first introduced in \cite{Szegedy13}. Further research showed that these adversarial examples generalize over multiple datasets and architectures \cite{goodfellow2014explaining}. Even very inexpensive attacks like the Fast Gradient Sign Method (FGSM) \cite{goodfellow2014explaining} can be used to fool neural networks. FGSM requires white-box access to the targeted neural networks architecture and its weights. Adversarial examples are computed by performing a gradient ascent step with respect to the sign of the gradient
 \begin{align*}
 	\operatorname{FGSM}_\epsilon(x) = x + \epsilon\operatorname{sign}(\nabla_x J(\theta,x,y)) 
 \end{align*}
@@ -62,7 +62,7 @@ Stronger attacks can be computed by repeatedly applying $\operatorname{FGSM}$ wi
 %Finally \cite{goodfellow2014explaining} and \cite{madry2017towards}  
 
 \paragraph{Foolbox}
-For our experiments we will use a suit of different attacks using the FoolBox library \cite{rauber2017foolbox}. The documentation is available at \url{https://foolbox.readthedocs.io/en/stable/}. 
+For our experiments we will use a suite of different attacks using the FoolBox library \cite{rauber2017foolbox}. The documentation is available at \url{https://foolbox.readthedocs.io/en/stable/}. 
 
 \bibliographystyle{unsrt}
 \bibliography{literature}
