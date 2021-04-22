@@ -40,24 +40,24 @@
 	\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 	\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 	\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\section{Notation}
+We denote neural network classifiers with ${f_\theta\colon\mathcal{X}\to\mathcal{Y}, x\mapsto y}$ with trainable parameter $\theta$, where $\mathcal{X}$ are a set of images with corresponding labels (classes) $\mathcal{Y}$. The parameter $\theta$ are optimized by minimizing a training objective ${(\theta, x, y) \mapsto J(\theta, x, y)}$ with respect to $\theta$.
 	
 \section{On adversarial attacks}
+Deep neural networks have been shown to be vulnerable to tiny, maliciously crafted perturbations applied to otherwise benign inputs. These so-called "adversarial examples" were first introduced in \cite{Szegedy13}. Further research \cite{goodfellow2014explaining} showed that these adversarial examples generalize over multiple dataset and architectures. Even very inexpensive attacks like the Fast Gradient Sign Method (FGSM) \cite{goodfellow2014explaining} can be used to fool neural networks. FGSM requires white-box access to the targeted neural networks architecture and its weights. Adversarial examples are computed by performing a gradient ascent step with respect to the sign of the gradient
+\begin{align*}
+	\operatorname{FGSM}_\epsilon(x) = x + \epsilon\operatorname{sign}(\nabla_x J(\theta,x,y)) 
+\end{align*}
+given a step size $\epsilon$. FGSM is an $L^\infty$-bounded attack\footnote{While bounds with respect to an $L^p$ norm are commonly used in the machine learning literature, we are aware that they are "[...] neither necessary nor sufficient for perceptual similarity [...]" \cite{sharif2018suitability}.}, i.e. $\norm{x-\operatorname{FGSM}_\epsilon(x)}_\infty\le\epsilon$, meaning that each pixel value of a benign image $x$ may only be perturbed by up to $\epsilon$.
+Stronger attacks can be computed by repeatedly applying $\operatorname{FGSM}$ with smaller step sizes. This type of attack is known as Projected Gradient Descent (PGD) and was first introduced \cite{madry2017towards}. Their experiments demonstrated the effectiveness of such attacks and showed that convergence is achieved after only a few hundred iterations. 
+%Finally \cite{goodfellow2014explaining} and \cite{madry2017towards}  
 
-\subsection{Attacks}
-\paragraph{Existence of adversarial examples}
-Demonstrated that attacking deep neural networks are susceptible to attacks \cite{Szegedy13}. They actually coined the term "adversarial examples".
-
-\paragraph{Fast gradient sign method}
-\cite{goodfellow2014explaining} developed the fast gradient sign method. They are the guys with the panda image.
-Modify an input image $x$, with respective label $y$,
-\[\operatorname{FGSM}(x) = x + \epsilon\operatorname{sign}(\nabla_x\ J(\theta,x,y)). \] 
-using the loss function $J$. 
-
-\paragraph{Projected gradient descent}
-The projected gradient descent, which is basically iterated FGSM, was first shown in \cite{madry2017towards}. Their experiments suggest that these attacks converge, i.e. they find a local maxima. This may require some restarts.
+ 
 
 \paragraph{Foolbox}
-A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
+For our experiments we will use a suit of different attacks using the FoolBox library \cite{rauber2017foolbox}. 
+
 
 \section{On neural networks}
 \subsection{Neural networks}
