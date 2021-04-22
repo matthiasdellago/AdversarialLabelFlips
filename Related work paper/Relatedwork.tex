@@ -58,7 +58,7 @@ Deep neural networks have been shown to be vulnerable to tiny, maliciously craft
 	\operatorname{FGSM}_\epsilon(x) = x + \epsilon\operatorname{sign}(\nabla_x J(\theta,x,y)) 
 \end{align*}
 given a step size $\epsilon>0$. FGSM is an $L^\infty$-bounded attack\footnote{While bounds with respect to an $L^p$ norm are commonly used in the machine learning literature, we are aware that they are "[...] neither necessary nor sufficient for perceptual similarity [...]" \cite{sharif2018suitability}.}, i.e. $\norm{x-\operatorname{FGSM}_\epsilon(x)}_\infty\le\epsilon$, meaning that each pixel value of a benign image $x$ may only be perturbed by up to $\epsilon$.
-Stronger attacks can be computed by repeatedly applying $\operatorname{FGSM}$ with smaller step sizes. This type of attack is known as Projected Gradient Descent (PGD) and was first introduced \cite{madry2017towards}. Their experiments demonstrated the effectiveness of such attacks and showed that convergence is achieved after only a few hundred iterations. 
+Stronger attacks can be computed by repeatedly applying $\operatorname{FGSM}$ with smaller step sizes. This type of attack is known as Projected Gradient Descent (PGD) and was first introduced \cite{madry2017towards}. Their experiments demonstrated the effectiveness of such attacks and showed that convergence is achieved after only a few hundred iterations or less. 
 %Finally \cite{goodfellow2014explaining} and \cite{madry2017towards}  
 
 \paragraph{Foolbox}
