@@ -1,4 +1,5 @@
 /code/data
+/code/models
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
@@ -276,3 +277,4 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+code/__pycache__/Networks.cpython-38.pyc

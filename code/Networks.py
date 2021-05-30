@@ -83,18 +83,18 @@ class CIFAR_Net(nn.Module):
 # print(net(x_train[:11]).shape)
 
 
-def train_model(model, criterion, optimizer, dataloaders, device, num_epochs):
+def train_model(model, criterion, optimizer, dataloaders, device, num_epochs,
+                save_path=False):
     liveloss = PlotLosses() # Live training plot generic API
     model = model.to(device) # Moves and/or casts the parameters and buffers to device.
+    best_val_acc = 0
     
     for epoch in range(num_epochs): # Number of passes through the entire training & validation datasets
         logs = {}
         for phase in ['train', 'validation']: # First train, then validate
-            if phase == 'train':
-                model.train() # Set the module in training mode
-            else:
-                model.eval() # Set the module in evaluation mode
-    
+            # Switch between training and test eval mode depending on phase.
+            model.train() if phase == 'train' else model.eval()
+
             running_loss = 0.0 # keep track of loss
             running_corrects = 0 # count of carrectly classified inputs
     
@@ -124,6 +124,15 @@ def train_model(model, criterion, optimizer, dataloaders, device, num_epochs):
     
             logs[prefix + 'log loss'] = epoch_loss.item()
             logs[prefix + 'accuracy'] = epoch_acc.item()
-        
+            
+            if phase == 'validation' and epoch_acc>best_val_acc:
+                best_val_acc = epoch_acc
+                if save_path is not None:
+                    print("New best validation accuracy")
+                    name = f"val_acc={np.round(epoch_acc.item(),4)},epoch={epoch}.pt"
+                    torch.save(model, save_path + name)
+                    print("Model saved")
+                    print()
+                
         liveloss.update(logs) # Update logs
         liveloss.send() # draw, display stuff
