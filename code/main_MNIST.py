@@ -1,7 +1,9 @@
+import os
+import numpy as np
+
+# Torch
 import torch
 import torch.nn as nn
-import numpy as np
-import os
 from torch.utils.data import DataLoader
 from torch.optim import SGD
 from torchvision.datasets import MNIST
@@ -12,10 +14,8 @@ from Networks import MNIST_Net
 from utils import train_model
 
 """
-The neural net sometimes diverges in the first epoch. 
-In that case restart the program.
+Trains and saves a neural net for the MNIST dataset.
 """
-
 if __name__ == "__main__":
     # Save model if validation accuracy increases.
     save_path = "models" + os.sep + "MNIST" + os.sep
@@ -25,31 +25,18 @@ if __name__ == "__main__":
     
     criterion = nn.CrossEntropyLoss()
     
+    # Preparing dataloaders
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=0.5, std=1)])
         
-    trainset = MNIST(root='./data', train=True,
-                     download=True, transform=transform,
-    )
-    testset = MNIST(root='./data', train=False, 
-                    transform=transform,
-    )
-    
-    
-    # trainset = MNIST(root='./data', train=True,
-    #                  download=True, transform=transforms.ToTensor(),
-    # )
-    # testset = MNIST(root='./data', train=False, 
-    #                 transform=transforms.ToTensor(),
-    # )
-    
+    trainset = MNIST(root='./data', train=True, download=True, transform=transform,)
+    testset = MNIST(root='./data', train=False, transform=transform,)
     
     kwargs = {
         "batch_size": 128, "shuffle": True, "pin_memory": True, 
         "num_workers": 4, "persistent_workers": True
     }
-
 
     dataloaders = {
         "train": DataLoader(trainset, **kwargs),

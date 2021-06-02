@@ -4,7 +4,9 @@ import torch.nn.functional as F
 # Reminder
 # Conv2d(in, out, kernelsize)
 
-# https://arxiv.org/pdf/1608.04644.pdf
+'''
+Model specification taken from https://arxiv.org/pdf/1608.04644.pdf
+'''
 
 class MNIST_Net(nn.Module):
     def __init__(self):

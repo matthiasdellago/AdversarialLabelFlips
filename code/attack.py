@@ -10,7 +10,6 @@ from torchvision import transforms
 
 # Foolbox
 import foolbox as fb
-from foolbox import PyTorchModel
 from foolbox.attacks import LinfPGD, FGSM, L0BrendelBethgeAttack, L2CarliniWagnerAttack
 
 # Custom modules
@@ -27,11 +26,11 @@ if __name__ == "__main__":
     model = model.to(device) 
     
     attack = LinfPGD()
-    attack_kwargs = {"epsilons": 1}
+    attack = FGSM()
+    #attack = L2CarliniWagnerAttack()
+    attack_kwargs = {"epsilons": 0.01}
     
-    # Tell FoolBox this is a PyTorchModel
-    fmodel = PyTorchModel(model, bounds=(-0.5,0.5)) 
-    
+
     # Preparing dataloader
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -45,7 +44,7 @@ if __name__ == "__main__":
     
     # Generate confusion matrix
     confusion_matrix = compute_confusion_matrix(
-        fmodel, attack, attack_kwargs, dataloader, device)
+        model, attack, attack_kwargs, dataloader, device)
     
     # For MNIST
     names = [str(k) for k in np.arange(10)]

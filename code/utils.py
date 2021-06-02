@@ -1,10 +1,20 @@
 import torch
 import numpy as np
+from foolbox import PyTorchModel
 from livelossplot import PlotLosses
 
-def compute_confusion_matrix(fmodel, attack, attack_kwargs, dataloader, device,
+"""
+Utility functions for all other scipts, including
+- compute confusion matrix
+- train model
+"""
+
+def compute_confusion_matrix(model, attack, attack_kwargs, dataloader, device,
                              save_path=None):
-        
+
+    # Tell FoolBox this is a PyTorchModel
+    fmodel = PyTorchModel(model, bounds=(-0.5,0.5)) 
+    
     confusion_matrix = np.zeros((10,10), dtype=int)
     for images, labels in dataloader:
         # Perform Tensor device conversion
@@ -19,6 +29,7 @@ def compute_confusion_matrix(fmodel, attack, attack_kwargs, dataloader, device,
         
         np.add.at(confusion_matrix, (source_labels, predicted_labels), 1)
     return confusion_matrix
+
 
 def train_model(model, criterion, optimizer, dataloaders, device, num_epochs,
                 save_path=None, scheduler=None):
