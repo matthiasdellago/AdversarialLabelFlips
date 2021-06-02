@@ -2,6 +2,24 @@ import torch
 import numpy as np
 from livelossplot import PlotLosses
 
+def compute_confusion_matrix(fmodel, attack, attack_kwargs, dataloader, device,
+                             save_path=None):
+        
+    confusion_matrix = np.zeros((10,10), dtype=int)
+    for images, labels in dataloader:
+        # Perform Tensor device conversion
+        images, labels = images.to(device), labels.to(device) 
+
+        # Attack
+        _, clipped_advs, success = attack(fmodel, images, labels, 
+                                          **attack_kwargs)
+        
+        predicted_labels = fmodel(clipped_advs).argmax(dim=1).cpu().numpy()
+        source_labels = labels.data.cpu().numpy()
+        
+        np.add.at(confusion_matrix, (source_labels, predicted_labels), 1)
+    return confusion_matrix
+
 def train_model(model, criterion, optimizer, dataloaders, device, num_epochs,
                 save_path=None, scheduler=None):
     liveloss = PlotLosses() # Live training plot generic API

@@ -10,7 +10,7 @@ from torchvision import transforms
 
 # Custom modules
 from Networks import CIFAR_Net
-from train import train_model
+from utils import train_model
 
 """
 The neural net sometimes diverges in the first epoch. 

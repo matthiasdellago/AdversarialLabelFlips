@@ -13,21 +13,8 @@ import foolbox as fb
 from foolbox import PyTorchModel
 from foolbox.attacks import LinfPGD, FGSM, L0BrendelBethgeAttack, L2CarliniWagnerAttack
 
-def compute_confusion_matrix(model, attack, attack_kwargs, dataloader, device, save_path=None):
-    confusion_matrix = np.zeros((10,10), dtype=int)
-
-    for images, labels in dataloader:
-        images = images.to(device) # Perform Tensor device conversion
-        labels = labels.to(device)
-    
-        raw_advs, clipped_advs, success = attack(fmodel, images, labels, **attack_kwargs)
-        
-        predicted_labels = model(clipped_advs).argmax(dim=1).cpu().numpy()
-        source_labels = labels.data.cpu().numpy()
-        
-        for i, j in zip(source_labels, predicted_labels):
-            confusion_matrix[i,j] += 1
-    return confusion_matrix
+# Custom modules
+from utils import compute_confusion_matrix
 
 if __name__ == "__main__":
     ### CONFIG
@@ -35,12 +22,12 @@ if __name__ == "__main__":
     model = torch.load(save_path + 'reference_model_val_acc=0.8023.pt')
     model.eval()
     
-    attack = LinfPGD()
-    attack_kwargs = {"epsilons": 1}
-    
     # Move everything to GPU if possible
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     model = model.to(device) 
+    
+    attack = LinfPGD()
+    attack_kwargs = {"epsilons": 1}
     
     # Tell FoolBox this is a PyTorchModel
     fmodel = PyTorchModel(model, bounds=(-0.5,0.5)) 
@@ -58,7 +45,7 @@ if __name__ == "__main__":
     
     # Generate confusion matrix
     confusion_matrix = compute_confusion_matrix(
-        model, attack, attack_kwargs, dataloader, device)
+        fmodel, attack, attack_kwargs, dataloader, device)
     
     # For MNIST
     names = [str(k) for k in np.arange(10)]
