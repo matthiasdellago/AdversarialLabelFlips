@@ -15,13 +15,13 @@ def train_model(model, criterion, optimizer, dataloaders, device, num_epochs,
             model.train() if phase == 'train' else model.eval()
 
             running_loss = 0.0 # keep track of loss
-            running_corrects = 0 # count of carrectly classified inputs
+            running_corrects = 0 # count of carrectly classified images
     
-            for inputs, labels in dataloaders[phase]:
-                inputs = inputs.to(device) # Perform Tensor device conversion
+            for images, labels in dataloaders[phase]:
+                images = images.to(device) # Perform Tensor device conversion
                 labels = labels.to(device)
     
-                outputs = model(inputs) # forward pass through network
+                outputs = model(images) # forward pass through network
                 loss = criterion(outputs, labels) # Calculate loss
     
                 if phase == 'train':
@@ -30,7 +30,7 @@ def train_model(model, criterion, optimizer, dataloaders, device, num_epochs,
                     optimizer.step() # Step on the weights using those gradient w -=  gradient(w) * lr
     
                 preds = torch.argmax(outputs, dim=1) # Get model's predictions
-                running_loss += loss.detach() * inputs.size(0) # multiply mean loss by the number of elements
+                running_loss += loss.detach() * images.size(0) # multiply mean loss by the number of elements
                 running_corrects += torch.sum(preds == labels.data) # add number of correct predictions to total
     
             epoch_loss = running_loss / len(dataloaders[phase].dataset) # get the "mean" loss for the epoch

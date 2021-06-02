@@ -18,7 +18,6 @@ import foolbox as fb
 from foolbox import PyTorchModel, accuracy, samples
 from foolbox.attacks import LinfPGD, FGSM, L0BrendelBethgeAttack, L2CarliniWagnerAttack
 
-
 if __name__ == "__main__":
     save_path = "models" + os.sep + "CIFAR-10" + os.sep
     model = torch.load(save_path + 'reference_model_val_acc=0.8023.pt')
@@ -46,7 +45,7 @@ if __name__ == "__main__":
     
     
     attack = LinfPGD()
-    eps = 0.05
+    eps = 1
     
     #criterion = nn.CrossEntropyLoss()
     
@@ -78,7 +77,15 @@ if __name__ == "__main__":
         # running_loss += loss.detach() * images.size(0) # multiply mean loss by the number of elements
         for i, j in zip(source_labels, predicted_labels):
             confusion_matrix[i,j] += 1
-        
+    
+    # For MNIST
     names = [str(k) for k in np.arange(10)]
+    
+    # For CIFAR-10
+    names = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
     df = pd.DataFrame(data=confusion_matrix, index=names, columns=names)
+    
+    pd.set_option('display.max_rows', 500)
+    pd.set_option('display.max_columns', 500)
+    pd.set_option('display.width', 1000)
     print(df)
