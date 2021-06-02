@@ -29,7 +29,7 @@ def train_model(model, criterion, optimizer, dataloaders, device, num_epochs,
                     loss.backward() # Calculate gradients
                     optimizer.step() # Step on the weights using those gradient w -=  gradient(w) * lr
     
-                _, preds = torch.max(outputs, 1) # Get model's predictions
+                preds = torch.argmax(outputs, dim=1) # Get model's predictions
                 running_loss += loss.detach() * inputs.size(0) # multiply mean loss by the number of elements
                 running_corrects += torch.sum(preds == labels.data) # add number of correct predictions to total
     
