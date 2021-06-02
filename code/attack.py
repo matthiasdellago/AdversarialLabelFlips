@@ -30,34 +30,33 @@ def compute_confusion_matrix(model, attack, attack_kwargs, dataloader, device, s
     return confusion_matrix
 
 if __name__ == "__main__":
+    ### CONFIG
     save_path = "models" + os.sep + "CIFAR-10" + os.sep
     model = torch.load(save_path + 'reference_model_val_acc=0.8023.pt')
     model.eval()
     
+    attack = LinfPGD()
+    attack_kwargs = {"epsilons": 1}
     
+    # Move everything to GPU if possible
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    model = model.to(device) # Moves and/or casts the parameters and buffers to device.
+    model = model.to(device) 
     
+    # Tell FoolBox this is a PyTorchModel
     fmodel = PyTorchModel(model, bounds=(-0.5,0.5)) 
     
+    # Preparing dataloader
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=0.5, std=1)])
-    
-    
     testset = CIFAR10(root='./data', train=False, transform=transform,)
-    
     kwargs = {
         "batch_size": 2**10, "shuffle": True, "pin_memory": True, 
         "num_workers": 4, "persistent_workers": True
     }
-    
     dataloader = DataLoader(testset, **kwargs)
     
-    
-    attack = LinfPGD()
-    attack_kwargs = {"epsilons": 1}
-    
+    # Generate confusion matrix
     confusion_matrix = compute_confusion_matrix(
         model, attack, attack_kwargs, dataloader, device)
     
