@@ -16,28 +16,31 @@ from foolbox.attacks import LinfPGD, FGSM, L0BrendelBethgeAttack, L2CarliniWagne
 from utils import compute_confusion_matrix
 
 if __name__ == "__main__":
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    
     ### CONFIG
     save_path = "models" + os.sep + "CIFAR-10" + os.sep
-    model = torch.load(save_path + 'reference_model_val_acc=0.8023.pt')
+    
+    #attack, attack_kwargs = L0BrendelBethgeAttack(), {"epsilons": None}
+    #attack, attack_kwargs = L1BrendelBethgeAttack(), {"epsilons": None}
+    #attack, attack_kwargs = L2CarliniWagnerAttack(), {"epsilons": None}
+    attack, attack_kwargs = FGSM(), {"epsilons": 0.01}
+    #attack, attack_kwargs = LinfPGD(), {"epsilons": 0.01}
+    print(attack_kwargs)    
+    
+    # Load model and move everything to GPU if possible
+    model = torch.load(save_path + 'reference_model_val_acc=0.8023.pt', 
+                       map_location=device)
     model.eval()
     
-    # Move everything to GPU if possible
-    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    model = model.to(device) 
     
-    attack = LinfPGD()
-    attack = FGSM()
-    #attack = L2CarliniWagnerAttack()
-    attack_kwargs = {"epsilons": 0.01}
-    
-
     # Preparing dataloader
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=0.5, std=1)])
-    testset = CIFAR10(root='./data', train=False, transform=transform,)
+    testset = CIFAR10(root='./data', download=True, train=False, transform=transform,)
     kwargs = {
-        "batch_size": 2**10, "shuffle": True, "pin_memory": True, 
+        "batch_size": 2**7, "shuffle": True, "pin_memory": True, 
         "num_workers": 4, "persistent_workers": True
     }
     dataloader = DataLoader(testset, **kwargs)
