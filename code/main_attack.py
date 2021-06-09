@@ -90,9 +90,9 @@ def execute_attack(dataset: str, model_filename: str,
         figure_path = result_path + "figures" + os.sep
         epsilon = attack_kwargs["epsilons"]
         if attack_kwargs["epsilons"] is None:
-            plt.savefig(figure_path + f"{attack_name}, steps=20.png")
-            plt.savefig(figure_path + f"{attack_name}, steps=20.pdf")
-            df.to_csv(  result_path + f"{attack_name}, steps=20.csv")
+            plt.savefig(figure_path + f"{attack_name}.png")
+            plt.savefig(figure_path + f"{attack_name}.pdf")
+            df.to_csv(  result_path + f"{attack_name}.csv")
         
         if attack_kwargs["epsilons"] is not None:
             plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.png")
@@ -119,17 +119,17 @@ if __name__ == "__main__":
     ##########################################################################
     # Config attack
     ##########################################################################
-    attack = L0BrendelBethgeAttack(steps=20)
-    attack_kwargs = {"epsilons": None}
-    attack_name = "L0BrendelBethgeAttack"
+    # attack = L0BrendelBethgeAttack(steps=20)
+    # attack_kwargs = {"epsilons": None}
+    # attack_name = "L0BrendelBethgeAttack"
     
     # attack = L1BrendelBethgeAttack(steps=20)
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L1BrendelBethgeAttack"
     
-    # attack = L2CarliniWagnerAttack(steps=20)
-    # attack_kwargs = {"epsilons": None}
-    # attack_name = "L2CarliniWagnerAttack"
+    attack = L2CarliniWagnerAttack()
+    attack_kwargs = {"epsilons": None}
+    attack_name = "L2CarliniWagnerAttack"
     
     # eps = 0.02
     # assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
@@ -142,6 +142,8 @@ if __name__ == "__main__":
     ##########################################################################
     # ATTACK
     ##########################################################################
-
+    print("##############################################################")
+    print(dataset, attack_name, attack_kwargs)
+    print("##############################################################")
     execute_attack(dataset, model_filename, attack, attack_kwargs, attack_name,
                     save=save)    
