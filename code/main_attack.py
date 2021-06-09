@@ -17,21 +17,26 @@ from foolbox.attacks import LinfPGD, FGSM, L0BrendelBethgeAttack, L2CarliniWagne
 from utils import compute_confusion_matrix
 
 def execute_attack(dataset: str, model_filename: str, 
-           attack, attack_kwargs, attack_name: str):
+           attack, attack_kwargs, attack_name: str,
+           save=False):
+    
+    result_path = "results" + os.sep + dataset + os.sep 
+    model_path = "models" + os.sep + dataset + os.sep + model_filename
     
     ##########################################################################
     # Loading model
     ##########################################################################
-    model_path = "models" + os.sep + dataset + os.sep + model_filename
     
     # Move everything to the GPU if possible
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     model = torch.load(model_path, map_location=device)
     model.eval()
     
+    
     ##########################################################################
     # Loading test data + data loader
     ##########################################################################
+    
     # Make input suitable for our models
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -50,15 +55,18 @@ def execute_attack(dataset: str, model_filename: str,
     
     dataloader = DataLoader(testset, batch_size=1000, num_workers=4)
     
+    
     ##########################################################################
     # Generate confusion matrix
     ##########################################################################
     confusion_matrix = compute_confusion_matrix(
         model, attack, attack_kwargs, dataloader, device)
     
+    
     ##########################################################################
     # Print as Pandas dataframe and visualize with matplotlib
     ##########################################################################
+    
     df = pd.DataFrame(data=confusion_matrix, index=labels, columns=labels)
     
     pd.set_option('display.max_rows', 500)
@@ -71,15 +79,31 @@ def execute_attack(dataset: str, model_filename: str,
     plt.yticks(range(len(labels)), labels, size='small')
     
     plt.xticks(rotation=90)
-    ##########################################################################
-    # Save confusion_matrix
-    ##########################################################################
-    #df.save("")
+    plt.show()
     
+    ##########################################################################
+    # Save plot and confusion matrix
+    ##########################################################################
+    
+    if save:
+        figure_path = result_path + "figures" + os.sep
+        epsilon = attack_kwargs["epsilons"]
+        if attack_kwargs["epsilons"] is None:
+            plt.savefig(figure_path + f"{attack_name}.png")
+            plt.savefig(figure_path + f"{attack_name}.pdf")
+            df.to_csv(  result_path + f"{attack_name}.csv")
+        
+        if attack_kwargs["epsilons"] is not None:
+            plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.png")
+            plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.pdf")
+            df.to_csv(  result_path + f"{attack_name}, epsilon={epsilon}.csv")
+        
 """    
 All configs are done here
 """  
 if __name__ == "__main__":
+    save = True
+    
     ##########################################################################
     # Choose dataset and model
     ##########################################################################
@@ -105,11 +129,17 @@ if __name__ == "__main__":
     # attack_name = "L2CarliniWagnerAttack"
     
     attack = LinfPGD()
-    attack_kwargs = {"epsilons": 0.2}
+    
     attack_name = "LinfPGD"
-
-    ##########################################################################
-    # ATTACK
-    ##########################################################################
-
-    execute_attack(dataset, model_filename, attack, attack_kwargs, attack_name)    
+    
+    for eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]:
+        attack_kwargs = {"epsilons": eps}
+    
+        assert(attack_kwargs["epsilons"] is None) or isinstance(
+               attack_kwargs["epsilons"], (float, int)) 
+        ##########################################################################
+        # ATTACK
+        ##########################################################################
+    
+        execute_attack(dataset, model_filename, attack, attack_kwargs, attack_name,
+                       save=save)    
