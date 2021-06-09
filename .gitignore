@@ -279,3 +279,4 @@ TSWLatexianTemp*
 # Makeindex log files
 *.lpz
 code/__pycache__/Networks.cpython-38.pyc
+code/.ipynb_checkpoints/visualize-checkpoint.ipynb
