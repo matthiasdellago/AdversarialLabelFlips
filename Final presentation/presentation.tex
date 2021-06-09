@@ -6,7 +6,7 @@
 \usepackage{microtype}
 \usepackage{graphbox}
 \usepackage{booktabs} 
-
+\usepackage{tikz-cd}
 \usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
 \usepackage{algorithmic}
 \usepackage{textcomp}
@@ -79,9 +79,18 @@
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L0.png} &
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L1.png} &
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L2.png} &
-	\includegraphics[align=c,width=0.3\columnwidth]{plots/Linf.png} &
+	\includegraphics[align=c,width=0.3\columnwidth]{plots/Linf.png} 
 	
 	\end{tabular}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Two Different Approaches}
+	\begin{tikzcd}[column sep=4em]
+		& \shortstack{small displacement and \\ big misclassification} \\
+		\text{small displacement} \arrow{ur}{ \text{maximise misclassification} } && \text{big misclassification} \arrow[ul, "\text{ minimise displacement}"']
+	\end{tikzcd}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
