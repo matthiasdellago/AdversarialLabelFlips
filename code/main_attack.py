@@ -11,7 +11,8 @@ from torchvision import transforms
 
 # Foolbox
 import foolbox as fb
-from foolbox.attacks import LinfPGD, FGSM, L0BrendelBethgeAttack, L2CarliniWagnerAttack
+from foolbox.attacks import LinfPGD, FGSM, \
+    L0BrendelBethgeAttack, L1BrendelBethgeAttack, L2CarliniWagnerAttack
 
 # Custom modules
 from utils import compute_confusion_matrix
@@ -79,7 +80,7 @@ def execute_attack(dataset: str, model_filename: str,
     plt.yticks(range(len(labels)), labels, size='small')
     
     plt.xticks(rotation=90)
-    plt.show()
+    
     
     ##########################################################################
     # Save plot and confusion matrix
@@ -97,6 +98,8 @@ def execute_attack(dataset: str, model_filename: str,
             plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.png")
             plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.pdf")
             df.to_csv(  result_path + f"{attack_name}, epsilon={epsilon}.csv")
+    
+    plt.show()
         
 """    
 All configs are done here
@@ -116,30 +119,31 @@ if __name__ == "__main__":
     ##########################################################################
     # Config attack
     ##########################################################################
-    # attack = L0BrendelBethgeAttack()
+    # attack = L0BrendelBethgeAttack(steps=20)
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L0BrendelBethgeAttack"
     
-    # attack = L1BrendelBethgeAttack()
+    # attack = L1BrendelBethgeAttack(steps=20)
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L1BrendelBethgeAttack"
     
-    # attack = L2CarliniWagnerAttack()
-    # attack_kwargs = {"epsilons": None}
-    # attack_name = "L2CarliniWagnerAttack"
+    attack = L2CarliniWagnerAttack()
+    attack_kwargs = {"epsilons": None}
+    attack_name = "L2CarliniWagnerAttack"
     
-    attack = LinfPGD()
-    
-    attack_name = "LinfPGD"
-    
-    for eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]:
-        attack_kwargs = {"epsilons": eps}
-    
-        assert(attack_kwargs["epsilons"] is None) or isinstance(
-               attack_kwargs["epsilons"], (float, int)) 
-        ##########################################################################
-        # ATTACK
-        ##########################################################################
-    
-        execute_attack(dataset, model_filename, attack, attack_kwargs, attack_name,
-                       save=save)    
+    # eps = 0.02
+    # assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
+    # attack = LinfPGD()
+    # attack_kwargs = {"epsilons": eps}
+    # attack_name = "LinfPGD"
+
+    assert(attack_kwargs["epsilons"] is None) or isinstance(
+            attack_kwargs["epsilons"], (float, int)) 
+    ##########################################################################
+    # ATTACK
+    ##########################################################################
+    print("##############################################################")
+    print(dataset, attack_name, attack_kwargs)
+    print("##############################################################")
+    execute_attack(dataset, model_filename, attack, attack_kwargs, attack_name,
+                    save=save)    
