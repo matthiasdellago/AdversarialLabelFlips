@@ -37,6 +37,10 @@
 	\maketitle
 \end{frame}	
 
+\begin{frame}[plain]
+	\huge A short recap
+\end{frame}	
+
 
 \begin{frame}[noframenumbering,fragile]
 	\frametitle{Fast gradient sign method}
@@ -65,6 +69,15 @@
 	\end{block}
 \end{frame}
 
+\begin{frame}[plain]
+	\huge Some simple theory
+\end{frame}	
+
+\begin{frame}[plain]
+	\large We want similar images that are classified differently.\\
+	But what is "similar"?
+\end{frame}	
+
 \begin{frame}[fragile]
 	\frametitle{Quantifying Changes}
 
@@ -80,7 +93,9 @@
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L1.png} &
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L2.png} &
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/Linf.png} 
+	\\
 	
+	\shortstack{ Perturb one \\ pixel maximally}&Minimise sum&\shortstack{Minimise sum \\ of squares}&\shortstack{Perturb all \\ pixels equally}
 	\end{tabular}
 \end{frame}
 
@@ -91,6 +106,57 @@
 		& \shortstack{small displacement and \\ big misclassification} \\
 		\text{small displacement} \arrow{ur}{ \text{maximise misclassification} } && \text{big misclassification} \arrow[ul, "\text{ minimise displacement}"']
 	\end{tikzcd}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Projected Gradient Decent}
+	\begin{columns}
+		\begin{column}{.5\columnwidth}
+			\begin{enumerate}
+				\item Pick spot in epsilon ball
+				\item Iterate gradient decent
+				\item If leaving ball, project back onto surface.
+			\end{enumerate}
+			
+		\end{column}
+
+		\begin{column}{.5\columnwidth}
+			\includegraphics[width= \textwidth]{plots/pgd_sketch.png}
+		\end{column}
+	\end{columns}
+
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Projected Gradient Decent}
+	
+	\includegraphics[height=0.8 \textheight]{plots/pgd_pic.png}
+	
+	\source{Know your enemy, Oscar Knagg, towardsdatascience.com, 2019}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Carlini-Wagner-Attack}
+	
+	Original idea: minimise disance while always staying in "misclassification territory".
+	\\
+	Problem: Nonlinearity of constraint makes for bad optimisation
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Carlini-Wagner-Attack}
+	
+	Solution: Pack constraint into the function that is optimised.
+	
+	=> minimise: distance + "how misclassified is x?"*
+	
+	equiv. minimise distance while maximising misclassification.
+	
+	\source{*loss function}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
