@@ -22,9 +22,8 @@
 
 % ------------------------------------------------------------------------
 \title{Adversarial Label Flips}
-%\subtitle{modified new beamer template}
 \author{Matthias Dellago \& Maximilian Samsinger}
-\date{22 January 2021}
+\date{10 June 2021}
 
 % ------------------------------------------------------------------------
 
@@ -38,28 +37,58 @@
 	\maketitle
 \end{frame}	
 
-\begin{frame}[fragile]
-	\frametitle{Example Slide}
-	\begin{columns}
-		\begin{column}{.5\columnwidth}
-			\begin{block}{Block}
-				This is a block
-			\end{block}
-			\begin{alertblock}{Alert block}
-				This is a alertblock
-			\end{alertblock}
-		\end{column}
-		\begin{column}{.5\columnwidth}
-			\begin{exampleblock}{Example block}
-				Examples show up one by one$\dots$.
-				\begin{itemize}
-					\visible<1->{\item Example 1}
-					\visible<2->{\item Example 2}
-					\visible<3->{\item Example 3}
-				\end{itemize}
-			\end{exampleblock}
-		\end{column}
-	\end{columns}
+
+\begin{frame}[noframenumbering,fragile]
+	\frametitle{Fast gradient sign method}
+	\begin{tabular}{ccccc}
+		\includegraphics[align=c,width=0.28\columnwidth]{plots/panda_577.png} & \Huge{+} & \Huge{\textbf{$\epsilon$}}\ \includegraphics[align=c,width=0.28\columnwidth]{plots/nematode_082.png}\ & \Huge{=} & \includegraphics[align=c,width=0.28\columnwidth]{plots/gibbon_993.png} \\~\\
+		\huge{Panda} &&\qquad \large{$\operatorname{sign}(\nabla_x\ J(\theta,x,y))$}&& \huge{Gibbon} \\
+		(57.7\% confidence) &&&& (99.3\% confidence) 
+	\end{tabular}
+	\source{[2] Explaining and harnessing adversarial examples, 2014}
 \end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{What we want to do}
+	\begin{block}{Confusion Matrix}
+		\begin{table}
+			\setlength{\extrarowheight}{2pt}
+			\begin{tabular}{cc|c|c|c|}
+				& \multicolumn{1}{c}{} & \multicolumn{3}{c}{Categorised as}\\
+				& \multicolumn{1}{c}{} & \multicolumn{1}{c}{Dog}  & \multicolumn{1}{c}{Cat} & \multicolumn{1}{c}{Plane} \\\cline{3-5}
+				\multirow{3}*{Adversarial Example of a}  & Dog & 0.0 & ? & ?\\\cline{3-5}
+				& Cat & ? & 0.0 &  ? \\\cline{3-5}
+				& Plane & ? & ? &  0.0 \\\cline{3-5}
+			\end{tabular}
+		\end{table}
+		How many modified dogs get classified as cats vs as planes? etc.
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Quantifying Changes}
+
+	\begin{tabular}{cccc}
+		
+	$L^0$-Norm & 	$L^1$-Norm & 	$L^2$-Norm & 	$L^\infty$-Norm \vspace{5pt} \\
+	
+	
+	
+	\shortstack{Number of \\ pixels changed} & \shortstack{Sum of \\ all changes} & \shortstack{Sum of the $square$ \\ of all changes} & \shortstack{Maximum of \\ all changes} \\
+	
+	\includegraphics[align=c,width=0.3\columnwidth]{plots/L0.png} &
+	\includegraphics[align=c,width=0.3\columnwidth]{plots/L1.png} &
+	\includegraphics[align=c,width=0.3\columnwidth]{plots/L2.png} &
+	\includegraphics[align=c,width=0.3\columnwidth]{plots/Linf.png} &
+	
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+	\frametitle{References}
+	\bibliographystyle{unsrt}
+	\bibliography{literature}
+\end{frame}
+
 
 \end{document}
