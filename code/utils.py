@@ -2,6 +2,7 @@ import torch
 import numpy as np
 from foolbox import PyTorchModel
 from livelossplot import PlotLosses
+from time import time
 
 """
 Utility functions for all other scipts, including
@@ -18,6 +19,7 @@ def compute_confusion_matrix(model, attack, attack_kwargs, dataloader, device,
     confusion_matrix = np.zeros((10,10), dtype=int)
     for images, labels in dataloader:
         # Perform Tensor device conversion
+        begin = time()
         images, labels = images.to(device), labels.to(device) 
 
         # Attack
@@ -28,7 +30,8 @@ def compute_confusion_matrix(model, attack, attack_kwargs, dataloader, device,
         source_labels = labels.data.cpu().numpy()
         
         np.add.at(confusion_matrix, (source_labels, predicted_labels), 1)
-        #print(confusion_matrix)
+        print(confusion_matrix)
+        print("Time:", time()-begin)
     return confusion_matrix
 
 
