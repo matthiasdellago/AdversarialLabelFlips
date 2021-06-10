@@ -110,26 +110,26 @@ if __name__ == "__main__":
     ##########################################################################
     # Choose dataset and model
     ##########################################################################
-    dataset = "MNIST"
-    model_filename = 'reference_model_val_acc=0.9948.pt'
+    # dataset = "MNIST"
+    # model_filename = 'reference_model_val_acc=0.9948.pt'
     
-    # dataset = "CIFAR-10"
-    # model_filename = 'reference_model_val_acc=0.8023.pt'
+    dataset = "CIFAR-10"
+    model_filename = 'reference_model_val_acc=0.8023.pt'
     
     ##########################################################################
     # Config attack
     ##########################################################################
-    # attack = L0BrendelBethgeAttack(steps=20)
-    # attack_kwargs = {"epsilons": None}
-    # attack_name = "L0BrendelBethgeAttack"
+    attack = L0BrendelBethgeAttack()
+    attack_kwargs = {"epsilons": None}
+    attack_name = "L0BrendelBethgeAttack"
     
     # attack = L1BrendelBethgeAttack(steps=20)
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L1BrendelBethgeAttack"
     
-    attack = L2CarliniWagnerAttack()
-    attack_kwargs = {"epsilons": None}
-    attack_name = "L2CarliniWagnerAttack"
+    # attack = L2CarliniWagnerAttack()
+    # attack_kwargs = {"epsilons": None}
+    # attack_name = "L2CarliniWagnerAttack"
     
     # eps = 0.02
     # assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
