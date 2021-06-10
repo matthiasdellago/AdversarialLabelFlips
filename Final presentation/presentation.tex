@@ -45,11 +45,11 @@
 \begin{frame}[noframenumbering,fragile]
 	\frametitle{Fast gradient sign method}
 	\begin{tabular}{ccccc}
-		\includegraphics[align=c,width=0.28\columnwidth]{plots/panda_577.png} & \Huge{+} & \Huge{\textbf{$\epsilon$}}\ \includegraphics[align=c,width=0.28\columnwidth]{plots/nematode_082.png}\ & \Huge{=} & \includegraphics[align=c,width=0.28\columnwidth]{plots/gibbon_993.png} \\~\\
-		\huge{Panda} &&\qquad \large{$\operatorname{sign}(\nabla_x\ J(\theta,x,y))$}&& \huge{Gibbon} \\
-		(57.7\% confidence) &&&& (99.3\% confidence) 
+		\includegraphics[align=c,width=0.28\columnwidth]{plots/original_04282.png} & \Huge{+} & \Huge{\textbf{$\epsilon$}}\ \includegraphics[align=c,width=0.28\columnwidth]{plots/difference_amplified_by_50.png}\ & \Huge{=} & \includegraphics[align=c,width=0.28\columnwidth]{plots/adversarial_09999.png} \\~\\
+		\huge{Husky} &&\qquad \large{Noise (PGD-40)}&& \huge{Handkerchief} \\
+		(42.82\% confidence) && \qquad 50x amplified && (99.999988\% confidence) 
 	\end{tabular}
-	\source{[2] Explaining and harnessing adversarial examples, 2014}
+	\source{Source: \url{ctf.codes}, circa 2021}
 \end{frame}
 
 \begin{frame}[fragile]
