@@ -53,7 +53,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{What we want to do}
+	\frametitle{What we want}
 	\begin{block}{Confusion Matrix}
 		\begin{table}
 			\setlength{\extrarowheight}{2pt}
@@ -87,7 +87,7 @@
 	
 	
 	
-	\shortstack{Number of \\ different pixels} & \shortstack{Sum of \\ all differences} & \shortstack{Sum of the $square$ \\ of all differences} & \shortstack{Maximum of \\ all differences} \\
+	\shortstack{Number of \\ different pixels} & \shortstack{Sum of \\ all differences} & \shortstack{Root of the sum\\of the squares \\ of all differences} & \shortstack{Maximum of \\ all differences} \\
 	
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L0.png} &
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L1.png} &
@@ -113,7 +113,7 @@
 	\begin{columns}
 		\begin{column}{.5\columnwidth}
 			\begin{enumerate}
-				\item Pick spot in epsilon ball
+				\item Pick spot in epsilon ball around target
 				\item Iterate gradient decent
 				\item If leaving ball, project back onto surface
 				\item Repeat to convergence
