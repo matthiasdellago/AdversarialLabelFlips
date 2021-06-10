@@ -30,7 +30,7 @@ def compute_confusion_matrix(model, attack, attack_kwargs, dataloader, device,
         source_labels = labels.data.cpu().numpy()
         
         np.add.at(confusion_matrix, (source_labels, predicted_labels), 1)
-        print("Time for current batch:", time()-begin)
+        print("Time elapsed for current batch:", time()-begin)
     return confusion_matrix
 
 

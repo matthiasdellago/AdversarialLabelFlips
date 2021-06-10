@@ -105,7 +105,7 @@ def execute_attack(dataset: str, model_filename: str,
 All configs are done here
 """  
 if __name__ == "__main__":
-    save = True
+    save = False
     
     ##########################################################################
     # Choose dataset and model
@@ -119,9 +119,9 @@ if __name__ == "__main__":
     ##########################################################################
     # Config attack
     ##########################################################################
-    attack = L0BrendelBethgeAttack()
-    attack_kwargs = {"epsilons": None}
-    attack_name = "L0BrendelBethgeAttack"
+    # attack = L0BrendelBethgeAttack()
+    # attack_kwargs = {"epsilons": None}
+    # attack_name = "L0BrendelBethgeAttack"
     
     # attack = L1BrendelBethgeAttack(steps=20)
     # attack_kwargs = {"epsilons": None}
@@ -133,9 +133,15 @@ if __name__ == "__main__":
     
     # eps = 0.02
     # assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
-    # attack = LinfPGD()
+    # attack = FGSM()
     # attack_kwargs = {"epsilons": eps}
-    # attack_name = "LinfPGD"
+    # attack_name = "FGSM"
+    
+    eps = 0.02
+    assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
+    attack = LinfPGD()
+    attack_kwargs = {"epsilons": eps}
+    attack_name = "LinfPGD"
 
     assert(attack_kwargs["epsilons"] is None) or isinstance(
             attack_kwargs["epsilons"], (float, int)) 
