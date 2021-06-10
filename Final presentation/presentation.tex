@@ -79,7 +79,7 @@
 \end{frame}	
 
 \begin{frame}[fragile]
-	\frametitle{Quantifying Changes}
+	\frametitle{Quantifying Difference}
 
 	\begin{tabular}{cccc}
 		
@@ -87,7 +87,7 @@
 	
 	
 	
-	\shortstack{Number of \\ pixels changed} & \shortstack{Sum of \\ all changes} & \shortstack{Sum of the $square$ \\ of all changes} & \shortstack{Maximum of \\ all changes} \\
+	\shortstack{Number of \\ different pixels} & \shortstack{Sum of \\ all differences} & \shortstack{Sum of the $square$ \\ of all differences} & \shortstack{Maximum of \\ all differences} \\
 	
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L0.png} &
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/L1.png} &
@@ -95,7 +95,7 @@
 	\includegraphics[align=c,width=0.3\columnwidth]{plots/Linf.png} 
 	\\
 	
-	\shortstack{ Perturb one \\ pixel maximally}&Minimise sum&\shortstack{Minimise sum \\ of squares}&\shortstack{Perturb all \\ pixels equally}
+	\shortstack{Change very few \\ pixels maximally}&Minimise sum&\shortstack{Minimise sum \\ of squares}&\shortstack{Change all \\ pixels equally}
 	\end{tabular}
 \end{frame}
 
@@ -103,8 +103,8 @@
 \begin{frame}[fragile]
 	\frametitle{Two Different Approaches}
 	\begin{tikzcd}[column sep=4em]
-		& \shortstack{small displacement and \\ big misclassification} \\
-		\text{small displacement} \arrow{ur}{ \text{maximise misclassification} } && \text{big misclassification} \arrow[ul, "\text{ minimise displacement}"']
+		& \shortstack{small difference and \\ big misclassification} \\
+		\text{small difference} \arrow{ur}{ \text{maximise misclassification} } && \text{big misclassification} \arrow[ul, "\text{minimise difference}"']
 	\end{tikzcd}
 \end{frame}
 
@@ -115,7 +115,8 @@
 			\begin{enumerate}
 				\item Pick spot in epsilon ball
 				\item Iterate gradient decent
-				\item If leaving ball, project back onto surface.
+				\item If leaving ball, project back onto surface
+				\item Repeat to convergence
 			\end{enumerate}
 			
 		\end{column}
@@ -143,10 +144,10 @@
 \begin{frame}[fragile]
 	\frametitle{Carlini-Wagner-Attack}
 	
-	\large Original approach: minimise disance while always staying in "misclassification territory". \\
+	\large Original approach: minimise difference while always staying in "misclassification territory". \\
 	
 	\medskip
-	Problem: Nonlinearity of constraint makes for bad optimisation properties.
+	Problem: Non-linearity of constraint makes optimimisation difficult.
 	
 	\source{Towards Evaluating the Robustness of Neural Networks, Nicholas Carlini and David Wagner, IEEE, 2017}
 \end{frame}
@@ -158,11 +159,13 @@
 	
 	\bigskip
 	
-	$\rightarrow$ minimise: distance - "how misclassified is x?"*\\
+	$\rightarrow$ minimise: difference - "how misclassified is x?"*\\
 	\smallskip
 	
-	i.e. minimise distance while maximising misclassification.
+	i.e. minimise difference while maximising misclassification.\\
+	\bigskip
 	
+	Apply Adam optimisation.
 	
 	\source{*loss function\\
 	\smallskip
@@ -227,6 +230,15 @@
 	\frametitle{CIFAR-10, $L^0$-Brendel-Bethge-Attack}
 		
 		\includegraphics[align=c,width=0.9\textwidth]{../code/results/CIFAR-10/figures/L0BrendelBethgeAttack.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tentative Findings}
+	
+	\large
+	Small $\epsilon \rightarrow$ symmetric confusion matrix \\
+	\medskip
+	Large $\epsilon \rightarrow$ strong attractor classes ("8" and "frog")
 \end{frame}
 
 \begin{frame}[allowframebreaks]
