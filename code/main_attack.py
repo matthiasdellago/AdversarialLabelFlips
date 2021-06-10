@@ -123,7 +123,7 @@ if __name__ == "__main__":
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L0BrendelBethgeAttack"
     
-    # attack = L1BrendelBethgeAttack(steps=20)
+    # attack = L1BrendelBethgeAttack()
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L1BrendelBethgeAttack"
     
