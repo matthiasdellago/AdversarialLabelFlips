@@ -125,15 +125,17 @@
 		\end{column}
 	\end{columns}
 
-
+	\source{Towards Deep Learning Models Resistant to Adversarial Attacks, Aleksander Madry et al., arXiv, 2019}
 \end{frame}
 
 
 \begin{frame}[fragile]
 	\frametitle{Projected Gradient Decent}
 	
-	\includegraphics[height=0.8 \textheight]{plots/pgd_pic.png}
-	
+	\begin{center}
+		\includegraphics[height=0.75 	\textheight]{plots/pgd_pic.png}
+	\end{center}
+
 	\source{Know your enemy, Oscar Knagg, towardsdatascience.com, 2019}
 \end{frame}
 
@@ -141,22 +143,90 @@
 \begin{frame}[fragile]
 	\frametitle{Carlini-Wagner-Attack}
 	
-	Original idea: minimise disance while always staying in "misclassification territory".
-	\\
-	Problem: Nonlinearity of constraint makes for bad optimisation
+	\large Original approach: minimise disance while always staying in "misclassification territory". \\
 	
+	\medskip
+	Problem: Nonlinearity of constraint makes for bad optimisation properties.
+	
+	\source{Towards Evaluating the Robustness of Neural Networks, Nicholas Carlini and David Wagner, IEEE, 2017}
 \end{frame}
 
 \begin{frame}[fragile]
 	\frametitle{Carlini-Wagner-Attack}
 	
-	Solution: Pack constraint into the function that is optimised.
+	\large Solution: Pack constraint into the function that is optimised.\\
 	
-	=> minimise: distance + "how misclassified is x?"*
+	\bigskip
 	
-	equiv. minimise distance while maximising misclassification.
+	$\rightarrow$ minimise: distance - "how misclassified is x?"*\\
+	\smallskip
 	
-	\source{*loss function}
+	i.e. minimise distance while maximising misclassification.
+	
+	
+	\source{*loss function\\
+	\smallskip
+	Towards Evaluating the Robustness of Neural Networks, Nicholas Carlini and David Wagner, IEEE, 2017}
+\end{frame}
+
+\begin{frame}
+	\huge Code
+\end{frame}
+
+\begin{frame}
+	\huge Results
+\end{frame}
+
+\begin{frame}
+	\frametitle{MNIST, $L^\infty$-PGD}
+	\begin{tabular}{cccc}
+		
+		$\epsilon = 0.01$  & 	$\epsilon = 0.02$ & 	$\epsilon = 0.05$ & 	$\epsilon = 0.1$ \\
+		
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/MNIST/figures/LinfPGD, epsilon=0.01.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/MNIST/figures/LinfPGD, epsilon=0.02.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/MNIST/figures/LinfPGD, epsilon=0.05.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/MNIST/figures/LinfPGD, epsilon=0.1.png} 
+		\bigskip \\
+		
+		$\epsilon = 0.2$  & 	$\epsilon = 0.5$ & 	$\epsilon = 1$ & \\
+		
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/MNIST/figures/LinfPGD, epsilon=0.2.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/MNIST/figures/LinfPGD, epsilon=0.5.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/MNIST/figures/LinfPGD, epsilon=1.png} &
+	\end{tabular}
+\end{frame}
+
+\begin{frame}
+	\frametitle{MNIST, $L^2$-Carlini-Wagner-Attack}
+	
+	\includegraphics[align=c,width=0.9\textwidth]{../code/results/MNIST/figures/L2CarliniWagnerAttack.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{CIFAR-10, $L^\infty$-PGD}
+	\begin{tabular}{cccc}
+		
+		$\epsilon = 0.01$  & 	$\epsilon = 0.02$ & 	$\epsilon = 0.05$ & 	$\epsilon = 0.1$ \\
+		
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/CIFAR-10/figures/LinfPGD, epsilon=0.01.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/CIFAR-10/figures/LinfPGD, epsilon=0.02.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/CIFAR-10/figures/LinfPGD, epsilon=0.05.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/CIFAR-10/figures/LinfPGD, epsilon=0.1.png} 
+		\bigskip \\
+		
+		$\epsilon = 0.2$  & 	$\epsilon = 0.5$ & 	$\epsilon = 1$ & \\
+		
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/CIFAR-10/figures/LinfPGD, epsilon=0.2.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/CIFAR-10/figures/LinfPGD, epsilon=0.5.png} &
+		\includegraphics[align=c,width=0.3\columnwidth]{../code/results/CIFAR-10/figures/LinfPGD, epsilon=1.png} &
+	\end{tabular}
+\end{frame}
+
+\begin{frame}
+	\frametitle{CIFAR-10, $L^0$-Brendel-Bethge-Attack}
+		
+		\includegraphics[align=c,width=0.9\textwidth]{../code/results/CIFAR-10/figures/L0BrendelBethgeAttack.png}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
