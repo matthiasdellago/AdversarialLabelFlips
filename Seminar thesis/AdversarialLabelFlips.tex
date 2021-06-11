@@ -28,7 +28,7 @@
 	\begin{center}
 		{\Large Seminar thesis}
 		\vspace{50pt}\\
-		\textbf{\Huge Adversarial Label Flips}
+		\textbf{\Huge Adversarial Label Flips (sexier title?)}
 		\vspace{40pt}\\
 		\textbf{\Large Matthias Dellago \& Maximilian Samsinger}\vspace{20pt}\\
 		{\large\today}
@@ -43,15 +43,25 @@
 	
 \begin{abstract}
 	sell it to sb looking for something good to read.
+	only 4 sentences or so.
 \end{abstract}
 
 \section{Introduction}
-Example citation \cite{madry2017towards}.
 
+What is the open question?
+How do we solve it.
+\\
+
+ie. what is our contribution. (we show that these confusion matrix are surprisingly nonrandom)
+\\
+use forward references i.e. "we elaborate on this in sectrion 4".\\
+Give an example for a confusion matrix straight away.
 \paragraph{Existence of adversarial examples}
 Demonstrated that attacking deep neural networks are susceptible to attacks \cite{Szegedy13}. They actually coined the term "adversarial examples".
 
 \section{Background and related work}
+
+move it after the results so that the reader, can first get the interesting stuff, and then get the background?
 
 \subsection{Attacks}
 
@@ -67,7 +77,9 @@ The projected gradient descent, which is basically iterated FGSM, was first show
 \paragraph{Foolbox}
 A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
 
-\subsection{Neural networks}
+\subsection{Neural networks (Necessary)}
+Is this section necessary? It seems that whoever is interested in our results, easily already knows this.
+
 First introduced in \cite{lecun1999object}. The authors of
 \cite{krizhevsky2012imagenet} demonstrated the effectiveness of deep convolutional neural networks on ImageNet.
 
@@ -76,6 +88,9 @@ Paradigm shift in deep learning. In \cite{he2016deep} they developed Residual Ne
 
 
 \section{Methods}
+
+Reference to our github.
+
 \subsection{Datasets}
 MNIST, Fashion MNIST, CIFAR-10
 
