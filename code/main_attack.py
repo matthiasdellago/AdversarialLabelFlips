@@ -105,7 +105,7 @@ def execute_attack(dataset: str, model_filename: str,
 All configs are done here
 """  
 if __name__ == "__main__":
-    save = False
+    save = True
     
     ##########################################################################
     # Choose dataset and model
@@ -123,9 +123,9 @@ if __name__ == "__main__":
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L0BrendelBethgeAttack"
     
-    # attack = L1BrendelBethgeAttack()
-    # attack_kwargs = {"epsilons": None}
-    # attack_name = "L1BrendelBethgeAttack"
+    attack = L1BrendelBethgeAttack()
+    attack_kwargs = {"epsilons": None}
+    attack_name = "L1BrendelBethgeAttack"
     
     # attack = L2CarliniWagnerAttack()
     # attack_kwargs = {"epsilons": None}
@@ -137,11 +137,11 @@ if __name__ == "__main__":
     # attack_kwargs = {"epsilons": eps}
     # attack_name = "FGSM"
     
-    eps = 0.02
-    assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
-    attack = LinfPGD()
-    attack_kwargs = {"epsilons": eps}
-    attack_name = "LinfPGD"
+    # eps = 0.02
+    # assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
+    # attack = LinfPGD()
+    # attack_kwargs = {"epsilons": eps}
+    # attack_name = "LinfPGD"
 
     assert(attack_kwargs["epsilons"] is None) or isinstance(
             attack_kwargs["epsilons"], (float, int)) 
