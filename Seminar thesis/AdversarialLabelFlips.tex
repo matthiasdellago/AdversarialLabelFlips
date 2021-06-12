@@ -97,8 +97,12 @@ MNIST, Fashion MNIST, CIFAR-10
 \subsection{}
 We probably use \url{https://arxiv.org/pdf/1608.04644.pdf} Table 1 as a neural network for MNIST \& Fashion-MNIST.
 
+\section{Experiments}
+
+
 \section{Results}
 pictures, pictures, and maybe a graph or two
+
 
 \section{Discussion}
 
@@ -107,6 +111,9 @@ Symmetry of matrices -> maybe find a way to quantify symmetry?\\
 \\
 
 Attractor classes -> manage with an extra "noise"-class or so?\\
+
+
+In Figures X, Y and Z one can observe that adversarial examples computed with large perturbation budgets $\epsilon$ are misclassified as "8", "TODO" and "frog" for MNIST, Fashion-MNIST and CIFAR-10 respectively. In order to shed light onto this phenomenon we generate and classify $10000$ white noise images sampled from a uniform distribution on the input domain. Figure A shows that these randomly generated images are also, most commonly, classified as "8", "TODO" and "frog" respectively. This result suggests that the neural networks in question have a default output for low probability images with respect to distribution of the input domain, which in turn affects adversarial examples computed with large perturbation budgets.
 
 \section{Conclusion}
 What was the main idea.
