@@ -50,9 +50,16 @@ def execute_attack(dataset: str, model_filename: str,
     if dataset == "MNIST":
         testset = MNIST(**dataset_kwargs)
         labels = [str(k) for k in np.arange(10)]
+    
+    if dataset == "FashionMNIST":
+        testset = FashionMNIST(**dataset_kwargs)
+        labels = ['T-shirt', 'Trouser', 'Pullover', 'Dress', 'Coat', 
+                  'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+        
     if dataset == "CIFAR-10":
         testset = CIFAR10(**dataset_kwargs)
-        labels = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+        labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 
+                  'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
     
     dataloader = DataLoader(testset, batch_size=1000, num_workers=4)
     
@@ -113,8 +120,11 @@ if __name__ == "__main__":
     # dataset = "MNIST"
     # model_filename = 'reference_model_val_acc=0.9948.pt'
     
-    dataset = "CIFAR-10"
-    model_filename = 'reference_model_val_acc=0.8023.pt'
+    dataset = "FashionMNIST"
+    model_filename = 'reference_model_val_acc=0.8963.pt'
+    
+    # dataset = "CIFAR-10"
+    # model_filename = 'reference_model_val_acc=0.8023.pt'
     
     ##########################################################################
     # Config attack
@@ -123,13 +133,13 @@ if __name__ == "__main__":
     # attack_kwargs = {"epsilons": None}
     # attack_name = "L0BrendelBethgeAttack"
     
-    attack = L1BrendelBethgeAttack()
-    attack_kwargs = {"epsilons": None}
-    attack_name = "L1BrendelBethgeAttack"
-    
-    # attack = L2CarliniWagnerAttack()
+    # attack = L1BrendelBethgeAttack()
     # attack_kwargs = {"epsilons": None}
-    # attack_name = "L2CarliniWagnerAttack"
+    # attack_name = "L1BrendelBethgeAttack"
+    
+    attack = L2CarliniWagnerAttack()
+    attack_kwargs = {"epsilons": None}
+    attack_name = "L2CarliniWagnerAttack"
     
     # eps = 0.02
     # assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
@@ -138,18 +148,18 @@ if __name__ == "__main__":
     # attack_name = "FGSM"
     
     # eps = 0.02
-    # assert eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]
-    # attack = LinfPGD()
-    # attack_kwargs = {"epsilons": eps}
-    # attack_name = "LinfPGD"
-
-    assert(attack_kwargs["epsilons"] is None) or isinstance(
-            attack_kwargs["epsilons"], (float, int)) 
+    # for eps in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]:
+    #     attack = LinfPGD()
+    #     attack_kwargs = {"epsilons": eps}
+    #     attack_name = "LinfPGD"
+    
+    #     assert(attack_kwargs["epsilons"] is None) or isinstance(
+    #             attack_kwargs["epsilons"], (float, int)) 
     ##########################################################################
     # ATTACK
     ##########################################################################
-    print("##############################################################")
+    print("#############################################################")
     print(dataset, attack_name, attack_kwargs)
-    print("##############################################################")
-    execute_attack(dataset, model_filename, attack, attack_kwargs, attack_name,
-                    save=save)    
+    print("#############################################################")
+    execute_attack(dataset, model_filename, attack, attack_kwargs,
+                   attack_name, save=save)    

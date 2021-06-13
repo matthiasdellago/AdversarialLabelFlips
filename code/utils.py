@@ -17,20 +17,26 @@ def compute_confusion_matrix(model, attack, attack_kwargs, dataloader, device,
     fmodel = PyTorchModel(model, bounds=(-0.5,0.5)) 
     
     confusion_matrix = np.zeros((10,10), dtype=int)
-    for images, labels in dataloader:
+    for k, (images, labels) in enumerate(dataloader):
         # Perform Tensor device conversion
         begin = time()
         images, labels = images.to(device), labels.to(device) 
 
         # Attack
-        _, clipped_advs, success = attack(fmodel, images, labels, 
-                                          **attack_kwargs)
-        
+        while True:     
+            try: 
+                _, clipped_advs, success = attack(fmodel, images, 
+                                                  labels, **attack_kwargs)
+                break
+            except:
+                print("Exception encountered during attack and ignored. Try again.")
+            
         predicted_labels = fmodel(clipped_advs).argmax(dim=1).cpu().numpy()
         source_labels = labels.data.cpu().numpy()
         
         np.add.at(confusion_matrix, (source_labels, predicted_labels), 1)
-        print("Time elapsed for current batch:", time()-begin)
+        print(f"Time elapsed for batch {k}:", 
+              np.round(time()-begin, 2))
     return confusion_matrix
 
 
