@@ -1,6 +1,6 @@
 /code/data
 /code/models
-!/code/models/*/reference_model*.pt
+!/code/models/*/reference_model?.pt
 /code/__pycache__
 
 ## Core latex/pdflatex auxiliary files:
