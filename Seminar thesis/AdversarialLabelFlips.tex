@@ -92,7 +92,9 @@ We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly s
 Since being first demonstrated \cite{Szegedy13} a large body of literature has flourished around adversarial examples. Blablabla...
 
 \paragraph{Notions of similarity}
-As mentioned previously we want to fool the NN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small pertubation" and similar? Here, we will briefly explain the most common methods to quantify this.
+As mentioned previously we want to fool the NN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small pertubation" and "similar"? We could argue that an image with only one pixel changed is very similar, but also that an image in which each pixel was altered only very slightly is similar.
+
+These different intuitive notions of distance and similarity are captured by norms.
 
 The distance of two images ($x$,$y$) (i.e. vectors) is described by a metric $D$. This metric can be defined via different norms, most commonly the $L^\infty$-, $L^1$- and $L^2$-norms.( The $L^0$-"norm" is also frequently used, though not a norm in the strict sense.) The distance between these the two images, is then defined as the $L^p$-norm of their difference, for a given $p$:
 
@@ -101,13 +103,19 @@ The distance of two images ($x$,$y$) (i.e. vectors) is described by a metric $D$
 \end{equation}
 
 
+\textbf{... Hmmm probably not that important, maybe if there is time and space after everything else in finished.}
+
 \subsection{Attacks}
 
 \paragraph{Fast gradient sign method}
-\cite{goodfellow2014explaining} developed the fast gradient sign method. They are the guys with the panda image.
+Goodfellow et al. famously developed the fast gradient sign method (FGSM) \cite{goodfellow2014explaining}, making attacks fast and easy. Its key insight was that the backpropagation commonly used to update the weights and biases can be applied all the way back to the input data itself to yields the gradient of the cost function. They then apply gradient decent to find an adversarial example. Since they optimise for the $L^\infty$-norm, all entries of the perturbance are scaled to the same magnitude.
 
 \paragraph{Projected gradient descent}
-The projected gradient descent, which is basically iterated FGSM, was first shown in \cite{madry2017towards}. Their experiments suggest that these attacks converge, i.e. they find a local maxima. This may require some restarts.
+Projected gradient descent (PGD) was first shown in \cite{madry2017towards}. Conceptually it is very similar to iterating FGSM until converging in a local misclassification optimum. The "projected" part of the name, derives from the fact that upon leaving a ball of radius $\epsilon$ instead of continuing iteration, they project back onto said ball. From iterated FGSM resumes.
+This attack leads to formidable results, especially using the $L^\infty$-norm.
+
+
+% Their experiments suggest that these attacks converge, i.e. they find a local maxima. This may require some restarts.
 
 \paragraph{Carlini-Wagner attack}
 
