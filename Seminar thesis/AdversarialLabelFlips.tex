@@ -119,11 +119,15 @@ This attack leads to formidable results, especially using the $L^\infty$-norm.
 
 \paragraph{Carlini-Wagner attack}
 
-\paragraph{Bethge attack}
+Carlini and Wagner \cite{carlini2017towards} invented a different style of attack, where the cost function of the classifier and the distance of the adversarial example are wrapped into one function. They can then simultaneously optimise for both using the Adam stochastic optimiser \cite{kingma2017adam}.
 
-%\paragraph{Foolbox}
-%A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
-%
+\paragraph{Brendel-Bethge attack}
+
+Brendel and Bethe invented a quite different method, which they aptly named Brendel \& Bethge attacks \cite{brendel2019accurate}. 
+
+\paragraph{Foolbox}
+A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
+
 %\subsection{Neural networks (Necessary)}
 %Is this section necessary? It seems that whoever is interested in our results, easily already knows this.
 %\texttt{No, we can just mention neural networks in the introduction and specify our models in the experiments section}
