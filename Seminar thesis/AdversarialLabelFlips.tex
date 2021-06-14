@@ -42,26 +42,64 @@
 	\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 	
 \begin{abstract}
-	sell it to sb looking for something good to read.
-	only 4 sentences or so.
+	%sell it to sb looking for something good to read.
+	%only 4 sentences or so.
+	
+	Given a neural network (NN) trained to classify and a untargeted evasion attack \cite{}, in what class does the adversarial example fall?
+	In the following, we will answer this question by evaluating some state of the art attacks, on a simple NN trained on industry standard datasets \cite{mnist, fashion,mnist, cifar10}.
+	We discover a intuitive symmetry in the classification of adversarial examples.
 \end{abstract}
 
 \section{Introduction}
 
-What is the open question?
-How do we solve it.
-\\
+Adversarial examples exist.
+Targeted and untargeted.
+What does that look like?
+We use confusion matrices.
+example.
+how did we do it? -> NN + foolbox + mnist cifar (section methods)
+what did we get out of it? -> symmetric matrices and interesting insight about noise. (section results)
 
-ie. what is our contribution. (we show that these confusion matrix are surprisingly nonrandom)
-\\
-use forward references i.e. "we elaborate on this in sectrion 4".\\
-Give an example for a confusion matrix straight away.
-\paragraph{Existence of adversarial examples}
-Demonstrated that attacking deep neural networks are susceptible to attacks \cite{Szegedy13}. They actually coined the term "adversarial examples".
+
+In 2013 Szegedy et al. demonstrated that attacking deep neural networks (NN) are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to a otherwise innocuous input, engineered to cause the NN to misbehave.
+
+In our case, the inputs will be images and the attack will be small changes to said image, designed to cause the classifier NN to misclassify the target.
+
+These attacks on classifiers come in two different variations: targeted and untargeted. 
+In targeted attacks\cite{} the attacker aims to have the adversarial example identified as a specific class by the NN. (Say, misclassify a dog as a cat.)
+An untargeted attack meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.) 
+
+Now, when considering untargeted attacks, the question as what the adversarial image $actually$ is then classified, naturally arises. This is what we will experimentally answer in this paper.
+
+We will present our results in terms of confusion matrices. In figure !! you can see an example. In larger matrices numbers become more difficult to process, so we will display our results in heatmap-style images (fig. !!). (Section results)
+
+In our experiments we used the foolbox framework \cite{}, and simple NNs trained on the MNIST, FashionMNIST, and CIFAR-10 datasets \cite{}. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{}, Carlini-Wagner \cite{} and ...-Bethge\cite{}. 
+
+We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly symmetric, and intuitively similar classes are often confused with each other. Furthermore we observe that for attacks which can choose large pertubations, there exist certain attractor classes, which most of the adversarial images are classified as. (Section Results.)
+
+%\\
+%
+%what is our contribution. (we show that these confusion matrix are surprisingly nonrandom)
+%\\
+%use forward references i.e. "we elaborate on this in sectrion 4".\\
+%Give an example for a confusion matrix straight away.
+
+
 
 \section{Background and related work}
 
-move it after the results so that the reader, can first get the interesting stuff, and then get the background?
+\paragraph{Existence of adversarial examples}
+Since being first demonstrated \cite{Szegedy13} a large body of literature has flourished around adversarial examples. Blablabla...
+
+\paragraph{Notions of similarity}
+As mentioned previously we want to fool the NN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small pertubation" and similar? Here, we will briefly explain the most common methods to quantify this.
+
+The distance of two images ($x$,$y$) (i.e. vectors) is described by a metric $D$. This metric can be defined via different norms, most commonly the $L^\infty$-, $L^1$- and $L^2$-norms.( The $L^0$-"norm" is also frequently used, though not a norm in the strict sense.) The distance between these the two images, is then defined as the $L^p$-norm of their difference, for a given $p$:
+
+\begin{equation}
+	D(x,y) := \| y - x \|_p
+\end{equation}
+
 
 \subsection{Attacks}
 
@@ -73,19 +111,20 @@ The projected gradient descent, which is basically iterated FGSM, was first show
 
 \paragraph{Carlini-Wagner attack}
 
+\paragraph{Bethge attack}
 
-\paragraph{Foolbox}
-A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
-
-\subsection{Neural networks (Necessary)}
-Is this section necessary? It seems that whoever is interested in our results, easily already knows this.
-\texttt{No, we can just mention neural networks in the introduction and specify our models in the experiments section}
-
-First introduced in \cite{lecun1999object}. The authors of
-\cite{krizhevsky2012imagenet} demonstrated the effectiveness of deep convolutional neural networks on ImageNet.
-
-\paragraph{ResNets}
-Paradigm shift in deep learning. In \cite{he2016deep} they developed Residual Networks to train very deep neural networks. We will probably use ResNet18. If we do, we probably also cite \cite{he2016identity} for the "pre-activation" optimization. This is just a better architecture obtained by having BatchNorm-ReLU-Weights blocks instead of Weights-BatchNorm-ReLU blocks.
+%\paragraph{Foolbox}
+%A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
+%
+%\subsection{Neural networks (Necessary)}
+%Is this section necessary? It seems that whoever is interested in our results, easily already knows this.
+%\texttt{No, we can just mention neural networks in the introduction and specify our models in the experiments section}
+%
+%First introduced in \cite{lecun1999object}. The authors of
+%\cite{krizhevsky2012imagenet} demonstrated the effectiveness of deep convolutional neural networks on ImageNet.
+%
+%\paragraph{ResNets}
+%Paradigm shift in deep learning. In \cite{he2016deep} they developed Residual Networks to train very deep neural networks. We will probably use ResNet18. If we do, we probably also cite \cite{he2016identity} for the "pre-activation" optimization. This is just a better architecture obtained by having BatchNorm-ReLU-Weights blocks instead of Weights-BatchNorm-ReLU blocks.
 
 
 \section{Methods}
@@ -99,7 +138,7 @@ MNIST, Fashion MNIST, CIFAR-10
 We probably use \url{https://arxiv.org/pdf/1608.04644.pdf} Table 1 as a neural network for MNIST \& Fashion-MNIST.
 
 \section{Experiments}
-
+\label{experiments}
 
 \section{Results}
 pictures, pictures, and maybe a graph or two
@@ -121,6 +160,8 @@ What was the main idea.
 
 \section{Contribution Statement}
 
+This is joint work from Maximilian Samsinger and Matthias Dellago. Max wrote the code...
+We thank Alexander Schlögl for the research idea.
 \bibliographystyle{unsrt}
 \bibliography{literature}
 
