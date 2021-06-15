@@ -127,7 +127,7 @@ Brendel and Bethe invented a quite different method, which they aptly named Bren
 Their method works by starting from a image deep inside the misclassification region and then preforming binary search between it and the benign, target image, to find the decision boundary. Once there, they move along the boundary to minimise the distance to the benign image, yielding a powerful adversarial example.
 
 \paragraph{Foolbox}
-A Python library with lots of attacks \cite{rauber2017foolbox}. They include the attacks above.
+Foolbox is a python toolbox for generating adversarial examples\cite{rauber2017foolbox}. It supports a large collection of attacks, including all of the above.
 
 %\subsection{Neural networks (Necessary)}
 %Is this section necessary? It seems that whoever is interested in our results, easily already knows this.
@@ -154,8 +154,22 @@ We probably use \url{https://arxiv.org/pdf/1608.04644.pdf} Table 1 as a neural n
 \label{experiments}
 
 \section{Results}
-pictures, pictures, and maybe a graph or two
 
+\subsection{CIFAR-10}
+\subsubsection{$L^\infty$-PGD}
+\subsubsection{$L^2$-Carlini-Wagner}
+\subsubsection{Brendel-Bethge}
+
+\subsection{FashionMNIST}
+\subsubsection{$L^\infty$-PGD}
+\subsubsection{$L^2$-Carlini-Wagner}
+\subsubsection{Brendel-Bethge}
+\subsection{MNIST}
+
+\subsection{MNIST}
+\subsubsection{$L^\infty$-PGD}
+\subsubsection{$L^2$-Carlini-Wagner}
+\subsubsection{Brendel-Bethge}
 
 \section{Discussion}
 
