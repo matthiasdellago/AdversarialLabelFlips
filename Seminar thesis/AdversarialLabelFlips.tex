@@ -20,6 +20,9 @@
 \usepackage{blindtext}
 
 
+\newcommand{\defneq}{\mathrel{\mathop:}=}
+\newcommand{\eqdefn}{=\mathrel{\mathop:}}
+
 \begin{document}
 
 \begin{titlepage}
@@ -99,7 +102,10 @@ These different intuitive notions of distance and similarity are captured by nor
 The distance of two images ($x$,$y$) (i.e. vectors) is described by a metric $D$. This metric can be defined via different norms, most commonly the $L^\infty$-, $L^1$- and $L^2$-norms.( The $L^0$-"norm" is also frequently used, though not a norm in the strict sense.) The distance between these the two images, is then defined as the $L^p$-norm of their difference, for a given $p$:
 
 \begin{equation}
-	D(x,y) := \| y - x \|_p
+D(x,y) \defneq \norm{y-x}_p % Here the := is fixed and i created a command for the norm. Hope that helps!
+\end{equation}
+\begin{equation}
+D(x,y) := \| y - x \|_p % Previous version for reference
 \end{equation}
 
 
@@ -140,25 +146,24 @@ A Python library with lots of attacks \cite{rauber2017foolbox}. They include the
 %Paradigm shift in deep learning. In \cite{he2016deep} they developed Residual Networks to train very deep neural networks. We will probably use ResNet18. If we do, we probably also cite \cite{he2016identity} for the "pre-activation" optimization. This is just a better architecture obtained by having BatchNorm-ReLU-Weights blocks instead of Weights-BatchNorm-ReLU blocks.
 
 
-\section{Methods}
 
+\section{Experiments}\label{experiments}
+In this Section we use the adversarial attacks introduced in Section~\ref{sec:Attacks} to compute adversarial examples on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. Each dataset is split into a training and test set and all adversarial attacks are computed and evaluated on the test set. Given a dataset and an attack we generate a pair of labels containing the original class and the predicted class for each adversarial example. We use $i$ to denote the $i$-th original class and $j$ to denote the $j$-th predicted class. Since all three datasets contain 10 classes each we obtain $10\times10$ confusion matrices
+\[A=(a_{ij})_{\begin{subarray}{l} 1\le i\le 10 \\ 1\le j\le 10\end{subarray}},\]
+where $a_{ij}\in\mathbb{N}$ corresponds to the total number of occurrences of each pair $(i,j)$.
+
+
+\subsection{Experimental setup}
+All experiments are conducted in Python 3.8.5~\cite{van1995python} using the PyTorch 1.8.1~\cite{pytorch} library on a Windows machine. Adversarial attacks are computed using FoolBox 3.3.1~\cite{rauber2017foolbox}. Each attack is instantiated using the FoolBox default parameters. All minimization attacks, i.e. \texttt{L0BrendelBethgeAttack}, \texttt{L1BrendelBethgeAttack}, \texttt{L2CarliniWagnerAttack} have their perturbation budget \texttt{epsilons} set to \texttt{None}. This prevents any early termination; a fixed number of iterations is used to compute the adversarial example with minimal perturbation size. For \texttt{LinfPGD} we set \texttt{epsilons} to one of the values in $[0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]$ to cover a wide range of perturbation budgets.\\
+
+\noindent Reference to figures.\\
 Reference to our github.
 
-\subsection{Datasets}
-MNIST, Fashion MNIST, CIFAR-10
-
-\subsection{}
-We probably use \url{https://arxiv.org/pdf/1608.04644.pdf} Table 1 as a neural network for MNIST \& Fashion-MNIST.
-
-\section{Experiments}
-\label{experiments}
-
-\section{Results}
-pictures, pictures, and maybe a graph or two
+\subsection{Architectures}
+\url{https://arxiv.org/pdf/1608.04644.pdf}
 
 
 \section{Discussion}
-
 Symmetry of matrices -> maybe find a way to quantify symmetry?\\
 -> NN can recognise "similarity"\\
 \\
@@ -168,12 +173,14 @@ Attractor classes -> manage with an extra "noise"-class or so?\\
 
 In Figures X, Y and Z one can observe that adversarial examples computed with large perturbation budgets $\epsilon$ are misclassified as "8", "TODO" and "frog" for MNIST, Fashion-MNIST and CIFAR-10 respectively. In order to shed light onto this phenomenon we generate and classify $10000$ white noise images sampled from a uniform distribution on the input domain. Figure A shows that these randomly generated images are also, most commonly, classified as "8", "TODO" and "frog" respectively. This result suggests that the neural networks in question have a default output for low probability images with respect to distribution of the input domain, which in turn affects adversarial examples computed with large perturbation budgets.
 
+
+
 \section{Conclusion}
 What was the main idea.
 
 \section{Contribution Statement}
 
-This is joint work from Maximilian Samsinger and Matthias Dellago. Max wrote the code...
+This is joint work from Maximilian Samsinger and Matthias Dellago. Max wrote the code... % Du kannst ruhig "main contributor" schreiben, wenn dir das lieber ist :)
 We thank Alexander Schlögl for the research idea.
 \bibliographystyle{unsrt}
 \bibliography{literature}
