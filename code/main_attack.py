@@ -87,7 +87,7 @@ def execute_attack(dataset: str, model_filename: str,
     plt.yticks(range(len(labels)), labels, size='small')
     
     plt.xticks(rotation=90)
-    
+    plt.tight_layout()
     
     ##########################################################################
     # Save plot and confusion matrix
@@ -105,9 +105,50 @@ def execute_attack(dataset: str, model_filename: str,
             plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.png")
             plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.pdf")
             df.to_csv(  result_path + f"{attack_name}, epsilon={epsilon}.csv")
-    
+
     plt.show()
         
+    
+def create_plots(dataset, attack_name, epsilons=None):
+    print(f"{attack_name}, {dataset}")
+    result_path = "results" + os.sep + dataset + os.sep 
+    figure_path = result_path + "figures" + os.sep
+    
+    if epsilons is None:
+        df = pd.read_csv( result_path + f"{attack_name}.csv")
+    if epsilons is not None:
+        df = df.to_csv(  result_path + f"{attack_name}, epsilon={epsilon}.csv")
+    
+    confusion_matrix = df[df.columns[1:]].to_numpy()
+    
+    if dataset == "MNIST": 
+        labels = [str(k) for k in np.arange(10)] 
+        
+    if dataset == "FashionMNIST": 
+        labels = ['T-shirt', 'Trouser', 'Pullover', 'Dress', 'Coat', 
+                  'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+        
+    if dataset == "CIFAR-10":
+        labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 
+                  'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
+    
+    plt.imshow(confusion_matrix)
+    plt.xticks(range(len(labels)), labels, size='small')
+    plt.yticks(range(len(labels)), labels, size='small')
+    
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+    
+    
+    if attack_kwargs["epsilons"] is None:
+        plt.savefig(figure_path + f"{attack_name}.png")
+        plt.savefig(figure_path + f"{attack_name}.pdf")
+    
+    if attack_kwargs["epsilons"] is not None:
+        plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.png")
+        plt.savefig(figure_path + f"{attack_name}, epsilon={epsilon}.pdf")
+    
+    
 """    
 All configs are done here
 """  
