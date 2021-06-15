@@ -3,21 +3,19 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def measure_symmetry(confusion_matrix):
-    trans = np.transpose(confusion_matrix)
+def measure_symmetry(confusion_matrix, order = 1):
     #symmetric component
-    sym = (confusion_matrix + trans)/2
+    sym = (confusion_matrix + confusion_matrix.T)/2
     #remove the diagonal values because, that just means "attack unsuccessful" and shouldn't count towards a higher "symmetry"
     np.fill_diagonal(sym,0)
     #print(sym)
     #antisymmetric component
-    skew = (confusion_matrix - trans)/2
+    skew = (confusion_matrix - confusion_matrix.T)/2
     #print(skew)
     # difference of the 1-norms of the two matrices, normalised by their sum
     # something like the relative difference of the two ¯\_(ツ)_/¯
-    order = 1
-    norm_skew = np.linalg.norm(skew, ord = order)
-    norm_sym = np.linalg.norm(sym, ord = order)
+    norm_skew = np.linalg.norm(skew, order)
+    norm_sym = np.linalg.norm(sym, order)
     symmetryness =  (norm_sym - norm_skew) / (norm_sym + norm_skew)
     return symmetryness
 
