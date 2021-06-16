@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{booktabs} 
 \usepackage{hyperref}
+\usepackage{pgffor}
 
 \newcommand{\theHalgorithm}{\arabic{algorithm}}
 \usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
@@ -204,23 +205,60 @@ Reference to our github.
 
 <<<<<<< HEAD
 \section{Results}
-=======
+Below we present all the confusion matrices we calculated. We add our symmetry score, and the epsilon value, if applicable.
 
-\subsection{CIFAR-10}
-\subsubsection{$L^\infty$-PGD}
-\subsubsection{$L^2$-Carlini-Wagner}
-\subsubsection{Brendel-Bethge}
 
-\subsection{FashionMNIST}
-\subsubsection{$L^\infty$-PGD}
-\subsubsection{$L^2$-Carlini-Wagner}
-\subsubsection{Brendel-Bethge}
-\subsection{MNIST}
 
-\subsection{MNIST}
-\subsubsection{$L^\infty$-PGD}
-\subsubsection{$L^2$-Carlini-Wagner}
-\subsubsection{Brendel-Bethge}
+% Eine for loop in latex, wir sind jetzt bei den cool kids, Max!
+\foreach \n in {CIFAR-10, FashionMNIST, MNIST}
+{
+	\subsection{\n}
+		%\subsubsection{$L^2$-Carlini-Wagner}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\textwidth]{../code/results/\n/figures/L2CarliniWagnerAttack.png}
+			\caption{$L^2$-Carlini-Wagner-Attack on \n}
+			%\label{fig:\nL2-Carlini-Wagner}
+		\end{figure}
+	%\subsubsection{Brendel-Bethge}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.4\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{../code/results/\n/figures/L0BrendelBethgeAttack.png}
+			\caption{$L^0$}
+			%\label{fig:y equals x}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.4\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{../code/results/\n/figures/L1BrendelBethgeAttack.png}
+			\caption{$L^1$}
+			%\label{fig:}
+		\end{subfigure}
+		\caption{Brendel-Bethge-Attacks on \n}
+		%\label{fig:}
+	\end{figure}
+
+	%\subsubsection{$L^\infty$-PGD}
+	\begin{figure}[H]
+		\begin{tabular}{cccc}
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.01.png} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.02.png} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.05.png} &
+			\bigskip \\
+			
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.1.png} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.2.png} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.5.png} &
+		\end{tabular}
+		
+		\caption{$L^\infty$-PGD-Attack on \n}
+	\end{figure}
+	
+}
+
 
 \section{Discussion}
 Symmetry of matrices\\

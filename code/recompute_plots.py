@@ -36,27 +36,32 @@ def create_plots(dataset, attack_name, epsilons=None, save=False):
     
     plt.xticks(rotation=90)
     plt.tight_layout()
+    plt.colorbar()
+    plt.set_cmap("viridis")
     
+    titlesize = 22
+
     sym = str(np.round(measure_symmetry(confusion_matrix),2))
     sym = sym + "0"*(4-len(sym))
     if epsilons is None:
-        plt.title(f"Symmetry: {sym}")
+        plt.title(f"Symmetry: {sym}", fontsize = titlesize)
     if epsilons is not None:
-        plt.title(f"Symmetry: {sym}, ϵ={epsilons}")
+        plt.title(f"Symmetry: {sym}, ϵ={epsilons}", fontsize = titlesize)
     
     if not save:
         plt.show()
         return 
     
     if epsilons is None:
-        plt.savefig(figure_path + f"{attack_name}.png")
-        plt.savefig(figure_path + f"{attack_name}.pdf")
+        plt.savefig(figure_path + f"{attack_name}.png", bbox_inches='tight')
+        plt.savefig(figure_path + f"{attack_name}.pdf", bbox_inches='tight')
     
     if epsilons is not None:
-        plt.savefig(figure_path + f"{attack_name}, epsilon={epsilons}.png")
-        plt.savefig(figure_path + f"{attack_name}, epsilon={epsilons}.pdf")
-        
-    plt.show()
+        plt.savefig(figure_path + f"{attack_name}, epsilon={epsilons}.png", bbox_inches='tight')
+        plt.savefig(figure_path + f"{attack_name}, epsilon={epsilons}.pdf", bbox_inches='tight')
+    
+    plt.close("all")
+    #plt.show()
     
         
 if __name__ == "__main__":
