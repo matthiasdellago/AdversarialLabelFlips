@@ -27,16 +27,18 @@
 \begin{document}
 
 \begin{titlepage}
-	\noindent\makebox[\textwidth][l]{\includegraphics{universitaet-innsbruck-logo-cmyk-farbe.pdf}}
-	\vspace{3cm}
+	\noindent\makebox[.5\textwidth][l]{\includegraphics{universitaet-innsbruck-logo-cmyk-farbe.pdf}}
+	\vspace{1cm}
 	\begin{center}
-		{\Large Seminar thesis}
+		\includegraphics[width=.7\textwidth]{titlefigure.pdf}
 		\vspace{50pt}\\
-		\textbf{\Huge Adversarial Label Flips (sexier title?)}
+		\textbf{\Huge Adversarial Label Flips}
 		\vspace{40pt}\\
 		\textbf{\Large Matthias Dellago \& Maximilian Samsinger}\vspace{20pt}\\
 		{\large\today}
-		\vspace{120pt}
+		
+
+
 	\end{center}
 \end{titlepage}
 	
@@ -49,37 +51,50 @@
 	%sell it to sb looking for something good to read.
 	%only 4 sentences or so.
 	
-	Given a neural network (NN) trained to classify and a untargeted evasion attack \cite{}, in what class does the adversarial example fall?
-	In the following, we will answer this question by evaluating some state of the art attacks, on a simple NN trained on industry standard datasets \cite{mnist, fashion,mnist, cifar10}.
+	Given a neural network (NN) trained to classify and a untargeted evasion attack, in what class does the adversarial example fall?
+	In the following, we will answer this question by evaluating some state of the art attacks, on a simple NN trained on industry standard datasets.
 	We discover that intuitively similar classes are more likely to be confused with another.
 \end{abstract}
 
 \section{Introduction}
 
-Adversarial examples exist.
-Targeted and untargeted.
-What does that look like?
-We use confusion matrices.
-example.
-how did we do it? -> NN + foolbox + mnist cifar (section methods)
-what did we get out of it? -> symmetric matrices and interesting insight about noise. (section results)
+%Adversarial examples exist.
+%Targeted and untargeted.
+%What does that look like?
+%We use confusion matrices.
+%example.
+%how did we do it? -> NN + foolbox + mnist cifar (section methods)
+%what did we get out of it? -> symmetric matrices and interesting insight about noise. (section results)
 
 
-In 2013 Szegedy et al. demonstrated that attacking deep neural networks (NN) are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to a otherwise innocuous input, engineered to cause the NN to misbehave.
+In 2013 Szegedy et al. demonstrated that deep neural networks (NN) are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to a otherwise innocuous input, engineered to cause the NN to misbehave.
 
 In our case, the inputs will be images and the attack will be small changes to said image, designed to cause the classifier NN to misclassify the target.
 
 These attacks on classifiers come in two different variations: targeted and untargeted. 
-In targeted attacks\cite{} the attacker aims to have the adversarial example identified as a specific class by the NN. (Say, misclassify a dog as a cat.)
-An untargeted attack meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.) 
+In targeted attacks \cite{} the attacker aims to have the adversarial example identified as a specific class by the NN. (Say, misclassify a dog as a cat.)
+An untargeted attack \cite{} meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.) 
 
-Now, when considering untargeted attacks, the question as what the adversarial image $actually$ is then classified, naturally arises. This is what we will experimentally answer in this paper.
+When considering untargeted attacks, the question what the adversarial image is classified as post-attack naturally arises. This is what we will experimentally answer in this paper.
 
-We will present our results in terms of confusion matrices. In figure !! you can see an example. In larger matrices numbers become more difficult to process, so we will display our results in heatmap-style images (fig. !!). (Section results)
+\begin{figure}[h]
+	\begin{tabular}{cc|c|c|c|}
+		& \multicolumn{1}{c}{} & \multicolumn{3}{c}{are categorised as}\\
+		& \multicolumn{1}{c}{} & \multicolumn{1}{c}{Dog}  & \multicolumn{1}{c}{Cat} & \multicolumn{1}{c}{Plane} \\\cline{3-5}
+		\multirow{3}*{Adversarial examples of a}  & Dog & 2 & 6 & 2\\\cline{3-5}
+		& Cat & 7 & 3 &  0 \\\cline{3-5}
+		& Plane & 1 & 2 &  7 \\\cline{3-5}
+	\end{tabular}
+	
+	\caption{An example of a confusion Matrix. Unsuccessful attacks (along the diagonal) are also included.}
+	\label{fig:matrixexample}
+\end{figure}
 
-In our experiments we used the foolbox framework \cite{}, and simple NNs trained on the MNIST, FashionMNIST, and CIFAR-10 datasets \cite{}. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{}, Carlini-Wagner \cite{} and ...-Bethge\cite{}. 
+We will present our results in terms of confusion matrices. In figure \ref{fig:matrixexample} you can see an example. In larger matrices numbers become more difficult to grasp, so we will display our results in heatmap-style images, as seen on the title page.
 
-We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly symmetric, and intuitively similar classes are often confused with each other. Furthermore we observe that for attacks which can choose large pertubations, there exist certain attractor classes, which most of the adversarial images are classified as. (Section Results.)
+In our experiments (Section \ref{sec:experiments}) we used the foolbox framework \cite{}, and simple NNs trained on the MNIST \cite{}, FashionMNIST \cite{}, and CIFAR-10 \cite{} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{}, Carlini-Wagner \cite{} and Brendel-Bethge\cite{}. 
+
+We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly symmetric, and intuitively similar classes are often confused with each other. Furthermore we observe that for attacks which are allotted a large perturbation budget, there exist certain attractor classes, which most of the adversarial images are classified as. (Section \ref{sec:results})
 
 %\\
 %
@@ -93,12 +108,12 @@ We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly s
 \section{Background and related work}
 
 \paragraph{Existence of adversarial examples}
-Since being first demonstrated \cite{Szegedy13} a large body of literature has flourished around adversarial examples. Blablabla...
+Since being first demonstrated \cite{Szegedy13} a large body of literature has flourished around adversarial examples. \textbf{Blablabla... short literature review}
 
 \paragraph{Notions of similarity}
-As mentioned previously we want to fool the NN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small pertubation" and "similar"? We could argue that an image with only one pixel changed is very similar, but also that an image in which each pixel was altered only very slightly is similar.
+As mentioned previously we want to fool the NN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small perturbation" and "similar"? We could argue that an image with only one pixel changed is very similar, but also that an image in which each pixel was altered only very slightly is similar.
 
-These different intuitive notions of distance and similarity are captured by norms.
+These different intuitive notions of distance and similarity are captured by different norms.
 
 The distance of two images ($x$,$y$) (i.e. vectors) is described by a metric $D$. This metric can be defined via different norms, most commonly the $L^\infty$-, $L^1$- and $L^2$-norms.( The $L^0$-"norm" is also frequently used, though not a norm in the strict sense.) The distance between these the two images, is then defined as the $L^p$-norm of their difference, for a given $p$:
 
@@ -138,7 +153,7 @@ Foolbox is a python toolbox for generating adversarial examples\cite{rauber2017f
 
 \subsection{Quantifying Symmetry}
 
-Since we found a surprising amount of symmetry in the confusion matrices (\ref{section Results}), we wanted to somehow quantify exactly \textit{how} symmetric our matrices were. Upon a review of the literature we could not find any such metric, and so we decided to improvise our own.
+Since we found a surprising amount of symmetry in the confusion matrices (Section \ref{sec:results}), we wanted to somehow quantify exactly \textit{how} symmetric our matrices were. Upon a review of the literature we could not find any such metric, and so we decided to improvise our own.
 
 Give the confusion matrix $A$ we first replace the diagonal values with zero, since these only represent failed attacks to get $A_0$. We then split $A_0$ into its symmetric and anti-symmetric constituent matrices:
 
@@ -187,7 +202,9 @@ Below some examples, to aid our dear reader in building an intuition.
 
 
 
-\section{Experiments}\label{experiments}
+\section{Experiments}
+\label{sec:experiments}
+
 In this Section we use the adversarial attacks introduced in Section~\ref{sec:Attacks} to compute adversarial examples on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. Each dataset is split into a training and test set and all adversarial attacks are computed and evaluated on the test set. Given a dataset and an attack we generate a pair of labels containing the original class and the predicted class for each adversarial example. We use $i$ to denote the $i$-th original class and $j$ to denote the $j$-th predicted class. Since all three datasets contain 10 classes each we obtain $10\times10$ confusion matrices
 \[A=(a_{ij})_{\begin{subarray}{l} 1\le i\le 10 \\ 1\le j\le 10\end{subarray}},\]
 where $a_{ij}\in\mathbb{N}$ corresponds to the total number of occurrences of each pair $(i,j)$.
@@ -205,6 +222,7 @@ Reference to our github.
 
 <<<<<<< HEAD
 \section{Results}
+\label{sec:results}
 Below we present all the confusion matrices we calculated. We add our symmetry score and the epsilon value, if applicable.
 
 
@@ -216,7 +234,7 @@ Below we present all the confusion matrices we calculated. We add our symmetry s
 		%\subsubsection{$L^2$-Carlini-Wagner}
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.5\textwidth]{../code/results/\n/figures/L2CarliniWagnerAttack.png}
+			\includegraphics[width=0.5\textwidth]{../code/results/\n/figures/L2CarliniWagnerAttack.pdf}
 			\caption{$L^2$-Carlini-Wagner-Attack on \n}
 			\label{fig:\n-C-W}
 		\end{figure}
@@ -226,14 +244,14 @@ Below we present all the confusion matrices we calculated. We add our symmetry s
 		\centering
 		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
-			\includegraphics[width=\textwidth]{../code/results/\n/figures/L0BrendelBethgeAttack.png}
+			\includegraphics[width=\textwidth]{../code/results/\n/figures/L0BrendelBethgeAttack.pdf}
 			\caption{$L^0$}
 			%\label{fig:y equals x}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[b]{0.4\textwidth}
 			\centering
-			\includegraphics[width=\textwidth]{../code/results/\n/figures/L1BrendelBethgeAttack.png}
+			\includegraphics[width=\textwidth]{../code/results/\n/figures/L1BrendelBethgeAttack.pdf}
 			\caption{$L^1$}
 			%\label{fig:}
 		\end{subfigure}
@@ -244,14 +262,14 @@ Below we present all the confusion matrices we calculated. We add our symmetry s
 	%\subsubsection{$L^\infty$-PGD}
 	\begin{figure}[H]
 		\begin{tabular}{cccc}
-			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.01.png} &
-			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.02.png} &
-			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.05.png} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.01.pdf} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.02.pdf} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.05.pdf} &
 			\bigskip \\
 			
-			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.1.png} &
-			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.2.png} &
-			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.5.png} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.1.pdf} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.2.pdf} &
+			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.5.pdf} &
 		\end{tabular}
 		
 		\caption{$L^\infty$-PGD-Attack on \n}

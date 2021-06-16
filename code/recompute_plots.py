@@ -55,10 +55,13 @@ def create_plots(dataset, attack_name, epsilons=None, save=False):
     if epsilons is None:
         plt.savefig(figure_path + f"{attack_name}.png", bbox_inches='tight')
         plt.savefig(figure_path + f"{attack_name}.pdf", bbox_inches='tight')
+        plt.savefig(figure_path + f"{attack_name}.eps", bbox_inches='tight', format = 'eps')
     
     if epsilons is not None:
         plt.savefig(figure_path + f"{attack_name}, epsilon={epsilons}.png", bbox_inches='tight')
         plt.savefig(figure_path + f"{attack_name}, epsilon={epsilons}.pdf", bbox_inches='tight')
+        plt.savefig(figure_path + f"{attack_name}, epsilon={epsilons}.eps", bbox_inches='tight', format = 'eps')
+
     
     plt.close("all")
     #plt.show()
