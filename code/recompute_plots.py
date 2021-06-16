@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from main_symmetry import measure_symmetry
+
 def create_plots(dataset, attack_name, epsilons=None, save=False):
     print("#############################################################")
     print(dataset, attack_name, epsilons)
@@ -34,6 +36,13 @@ def create_plots(dataset, attack_name, epsilons=None, save=False):
     
     plt.xticks(rotation=90)
     plt.tight_layout()
+    
+    sym = str(np.round(measure_symmetry(confusion_matrix),2))
+    sym = sym + "0"*(4-len(sym))
+    if epsilons is None:
+        plt.title(f"Symmetry: {sym}")
+    if epsilons is not None:
+        plt.title(f"Symmetry: {sym}, ϵ={epsilons}")
     
     if not save:
         plt.show()
