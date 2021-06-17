@@ -127,7 +127,7 @@ D(x,y) := \| y - x \|_p % Previous version for reference
 
 \textbf{... Hmmm probably not that important, maybe if there is time and space after everything else in finished.}
 
-\subsection{Attacks}
+\subsection{Attacks}\label{sec:Attacks}
 
 \paragraph{Fast gradient sign method}
 Goodfellow et al. famously developed the fast gradient sign method (FGSM) \cite{goodfellow2014explaining}, making attacks fast and easy. Its key insight was that the backpropagation commonly used to update the weights and biases can be applied all the way back to the input data itself to yields the gradient of the cost function. They then apply gradient decent to find an adversarial example. Since they optimise for the $L^\infty$-norm, all entries of the perturbance are scaled to the same magnitude.
@@ -211,16 +211,17 @@ where $a_{ij}\in\mathbb{N}$ corresponds to the total number of occurrences of ea
 
 
 \subsection{Experimental setup}
-All experiments are conducted in Python 3.8.5~\cite{van1995python} using the PyTorch 1.8.1~\cite{pytorch} library on a Windows machine. Adversarial attacks are computed using FoolBox 3.3.1~\cite{rauber2017foolbox}. Each attack is instantiated using the FoolBox default parameters. All minimization attacks, i.e. \texttt{L0BrendelBethgeAttack}, \texttt{L1BrendelBethgeAttack}, \texttt{L2CarliniWagnerAttack} have their perturbation budget \texttt{epsilons} set to \texttt{None}. This prevents any early termination; a fixed number of iterations is used to compute the adversarial example with minimal perturbation size. For \texttt{LinfPGD} we set \texttt{epsilons} to one of the values in $[0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]$ to cover a wide range of perturbation budgets.\\
+All experiments are conducted in Python 3.8.5~\cite{van1995python} using the PyTorch 1.8.1~\cite{pytorch} library on a Windows machine. Adversarial attacks are computed using FoolBox 3.3.1~\cite{rauber2017foolbox}. Each attack is instantiated using the FoolBox default parameters. All minimization attacks, i.e. \texttt{L0BrendelBethgeAttack}, \texttt{L1BrendelBethgeAttack}, \texttt{L2CarliniWagnerAttack} have their perturbation budget \texttt{epsilons} set to \texttt{None}. This prevents any early termination; a fixed number of iterations is used to compute the adversarial example with minimal perturbation size. For \texttt{LinfPGD} we set \texttt{epsilons} to one of the values in $[0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]$ to cover a wide range of perturbation budgets.
 
-\noindent Reference to figures.\\
-Reference to our github.
+\noindent Reference to figures.
+
+\paragraph{Reproducability}All our code, figures and the models we trained are available on GitHub \footnote{\url{https://github.com/MXSMCI/AdversarialLabelFlips}}.
 
 \subsection{Architectures}
-\url{https://arxiv.org/pdf/1608.04644.pdf}
->>>>>>> fc30d912d4fbae6a812c94b67d31111a632f83e6
+We consider the MNIST Model and CIFAR Model, two architectures which are described in \cite{carlini2017towards}, Table 1 and 2. Both architectures consist of two blocks of Convolutional-Convolutional-MaxPooling layers followed by three fully connected layers. All but the last layer use ReLU \cite{maas2013rectifier} as its activation function, whereas the final layer uses the softmax function.\\
+One author of \cite{carlini2017towards} provides a reference implementation available on GitHub \footnote{\url{https://github.com/carlini/nn_robust_attacks}}. We achieved similar results in terms of accuracy with our PyTorch reimplementation and can therefore confirm the validity of their results.  \\
+For our experiments on the MNIST and Fashion-MNIST dataset we use the MNIST model. For the CIFAR-10 dataset we use the CIFAR Model.
 
-<<<<<<< HEAD
 \section{Results}
 \label{sec:results}
 Below we present all the confusion matrices we calculated. We add our symmetry score and the epsilon value, if applicable.
@@ -316,5 +317,9 @@ This is joint work from Maximilian Samsinger and Matthias Dellago. Max wrote the
 We thank Alexander Schlögl for the research idea.
 \bibliographystyle{unsrt}
 \bibliography{literature}
+
+\appendix
+\newpage
+\section{Figures}
 
 \end{document}
