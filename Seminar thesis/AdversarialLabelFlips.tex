@@ -297,7 +297,7 @@ The MNIST, and FashionMNIST dataset do not appear to match this hypothesis too w
 
 In Figures \ref{fig:FashionMNIST-C-W} and \ref{fig:FashionMNIST-B-B} the FashionMNIST-CNN appears prone to confusing the pairs "Sandals"-"Sneakers" and "Coat"-"Pullover", but adversarial examples of Dresses are far more likely to be classified as "Trouser" than vice versa. The PGD-Matrices (Fig. \ref{fig:FashionMNIST-PGD}) have quite high symmetry scores, but nothing particularly captures the eye.
 
-The MNIST confusion matrices yield comparatively low symmetry scores (Fig. \ref{fig:MNIST-C-W}, \ref{fig:MNIST-B-B}, \ref{fig:MNIST-PGD}). We propose that this is due to a overpowered CNN and resulting overfitting. \textbf{Passt das von dir aus Max?}
+The MNIST confusion matrices yield comparatively low symmetry scores (Fig. \ref{fig:MNIST-C-W}, \ref{fig:MNIST-B-B}, \ref{fig:MNIST-PGD}). We propose that this is due to a overpowered CNN and resulting overfitting.
 
 
 \paragraph{Catch-all Class} In Figures \foreach \j in {CIFAR-10, FashionMNIST, MNIST}{\ref{fig:\j-PGD}, }one can observe that adversarial examples computed with large perturbation budgets $\epsilon$ are misclassified as "8", "TODO" and "frog" for MNIST, Fashion-MNIST and CIFAR-10 respectively. In order to shed light onto this phenomenon we generate and classify $10000$ white noise images sampled from a uniform distribution on the input domain. Figure A shows that these randomly generated images are also, most commonly, classified as "8", "TODO" and "frog" respectively. This result suggests that the neural networks in question have a default output for low probability images with respect to distribution of the input domain, which in turn affects adversarial examples computed with large perturbation budgets.
