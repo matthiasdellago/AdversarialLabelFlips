@@ -68,7 +68,7 @@
 %what did we get out of it? -> symmetric matrices and interesting insight about noise. (section results)
 
 
-In 2013 Szegedy et al. demonstrated that deep neural networks are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to a otherwise benign input, engineered to cause the neural net to misbehave.
+In 2013 Szegedy et al. demonstrated that deep neural networks are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to otherwise benign inputs, engineered to cause the neural network to misbehave.
 
 We consider the case of neural image classifiers, in particular convolutional neural networks \cite{lecun1999object} (CNN).
 That is inputs are images and attacks apply small changes to said images, designed to cause the CNN to misclassify the target. These attacks on classifiers come in two different variations: targeted and untargeted.
@@ -91,9 +91,9 @@ When considering untargeted attacks, the question what the adversarial image is 
 	\label{fig:matrixexample}
 \end{figure}
 
-We will present our results in terms of confusion matrices. In figure \ref{fig:matrixexample} you can see an example. In larger matrices numbers become more difficult to grasp, so we will display our results in heatmap-style images, as seen on the title page.
+We will present our results in terms of confusion matrices. In Figure \ref{fig:matrixexample} you can see an example. In larger matrices numbers become more difficult to grasp, so we will display our results in heatmap-style images, as seen on the title page.
 
-In our experiments (Section \ref{sec:experiments}) we used the foolbox framework \cite{rauber2017foolbox}, and simple CNNs trained on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{madry2017towards}, Carlini-Wagner \cite{carlini2017towards} and Brendel-Bethge\cite{brendel2019accurate}.
+In our experiments (Section \ref{sec:experiments}) we used the foolbox framework \cite{rauber2017foolbox}, and simple CNNs trained on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{madry2017towards}, Carlini-Wagner~\cite{carlini2017towards} and Brendel-Bethge~\cite{brendel2019accurate}.
 
 We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly symmetric, and intuitively similar classes are often confused with each other. Furthermore we observe that for attacks which are allotted a large perturbation budget, there exist certain attractor classes, which most of the adversarial images are classified as. (Section \ref{sec:results})
 
@@ -141,16 +141,14 @@ This attack leads to formidable results, especially using the $L^\infty$-norm.
 % Their experiments suggest that these attacks converge, i.e. they find a local maxima. This may require some restarts.
 
 \paragraph{Carlini-Wagner attack}
-
-Carlini and Wagner \cite{carlini2017towards} invented a different style of attack, where the cost function of the classifier and the distance of the adversarial example are wrapped into one function. They can then simultaneously optimise for both using the Adam stochastic optimiser \cite{kingma2017adam}.
+Carlini and Wagner \cite{carlini2017towards} invented a different style of attack, where the cost function of the classifier and the distance of the adversarial example are wrapped into one function. They can then simultaneously optimize for both using the Adam stochastic optimizer \cite{kingma2017adam}.
 
 \paragraph{Brendel-Bethge attack}
-
 Brendel and Bethe invented a quite different approach~\cite{brendel2019accurate}.
-Their method works by starting from a image deep inside the misclassification region and then preforming binary search between it and the benign, target image, to find the decision boundary. Once there, they move along the boundary to minimise the distance to the benign image, yielding a powerful adversarial example.
+Their method works by starting from a image deep inside the misclassification region and then preforming binary search between it and the benign, target image, to find the decision boundary. Once there, they move along the boundary to minimize the distance to the benign image, yielding a powerful adversarial example.
 
 \paragraph{Foolbox}
-Foolbox is a convenient python toolbox for generating adversarial examples~\cite{rauber2017foolbox}. It supports a large collection of attacks, including all of the above.
+Foolbox is a convenient Python~\cite{van1995python} toolbox for generating adversarial examples~\cite{rauber2017foolbox}. It supports a large collection of attacks, including all of the above.
 
 \subsection{Quantifying Symmetry}
 
@@ -162,19 +160,13 @@ Given the confusion matrix $A$ we first replace the diagonal values with zero, s
 	A_{sym} = \frac{A_0 + A_0^T}{2}, \qquad
 	A_{anti} = \frac{A_0 - A_0^T}{2}
 \end{equation}
-
 We then define our measure for symmetry $s$:
 
 \begin{equation}
 	s = \frac{ \|A_{sym}\|_1 - \|A_{anti}\|_1}{\|A_{sym}\|_1 + \|A_{anti}\|_1}
 \end{equation}
-
-(The 1-norm is not special, and could be replaced with any other $p$-norm.)
-
 For confusion matrices (i.e. all values $a_{ij}$ greater zero) $s$ can take values from $[0,1]$. $s = 1$ represents maximally symmetric matrices, and $s = 0$ a maximally skewed matrix.
-
-$s$ is also well defined, meaning it is not dependent on the permutation of classes, that is the rows and columns of $A$.
-
+Note that $s$ is well-defined for confusion matrices since any reordering of classes labels, that is permutations of the rows and columns of $A$, does not change $s$. Furthermore the 1-norm is not special, and could be replaced with any other $p$-norm, since it is well-defined for all of them.\\
 Below are some examples, to aid our dear reader in building an intuition.
 
 \begin{equation*}
@@ -212,10 +204,10 @@ In this Section we use the adversarial attacks introduced in Section~\ref{subsec
 \[A=(a_{ij})_{\begin{subarray}{l} 1\le i\le 10 \\ 1\le j\le 10\end{subarray}},\]
 where $a_{ij}\in\mathbb{N}$ corresponds to the total number of occurrences of each pair $(i,j)$.
 
-\paragraph{Reproducability}All our code, figures and the models we trained are available on GitHub \footnote{\url{https://github.com/MXSMCI/AdversarialLabelFlips}}.
+\paragraph{Reproducability}All our code, Figures and the models we trained are available on GitHub \footnote{\url{https://github.com/MXSMCI/AdversarialLabelFlips}}.
 
 \subsection{Experimental setup}
-All experiments are conducted in Python 3.8.5~\cite{van1995python} using the PyTorch 1.8.1~\cite{pytorch} library on a Windows machine. Adversarial attacks are computed using FoolBox 3.3.1~\cite{rauber2017foolbox}. Each attack is instantiated using the FoolBox default parameters. All minimization attacks, i.e. \texttt{L0BrendelBethgeAttack}, \texttt{L1BrendelBethgeAttack}, \texttt{L2CarliniWagnerAttack} have their perturbation budget \texttt{epsilons} set to \texttt{None}. This prevents any early termination; a fixed number of iterations is used to compute the adversarial example with minimal perturbation size. For \texttt{LinfPGD} we set \texttt{epsilons} to one of the values in $[0.01, 0.02, 0.05, 0.1, 0.2, 0.5]$ to cover a wide range of perturbation budgets.
+All experiments are conducted in Python 3.8.5~\cite{van1995python} using the PyTorch 1.8.1~\cite{pytorch} library on a Windows machine. Adversarial attacks are computed using Foolbox 3.3.1~\cite{rauber2017foolbox}. Each attack is instantiated using the Foolbox default parameters. All minimization attacks, i.e. \texttt{L0BrendelBethgeAttack}, \texttt{L1BrendelBethgeAttack}, \texttt{L2CarliniWagnerAttack} have their perturbation budget \texttt{epsilons} set to \texttt{None}. This prevents any early termination; a fixed number of iterations is used to compute the adversarial example with minimal perturbation size. For \texttt{LinfPGD} we set \texttt{epsilons} to one of the values in $[0.01, 0.02, 0.05, 0.1, 0.2, 0.5]$ to cover a wide range of perturbation budgets.
 
 \subsection{Architectures}
 We consider the MNIST Model and CIFAR Model, two architectures which are described in \cite{carlini2017towards}, Table 1 and 2. Both architectures consist of two blocks of Convolutional-Convolutional-MaxPooling \cite{nagi2011max} layers followed by three fully connected layers. All but the last layer use ReLU \cite{maas2013rectifier} as its activation function, whereas the final layer uses the softmax function.\\
@@ -225,7 +217,7 @@ For our experiments on the MNIST and Fashion-MNIST dataset we use the MNIST Mode
 \section{Results}
 \label{sec:results}
 We present the confusion matrices for all adversarial attacks we considered. Figure \foreach \n in {CIFAR-10, FashionMNIST}{\ref{fig:\n-C-W},} and \ref{fig:MNIST-C-W} show the results for the Carlini-Wagner attack and Figure \foreach \n in {CIFAR-10, FashionMNIST}{\ref{fig:\n-PGD},} and \ref{fig:MNIST-PGD} show the results for all PGD attacks.
-Since the results for both Brendel-Bethge attacks are similar to the Carlini-Wagner attack, we moved them to the appendix \ref{sec:BB}.  We add our symmetry score as well as the perturbation budget used $\epsilon$ to the figure title, if applicable.
+Since the results for both Brendel-Bethge attacks are similar to the Carlini-Wagner attack, we moved them to the appendix \ref{sec:BB}.  We add our symmetry score as well as the perturbation budget used $\epsilon$ to the Figure title, if applicable.
 
 % Eine for loop in latex, wir sind jetzt bei den cool kids, Max!
 \foreach \n in {CIFAR-10, FashionMNIST, MNIST}
@@ -235,7 +227,7 @@ Since the results for both Brendel-Bethge attacks are similar to the Carlini-Wag
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.5\textwidth]{../code/results/\n/figures/L2CarliniWagnerAttack.pdf}
-			\caption{Confusion matrix for the $L^2$-Carlini-Wagner attack on \n. Attacks were computed using the FoolBox default parameters with no early termination.}
+			\caption{Confusion matrix for the $L^2$-Carlini-Wagner attack on \n. Attacks were computed using the Foolbox default parameters with no early termination.}
 			\label{fig:\n-C-W}
 		\end{figure}
 
@@ -252,7 +244,7 @@ Since the results for both Brendel-Bethge attacks are similar to the Carlini-Wag
 			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.5.pdf} &
 		\end{tabular}
 
-		\caption{Confusion matrices for the $L^\infty$-PGD attack on \n\ for varying maximal perturbation sizes per image pixel $\epsilon\in[0,1]$. Larger $\epsilon$ corresponds to stronger attacks. Attacks were computed using the FoolBox default parameters.}
+		\caption{Confusion matrices for the $L^\infty$-PGD attack on \n\ for varying maximal perturbation sizes per image pixel $\epsilon\in[0,1]$. Larger $\epsilon$ corresponds to stronger attacks. Attacks were computed using the Foolbox default parameters.}
 		\label{fig:\n-PGD}
 	\end{figure}
 
@@ -283,7 +275,6 @@ In Figures \ref{fig:FashionMNIST-C-W} and \ref{fig:FashionMNIST-B-B} the classif
 The MNIST confusion matrices yield comparatively low symmetry scores (Fig. \ref{fig:MNIST-C-W}, \ref{fig:MNIST-B-B}, \ref{fig:MNIST-PGD}). We propose that this is due to a overpowered CNN and resulting overfitting.
 
 \paragraph{Catch-all Classes} In Figures \ref{fig:CIFAR-10-PGD} and \ref{fig:MNIST-PGD} one can observe that adversarial examples computed with large perturbation budgets $\epsilon$ are most often misclassified as "frog", and "8" for MNIST and CIFAR-10 respectively. For FashionMNIST \foreach \j in {FashionMNIST}{\ref{fig:\j-PGD},} there are multiple high probability classes. In order to shed light onto this phenomenon we generate and classify $10000$ white noise images sampled from a uniform distribution on the input domain. Figure \ref{fig:barplot} shows that these randomly generated images are also, most commonly, classified as "frog" and "8" respectively and more complex behavior emerges for the Fashion-MNIST dataset. These results suggests that the neural networks in question have one or multiple default outputs for low probability images with respect to the distribution of their respective input domains, which in turn affects adversarial examples computed with large perturbation budgets.
-
 
 
 \section{Conclusion}
@@ -322,7 +313,7 @@ We thank Alexander Schlögl for the research idea and all members of the seminar
 			\caption{$L^1$}
 			%\label{fig:}
 		\end{subfigure}
-		\caption{Confusion matrix for the Brendel-Bethge attack on \n. The left and right plot shows the $L^0$ and $L^1$ variant of the attack respectively. Both attacks were computed using the FoolBox default parameters with no early termination.}
+		\caption{Confusion matrix for the Brendel-Bethge attack on \n. The left and right plot shows the $L^0$ and $L^1$ variant of the attack respectively. Both attacks were computed using the Foolbox default parameters with no early termination.}
 		\label{fig:\n-B-B}
 	\end{figure}
 }
