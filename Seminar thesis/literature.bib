@@ -87,7 +87,7 @@
 @inproceedings{papernot2016distillation,
 	title={Distillation as a defense to adversarial perturbations against deep neural networks},
 	author={Papernot, Nicolas and McDaniel, Patrick and Wu, Xi and Jha, Somesh and Swami, Ananthram},
-	booktitle={2016 IEEE Symposium on Security and Privacy (SP)},
+	booktitle={Symposium on Security and Privacy (SP)},
 	pages={582--597},
 	year={2016},
 	organization={IEEE}
@@ -97,30 +97,26 @@
 @inproceedings{carlini2017towards,
 	title={Towards evaluating the robustness of neural networks},
 	author={Carlini, Nicholas and Wagner, David},
-	booktitle={2017 IEEE Symposium on Security and Privacy (SP)},
+	booktitle={Symposium on Security and Privacy (SP)},
 	pages={39--57},
 	year={2017},
 	organization={IEEE}
 }
 
 %%% stochastic optimisation used in carlini-wagner %%%
-@misc{kingma2017adam,
+@article{kingma2017adam,
 	title={Adam: A Method for Stochastic Optimization}, 
 	author={Diederik P. Kingma and Jimmy Ba},
-	year={2017},
-	eprint={1412.6980},
-	archivePrefix={arXiv},
-	primaryClass={cs.LG}
+	journal={arXiv preprint arXiv:1412.6980},
+	year={2017}
 }
 
 %%% Brendel-Bethge-Attack %%%
-@misc{brendel2019accurate,
+@article{brendel2019accurate,
 	title={Accurate, reliable and fast robustness evaluation}, 
 	author={Wieland Brendel and Jonas Rauber and Matthias Kümmerer and Ivan Ustyuzhaninov and Matthias Bethge},
+	journal={arXiv preprint arXiv:1907.01003},
 	year={2019},
-	eprint={1907.01003},
-	archivePrefix={arXiv},
-	primaryClass={stat.ML}
 }
 
 @article{carlini2019evaluating,
@@ -219,6 +215,7 @@
 	pages={249--256},
 	year={2010}
 }
+
 @article{liu2019variance,
 	title={On the variance of the adaptive learning rate and beyond},
 	author={Liu, Liyuan and Jiang, Haoming and He, Pengcheng and Chen, Weizhu and Liu, Xiaodong and Gao, Jianfeng and Han, Jiawei},
@@ -264,9 +261,10 @@
 @inproceedings{he2016deep,
 	title={Deep residual learning for image recognition},
 	author={He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
-	booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+	booktitle={Conference on Computer Vision and Pattern Recognition},
 	pages={770--778},
-	year={2016}
+	year={2016},
+	organization={IEEE}
 }
 
 @article{zagoruyko2016wide,
@@ -300,11 +298,8 @@
 	title = {PyTorch: An Imperative Style, High-Performance Deep Learning Library},
 	author = {Paszke, Adam and Gross, Sam and Massa, Francisco and Lerer, Adam and Bradbury, James and Chanan, Gregory and Killeen, Trevor and Lin, Zeming and Gimelshein, Natalia and Antiga, Luca and Desmaison, Alban and Kopf, Andreas and Yang, Edward and DeVito, Zachary and Raison, Martin and Tejani, Alykhan and Chilamkurthy, Sasank and Steiner, Benoit and Fang, Lu and Bai, Junjie and Chintala, Soumith},
 	booktitle = {Advances in Neural Information Processing Systems 32},
-	editor = {H. Wallach and H. Larochelle and A. Beygelzimer and F. d\textquotesingle Alch\'{e}-Buc and E. Fox and R. Garnett},
-	pages = {8024--8035},
 	year = {2019},
 	publisher = {Curran Associates, Inc.},
-	url = {http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf}
 }
 
 @article{rauber2017foolbox,
@@ -467,7 +462,7 @@
 @inproceedings{cardenas2006framework,
   title={A framework for the evaluation of intrusion detection systems},
   author={C{\'a}rdenas, Alvaro A and Baras, John S and Seamon, Karl},
-  booktitle={2006 IEEE Symposium on Security and Privacy (S\&P'06)},
+  booktitle={Symposium on Security and Privacy (SP)},
   pages={15--pp},
   year={2006},
   organization={IEEE}
@@ -545,26 +540,26 @@
 % DATASETS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-@article{krizhevsky2009learning,
-	title={Learning multiple layers of features from tiny images},
-	author={Krizhevsky, Alex and Hinton, Geoffrey and others},
-	year={2009},
-	publisher={Citeseer}
+@mastersthesis{krizhevsky2009learning,
+	author = {Alex Krizhevsky},
+	title  = {Learning multiple layers of features from tiny images},
+	school = {Univ.~of Toronto},
+	year   = {2009}
 }
 
 @inproceedings{deng2009imagenet,
 	title={Imagenet: A large-scale hierarchical image database},
 	author={Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li},
-	booktitle={2009 IEEE Conference on Computer Vision and Pattern Recognition},
+	booktitle={Computer Vision and Pattern Recognition},
 	pages={248--255},
 	year={2009},
-	organization={Ieee}
+	organization={IEEE}
 }
 
 @article{deng2012mnist,
 	title={The mnist database of handwritten digit images for machine learning research [best of the web]},
 	author={Deng, Li},
-	journal={IEEE Signal Processing Magazine},
+	journal={Signal Processing Magazine},
 	volume={29},
 	number={6},
 	pages={141--142},
