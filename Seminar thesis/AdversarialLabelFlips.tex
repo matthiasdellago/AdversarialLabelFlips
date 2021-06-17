@@ -73,11 +73,8 @@ When considering untargeted attacks, the question what the adversarial image is 
 	\caption{An example of a confusion Matrix. Unsuccessful attacks (along the diagonal) are also included.}
 	\label{fig:matrixexample}
 \end{figure}
-
 We will present our results in terms of confusion matrices, where Figure \ref{fig:matrixexample} serves as an example. For large matrices numbers become more difficult to grasp, so we will display our results in heatmap-style images, as seen on the title page.
-
 In our experiments (Section \ref{sec:experiments}) we used the Foolbox framework \cite{rauber2017foolbox}, and simple CNNs trained on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{madry2017towards}, Carlini-Wagner~\cite{carlini2017towards} and Brendel-Bethge~\cite{brendel2019accurate}.
-
 We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly symmetric, and intuitively similar classes are often confused with each other. Furthermore we observe that for attacks which are allotted a large perturbation budget, there exist certain attractor classes, which most of the adversarial images are classified as. (Section \ref{sec:results})
 
 \section{Background and related work}
@@ -109,7 +106,7 @@ Foolbox is a convenient Python~\cite{van1995python} toolbox for generating adver
 
 \subsection{Quantifying Symmetry}
 
-Since we found a surprising amount of symmetry in the confusion matrices (Section \ref{sec:results}), we wanted to somehow quantify exactly \textit{how} symmetric our matrices were. Upon a review of the literature we could not find any such metric, and so we decided to improvise our own.
+Since we found a surprising amount of symmetry in the confusion matrices in Section \ref{sec:results}, we wanted to somehow quantify exactly \textit{how} symmetric our matrices were. Upon a review of the literature we could not find any such metric, and so we decided to improvise our own.
 
 Given the confusion matrix $A$ we first replace the diagonal values with zero, since these only represent failed attacks, to get $A_0$. We then split $A_0$ into its symmetric and anti-symmetric constituent matrices:
 
@@ -157,7 +154,7 @@ Below are some examples, to aid our dear reader in building an intuition.
 \section{Experiments}
 \label{sec:experiments}
 
-In this Section we use the adversarial attacks introduced in Section~\ref{subsec:attacks} to compute adversarial examples on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{xiao2017fashion} and CIFAR-10~\cite{krizhevsky2009learning} datasets. Each dataset is split into a training and test set and all adversarial attacks are computed and evaluated on the test set. Given a dataset and an attack we generate a pair of labels containing the original class and the predicted class for each adversarial example. We use $i$ to denote the $i$-th original class and $j$ to denote the $j$-th predicted class. Since all three datasets contain 10 classes each we obtain $10\times10$ confusion matrices
+In this Section we use the adversarial attacks introduced in Section~\ref{sec:Attacks} to compute adversarial examples on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{xiao2017fashion} and CIFAR-10~\cite{krizhevsky2009learning} datasets. Each dataset is split into a training and test set and all adversarial attacks are computed and evaluated on the test set. Given a dataset and an attack we generate a pair of labels containing the original class and the predicted class for each adversarial example. We use $i$ to denote the $i$-th original class and $j$ to denote the $j$-th predicted class. Since all three datasets contain 10 classes each we obtain $10\times10$ confusion matrices
 \[A=(a_{ij})_{\begin{subarray}{l} 1\le i\le 10 \\ 1\le j\le 10\end{subarray}},\]
 where $a_{ij}\in\mathbb{N}$ corresponds to the total number of occurrences of each pair $(i,j)$.
 
