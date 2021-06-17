@@ -51,9 +51,9 @@
 	%sell it to sb looking for something good to read.
 	%only 4 sentences or so.
 
-	Given a neural network (NN) trained to classify, and an untargeted evasion attack, in what class does the adversarial example fall post-attack?
-	In the following, we will answer this question by evaluating some state of the art attacks on a simple NN trained on industry standard datasets.
-	We discover that intuitively similar classes are more likely to be confused with another, leading us to hypothesise that the NN recognises these similarities.
+	Given a neural network classifier and an untargeted evasion attack, in what class does the adversarial example fall post-attack?
+	In the following, we will answer this question by evaluating some state of the art attacks on a simple neural network classifiers trained on industry standard datasets.
+	We discover that this intuitively similar classes are more likely to be confused with another, leading us to hypothesise that the NN recognises these similarities.
 \end{abstract}
 
 \section{Introduction}
@@ -67,13 +67,13 @@
 %what did we get out of it? -> symmetric matrices and interesting insight about noise. (section results)
 
 
-In 2013 Szegedy et al. demonstrated that deep neural networks (NN) are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to a otherwise innocuous input, engineered to cause the NN to misbehave.
+In 2013 Szegedy et al. demonstrated that deep neural networks are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to a otherwise benign input, engineered to cause the neural net to misbehave.
 
-In our case, the inputs will be images and the attack will be small changes to said image, designed to cause the classifier NN to misclassify the target.
-
-These attacks on classifiers come in two different variations: targeted and untargeted.
-In targeted attacks \cite{??} the attacker aims to have the adversarial example identified as a specific class by the NN. (Say, misclassify a dog as a cat.)
-An untargeted attack \cite{??} meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.)
+We consider the case of neural image classifiers, in particular convolutional neural networks (CNN).
+That is inputs are images and attacks apply small changes to said images, designed to cause the CNN to misclassify the target. These attacks on classifiers come in two different variations: targeted and untargeted.
+In targeted attacks the attacker aims to have the adversarial example identified as a specific class by the CNN. (Say, misclassify a dog as a cat.)
+An untargeted attack meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.)
+For a more in-depth discussion of threat modelling in adversarial machine learning we refer to \cite{biggio2018wild}.
 
 When considering untargeted attacks, the question what the adversarial image is classified as post-attack naturally arises. This is what we will experimentally answer in this paper.
 
@@ -92,7 +92,7 @@ When considering untargeted attacks, the question what the adversarial image is 
 
 We will present our results in terms of confusion matrices. In figure \ref{fig:matrixexample} you can see an example. In larger matrices numbers become more difficult to grasp, so we will display our results in heatmap-style images, as seen on the title page.
 
-In our experiments (Section \ref{sec:experiments}) we used the foolbox framework \cite{rauber2017foolbox}, and simple NNs trained on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{madry2017towards}, Carlini-Wagner \cite{carlini2017towards} and Brendel-Bethge\cite{brendel2019accurate}.
+In our experiments (Section \ref{sec:experiments}) we used the foolbox framework \cite{rauber2017foolbox}, and simple CNNs trained on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{madry2017towards}, Carlini-Wagner \cite{carlini2017towards} and Brendel-Bethge\cite{brendel2019accurate}.
 
 We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly symmetric, and intuitively similar classes are often confused with each other. Furthermore we observe that for attacks which are allotted a large perturbation budget, there exist certain attractor classes, which most of the adversarial images are classified as. (Section \ref{sec:results})
 
@@ -111,7 +111,7 @@ We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly s
 Since being first demonstrated \cite{Szegedy13} a large body of literature has flourished around adversarial examples. We in the following we will briefly introduce the attacks we use.
 
 %\paragraph{Notions of similarity}
-%As mentioned previously we want to fool the NN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small perturbation" and "similar"? We could argue that an image with only one pixel changed is very similar, but also that an image in which each pixel was altered only very slightly is similar.
+%As mentioned previously we want to fool the CNN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small perturbation" and "similar"? We could argue that an image with only one pixel changed is very similar, but also that an image in which each pixel was altered only very slightly is similar.
 %
 %These different intuitive notions of distance and similarity are captured by different norms.
 %
@@ -283,19 +283,19 @@ Here we present all the confusion matrices we calculated. We add our symmetry sc
 \section{Discussion}
 
 \paragraph{Symmetry}
-Probably the most notable feature of our results is the high degree of symmetry of the CIFAR-10 confusion matrices (Figures \ref{fig:CIFAR-10-C-W}, \ref{fig:CIFAR-10-B-B}, \ref{fig:CIFAR-10-PGD}). This means that, the NN that learned to classify CIFAR-10 is equally likely to mistake class $i$ as class $j$ as the other way around ($j$ as $i$).
+Probably the most notable feature of our results is the high degree of symmetry of the CIFAR-10 confusion matrices (Figures \ref{fig:CIFAR-10-C-W}, \ref{fig:CIFAR-10-B-B}, \ref{fig:CIFAR-10-PGD}). This means that, the CNN that learned to classify CIFAR-10 is equally likely to mistake class $i$ as class $j$ as the other way around ($j$ as $i$).
 
 Upon taking a closer look at the classes that are likely to be mistaken for another, our reader may notice a pattern. Across the board, the two most common causes of confusion are the pairs "Automobile"-"Truck", and "Dog"-"Cat". From a human perspective, this is a understandable mistake; these two categories are in fact similar in appearance. The other matrix entries follow a similar pattern, with confusions amongst animals and vehicles, being significantly more common than across these two categories.
 
-It therefore seems that the NN captures some notion of similarity, that is quite close to what a human would intuit.
+It therefore seems that the CNN captures some notion of similarity, that is quite close to what a human would intuit.
 \vspace{12pt}
 
 
 The MNIST, and FashionMNIST dataset do not appear to match this hypothesis too well.
 
-In Figures \ref{fig:FashionMNIST-C-W} and \ref{fig:FashionMNIST-B-B} the FashionMNIST-NN appears prone to confusing the pairs "Sandals"-"Sneakers" and "Coat"-"Pullover", but adversarial examples of Dresses are far more likely to be classified as "Trouser" than vice versa. The PGD-Matrices (Fig. \ref{fig:FashionMNIST-PGD}) have quite high symmetry scores, but nothing particularly captures the eye.
+In Figures \ref{fig:FashionMNIST-C-W} and \ref{fig:FashionMNIST-B-B} the FashionMNIST-CNN appears prone to confusing the pairs "Sandals"-"Sneakers" and "Coat"-"Pullover", but adversarial examples of Dresses are far more likely to be classified as "Trouser" than vice versa. The PGD-Matrices (Fig. \ref{fig:FashionMNIST-PGD}) have quite high symmetry scores, but nothing particularly captures the eye.
 
-The MNIST confusion matrices yield comparatively low symmetry scores (Fig. \ref{fig:MNIST-C-W}, \ref{fig:MNIST-B-B}, \ref{fig:MNIST-PGD}). We propose that this is due to a overpowered NN and resulting overfitting. \textbf{Passt das von dir aus Max?}
+The MNIST confusion matrices yield comparatively low symmetry scores (Fig. \ref{fig:MNIST-C-W}, \ref{fig:MNIST-B-B}, \ref{fig:MNIST-PGD}). We propose that this is due to a overpowered CNN and resulting overfitting. \textbf{Passt das von dir aus Max?}
 
 
 \paragraph{Catch-all Class} In Figures \foreach \j in {CIFAR-10, FashionMNIST, MNIST}{\ref{fig:\j-PGD}, }one can observe that adversarial examples computed with large perturbation budgets $\epsilon$ are misclassified as "8", "TODO" and "frog" for MNIST, Fashion-MNIST and CIFAR-10 respectively. In order to shed light onto this phenomenon we generate and classify $10000$ white noise images sampled from a uniform distribution on the input domain. Figure A shows that these randomly generated images are also, most commonly, classified as "8", "TODO" and "frog" respectively. This result suggests that the neural networks in question have a default output for low probability images with respect to distribution of the input domain, which in turn affects adversarial examples computed with large perturbation budgets.
@@ -306,15 +306,15 @@ The MNIST confusion matrices yield comparatively low symmetry scores (Fig. \ref{
 We explored confusion matrices generated by many common untargeted attacks, and discovered interesting structure.
 They are decidedly non-random in at least two ways:
 \begin{itemize}
-	\item Adversarial images which come very close to the original image (e.g. small $\epsilon$) can yield surprisingly symmetric confusion matrices. This symmetry means that class $i$ is confused with class $j$ about as often as vice versa. To us this indicates, that the NN has learned that some classes are more closely related than others.
-	This idea is corroborated by the fact that, in these cases the NN confuses semantically similar images in a rather intuitive fashion; for instance confusing "horses" with "deer", and "automobiles" with "trucks".
+	\item Adversarial images which come very close to the original image (e.g. small $\epsilon$) can yield surprisingly symmetric confusion matrices. This symmetry means that class $i$ is confused with class $j$ about as often as vice versa. To us this indicates, that the CNN has learned that some classes are more closely related than others.
+	This idea is corroborated by the fact that, in these cases the CNN confuses semantically similar images in a rather intuitive fashion; for instance confusing "horses" with "deer", and "automobiles" with "trucks".
 
-	\item Attacks which are given a more generous $\epsilon$ tend to cluster into one specific class ("frog" and "8"). We hypothesised that this is due the NN using this class as a catch-all for all images it has difficulty classifying. Using a large batch of noise images we were able to confirm this hypothesis.
+	\item Attacks which are given a more generous $\epsilon$ tend to cluster into one specific class ("frog" and "8"). We hypothesised that this is due the CNN using this class as a catch-all for all images it has difficulty classifying. Using a large batch of noise images we were able to confirm this hypothesis.
 \end{itemize}
 
 \section{Contribution Statement}
 
-This is joint work from Maximilian Samsinger and Matthias Dellago. Max trained the NN and evaluated the attacks, Matthias wrote most of the paper. \textbf{Passt das so? Soll noch was rein?}
+This is joint work from Maximilian Samsinger and Matthias Dellago. Max trained the CNN and evaluated the attacks, Matthias wrote most of the paper. \textbf{Passt das so? Soll noch was rein?}
 We thank Alexander Schlögl for the research idea.
 \bibliographystyle{unsrt}
 \bibliography{literature}
