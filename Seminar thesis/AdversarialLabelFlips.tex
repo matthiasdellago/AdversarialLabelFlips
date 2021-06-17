@@ -72,8 +72,8 @@ In 2013 Szegedy et al. demonstrated that deep neural networks (NN) are susceptib
 In our case, the inputs will be images and the attack will be small changes to said image, designed to cause the classifier NN to misclassify the target.
 
 These attacks on classifiers come in two different variations: targeted and untargeted. 
-In targeted attacks \cite{??} the attacker aims to have the adversarial example identified as a specific class by the NN. (Say, misclassify a dog as a cat.)
-An untargeted attack \cite{??} meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.) 
+In targeted attacks the attacker aims to have the adversarial example identified as a specific class by the NN. (Say, misclassify a dog as a cat.)
+An untargeted attack meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.)~\cite{biggio2018wild}
 
 When considering untargeted attacks, the question what the adversarial image is classified as post-attack naturally arises. This is what we will experimentally answer in this paper.
 
@@ -171,6 +171,8 @@ We then define our measure for symmetry $s$:
 (The 1-norm is not special, and could be replaced with any other $p$-norm.)
 
 For confusion matrices (i.e. all values $a_{ij}$ greater zero) $s$ can take values from $[0,1]$. $s = 1$ represents maximally symmetric matrices, and $s = 0$ a maximally skewed matrix.
+
+$s$ is also well defined, meaning it is not dependent on the permutation of classes, that is the rows and columns of $A$.
 
 Below are some examples, to aid our dear reader in building an intuition.
 
