@@ -212,13 +212,10 @@ In this Section we use the adversarial attacks introduced in Section~\ref{subsec
 \[A=(a_{ij})_{\begin{subarray}{l} 1\le i\le 10 \\ 1\le j\le 10\end{subarray}},\]
 where $a_{ij}\in\mathbb{N}$ corresponds to the total number of occurrences of each pair $(i,j)$.
 
-
-\noindent Reference to figures.
-
 \paragraph{Reproducability}All our code, figures and the models we trained are available on GitHub \footnote{\url{https://github.com/MXSMCI/AdversarialLabelFlips}}.
 
 \subsection{Experimental setup}
-All experiments are conducted in Python 3.8.5~\cite{van1995python} using the PyTorch 1.8.1~\cite{pytorch} library on a Windows machine. Adversarial attacks are computed using FoolBox 3.3.1~\cite{rauber2017foolbox}. Each attack is instantiated using the FoolBox default parameters. All minimization attacks, i.e. \texttt{L0BrendelBethgeAttack}, \texttt{L1BrendelBethgeAttack}, \texttt{L2CarliniWagnerAttack} have their perturbation budget \texttt{epsilons} set to \texttt{None}. This prevents any early termination; a fixed number of iterations is used to compute the adversarial example with minimal perturbation size. For \texttt{LinfPGD} we set \texttt{epsilons} to one of the values in $[0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1]$ to cover a wide range of perturbation budgets.
+All experiments are conducted in Python 3.8.5~\cite{van1995python} using the PyTorch 1.8.1~\cite{pytorch} library on a Windows machine. Adversarial attacks are computed using FoolBox 3.3.1~\cite{rauber2017foolbox}. Each attack is instantiated using the FoolBox default parameters. All minimization attacks, i.e. \texttt{L0BrendelBethgeAttack}, \texttt{L1BrendelBethgeAttack}, \texttt{L2CarliniWagnerAttack} have their perturbation budget \texttt{epsilons} set to \texttt{None}. This prevents any early termination; a fixed number of iterations is used to compute the adversarial example with minimal perturbation size. For \texttt{LinfPGD} we set \texttt{epsilons} to one of the values in $[0.01, 0.02, 0.05, 0.1, 0.2, 0.5]$ to cover a wide range of perturbation budgets.
 
 \subsection{Architectures}
 We consider the MNIST Model and CIFAR Model, two architectures which are described in \cite{carlini2017towards}, Table 1 and 2. Both architectures consist of two blocks of Convolutional-Convolutional-MaxPooling \cite{nagi2011max} layers followed by three fully connected layers. All but the last layer use ReLU \cite{maas2013rectifier} as its activation function, whereas the final layer uses the softmax function.\\
@@ -227,9 +224,8 @@ For our experiments on the MNIST and Fashion-MNIST dataset we use the MNIST Mode
 
 \section{Results}
 \label{sec:results}
-Here we present all the confusion matrices we calculated. We add our symmetry score as well as the epsilon value, if applicable.
-
-
+We present the confusion matrices for all adversarial attacks we considered. Figure \foreach \n in {CIFAR-10, FashionMNIST}{\ref{fig:\n-C-W},} and \ref{fig:MNIST-C-W} show the results for the Carlini-Wagner attack and Figure \foreach \n in {CIFAR-10, FashionMNIST}{\ref{fig:\n-PGD},} and \ref{fig:MNIST-PGD} show the results for all PGD attacks.
+Since the results for both Brendel-Bethge attacks are similar to the Carlini-Wagner attack, we moved them to the appendix \ref{sec:BB}.  We add our symmetry score as well as the perturbation budget used $\epsilon$ to the figure title, if applicable.
 
 % Eine for loop in latex, wir sind jetzt bei den cool kids, Max!
 \foreach \n in {CIFAR-10, FashionMNIST, MNIST}
@@ -239,7 +235,7 @@ Here we present all the confusion matrices we calculated. We add our symmetry sc
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.5\textwidth]{../code/results/\n/figures/L2CarliniWagnerAttack.pdf}
-			\caption{$L^2$-Carlini-Wagner-Attack on \n}
+			\caption{Confusion matrix for the $L^2$-Carlini-Wagner attack on \n. Attacks were computed using the FoolBox default parameters with no early termination.}
 			\label{fig:\n-C-W}
 		\end{figure}
 
@@ -256,14 +252,13 @@ Here we present all the confusion matrices we calculated. We add our symmetry sc
 			\includegraphics[width=0.3\columnwidth]{../code/results/\n/figures/LinfPGD, epsilon=0.5.pdf} &
 		\end{tabular}
 
-		\caption{$L^\infty$-PGD-Attack on \n}
+		\caption{Confusion matrices for the $L^\infty$-PGD attack on \n\ for varying maximal perturbation sizes per image pixel $\epsilon\in[0,1]$. Larger $\epsilon$ corresponds to stronger attacks. Attacks were computed using the FoolBox default parameters.}
 		\label{fig:\n-PGD}
 	\end{figure}
 
 }
 
-
-\section{Discussion}
+\newpage
 
 \paragraph{Symmetry}
 Probably the most notable feature of our results is the high degree of symmetry of the CIFAR-10 confusion matrices (Figures \ref{fig:CIFAR-10-C-W}, \ref{fig:CIFAR-10-B-B}, \ref{fig:CIFAR-10-PGD}). This means that, the CNN that learned to classify CIFAR-10 is equally likely to mistake class $i$ as class $j$ as the other way around ($j$ as $i$).
@@ -276,12 +271,18 @@ It therefore seems that the CNN captures some notion of similarity, that is quit
 
 The MNIST, and FashionMNIST dataset do not appear to match this hypothesis too well.
 
-In Figures \ref{fig:FashionMNIST-C-W} and \ref{fig:FashionMNIST-B-B} the FashionMNIST-CNN appears prone to confusing the pairs "Sandals"-"Sneakers" and "Coat"-"Pullover", but adversarial examples of Dresses are far more likely to be classified as "Trouser" than vice versa. The PGD-Matrices (Fig. \ref{fig:FashionMNIST-PGD}) have quite high symmetry scores, but nothing particularly captures the eye.
+In Figures \ref{fig:FashionMNIST-C-W} and \ref{fig:FashionMNIST-B-B} the classifier appears prone to confusing the pairs "Sandals"-"Sneakers" and "Coat"-"Pullover", but adversarial examples of Dresses are far more likely to be classified as "Trouser" than vice versa. The PGD-Matrices (Fig. \ref{fig:FashionMNIST-PGD}) have quite high symmetry scores, but nothing particularly captures the eye.
 
-The MNIST confusion matrices yield comparatively low symmetry scores (Fig. \ref{fig:MNIST-C-W}, \ref{fig:MNIST-B-B}, \ref{fig:MNIST-PGD}). We propose that this is due to a overpowered CNN and resulting overfitting. \textbf{Passt das von dir aus Max?}
+The MNIST confusion matrices yield comparatively low symmetry scores (Figure \ref{fig:MNIST-C-W}, \ref{fig:MNIST-B-B}, \ref{fig:MNIST-PGD}). We propose that this is due to a overpowered CNN and resulting overfitting. \textbf{Passt das von dir aus Max?}
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\textwidth]{../code/results/barplot.pdf}
+	\caption{Bar chart of the top 5 most common predictions of 1000 random uniform white noise images on CIFAR-10, MNIST and Fashion-MNIST respectively. On CIFAR-10 and MNIST only four and two different classes where predicted respectively.}
+	\label{fig:barplot}
+\end{figure}
 
-\paragraph{Catch-all Class} In Figures \foreach \j in {CIFAR-10, FashionMNIST, MNIST}{\ref{fig:\j-PGD}, }one can observe that adversarial examples computed with large perturbation budgets $\epsilon$ are misclassified as "8", "TODO" and "frog" for MNIST, Fashion-MNIST and CIFAR-10 respectively. In order to shed light onto this phenomenon we generate and classify $10000$ white noise images sampled from a uniform distribution on the input domain. Figure A shows that these randomly generated images are also, most commonly, classified as "8", "TODO" and "frog" respectively. This result suggests that the neural networks in question have a default output for low probability images with respect to distribution of the input domain, which in turn affects adversarial examples computed with large perturbation budgets.
+\paragraph{Catch-all Class} In Figures \foreach \j in {CIFAR-10, MNIST}{\ref{fig:\j-PGD}, }one can observe that adversarial examples computed with large perturbation budgets $\epsilon$ are most often misclassified as "frog", and "8" for MNIST and CIFAR-10 respectively. For FashionMNIST \foreach \j in {FashionMNIST}{\ref{fig:\j-PGD},} there are multiple high probability classes. In order to shed light onto this phenomenon we generate and classify $10000$ white noise images sampled from a uniform distribution on the input domain. Figure \ref{fig:barplot} shows that these randomly generated images are also, most commonly, classified as "frog" and "8" respectively and more complex behavior emerges for the Fashion-MNIST dataset. These results suggests that the neural networks in question have one or multiple default outputs for low probability images with respect to the distribution of their respective input domains, which in turn affects adversarial examples computed with large perturbation budgets.
 
 
 
@@ -297,14 +298,14 @@ They are decidedly non-random in at least two ways:
 
 \section{Contribution Statement}
 
-This is joint work from Maximilian Samsinger and Matthias Dellago. Max trained the CNN and evaluated the attacks, Matthias wrote most of the paper. \textbf{Passt das so? Soll noch was rein?}
-We thank Alexander Schlögl for the research idea.
+This is joint work from Maximilian Samsinger and Matthias Dellago. Max contributed to most of the code, which includes training and evaluating the neural networks. Matthias wrote most parts of the seminar thesis. Both contributed equally to all presentations. 
+We thank Alexander Schlögl for the research idea and all members of the seminar for their valuable feedback, which lead to, among other revisions, the inclusion of Figure \ref{fig:barplot}.
 \bibliographystyle{unsrt}
 \bibliography{literature}
 
 \appendix
 \newpage
-\section{Figures for Brendel-Bethge attacks}
+\section{Figures for Brendel-Bethge attacks}\label{sec:BB}
 
 \foreach \n in {CIFAR-10, FashionMNIST, MNIST}
 {	\begin{figure}[H]
