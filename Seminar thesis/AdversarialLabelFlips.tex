@@ -37,9 +37,6 @@
 		\vspace{40pt}\\
 		\textbf{\Large Matthias Dellago \& Maximilian Samsinger}\vspace{20pt}\\
 		{\large\today}
-
-
-
 	\end{center}
 \end{titlepage}
 
@@ -49,32 +46,18 @@
 	\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \begin{abstract}
-	%sell it to sb looking for something good to read.
-	%only 4 sentences or so.
-
 	Given a neural network classifier and an untargeted evasion attack, in what class does the adversarial example fall post-attack?
-	In the following, we will answer this question by evaluating some state of the art attacks on a simple neural network classifiers trained on industry standard datasets.
-	We discover that this intuitively similar classes are more likely to be confused with another, leading us to hypothesise that the convolutional neural networks recognise these similarities.
+	In the following, we will answer this question by evaluating some state of the art attacks on simple neural network classifiers trained on industry standard datasets.
+	We discover that this semantically similar classes are more likely to be confused with another, leading us to hypothesise that the convolutional neural networks recognise these similarities.
 \end{abstract}
 
 \section{Introduction}
-
-%Adversarial examples exist.
-%Targeted and untargeted.
-%What does that look like?
-%We use confusion matrices.
-%example.
-%how did we do it? -> NN + foolbox + mnist cifar (section methods)
-%what did we get out of it? -> symmetric matrices and interesting insight about noise. (section results)
-
-
 In 2013 Szegedy et al. demonstrated that deep neural networks are susceptible to attacks \cite{Szegedy13}. These adversarial examples consist of a small perturbation applied to otherwise benign inputs, engineered to cause the neural network to misbehave.
-
 We consider the case of neural image classifiers, in particular convolutional neural networks \cite{lecun1999object} (CNN).
 That is inputs are images and attacks apply small changes to said images, designed to cause the CNN to misclassify the target. These attacks on classifiers come in two different variations: targeted and untargeted.
-In targeted attacks the attacker aims to have the adversarial example identified as a specific class by the CNN. (Say, misclassify a dog as a cat.)
-An untargeted attack meanwhile, only tries to evade correct classification. (Make this dog appear as anything, apart from a dog.)
-For a more in-depth discussion of threat modelling in adversarial machine learning we refer to \cite{biggio2018wild}.
+Targeted attacks aims to cause a misclassification into a specific target class. For example, all non-dog images should be misclassified as a dog.
+Untargeted attacks only try to evade correct classification. 
+For a proper introduction to threat modelling in adversarial machine learning we refer to \cite{biggio2018wild}.
 
 When considering untargeted attacks, the question what the adversarial image is classified as post-attack naturally arises. This is what we will experimentally answer in this paper.
 
@@ -91,42 +74,16 @@ When considering untargeted attacks, the question what the adversarial image is 
 	\label{fig:matrixexample}
 \end{figure}
 
-We will present our results in terms of confusion matrices. In Figure \ref{fig:matrixexample} you can see an example. In larger matrices numbers become more difficult to grasp, so we will display our results in heatmap-style images, as seen on the title page.
+We will present our results in terms of confusion matrices, where Figure \ref{fig:matrixexample} serves as an example. For large matrices numbers become more difficult to grasp, so we will display our results in heatmap-style images, as seen on the title page.
 
-In our experiments (Section \ref{sec:experiments}) we used the foolbox framework \cite{rauber2017foolbox}, and simple CNNs trained on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{madry2017towards}, Carlini-Wagner~\cite{carlini2017towards} and Brendel-Bethge~\cite{brendel2019accurate}.
+In our experiments (Section \ref{sec:experiments}) we used the Foolbox framework \cite{rauber2017foolbox}, and simple CNNs trained on the MNIST~\cite{deng2012mnist}, Fashion-MNIST~\cite{deng2012mnist} and CIFAR-10~\cite{krizhevsky2009learning} datasets. We applied three state of the art attacks: Projected Gradient Decent (PDG)\cite{madry2017towards}, Carlini-Wagner~\cite{carlini2017towards} and Brendel-Bethge~\cite{brendel2019accurate}.
 
 We show that, for the CIFAR-10 dataset the confusion matrices are surprisingly symmetric, and intuitively similar classes are often confused with each other. Furthermore we observe that for attacks which are allotted a large perturbation budget, there exist certain attractor classes, which most of the adversarial images are classified as. (Section \ref{sec:results})
-
-%\\
-%
-%what is our contribution. (we show that these confusion matrix are surprisingly nonrandom)
-%\\
-%use forward references i.e. "we elaborate on this in sectrion 4".\\
-%Give an example for a confusion matrix straight away.
-
-
 
 \section{Background and related work}
 
 \paragraph{Existence of adversarial examples}
-Since being first demonstrated \cite{Szegedy13} a large body of literature has flourished around adversarial examples. We in the following we will briefly introduce the attacks we use.
-
-%\paragraph{Notions of similarity}
-%As mentioned previously we want to fool the CNN with a small perturbation, that is to say a image which is very similar. But what do we precisely mean by "small perturbation" and "similar"? We could argue that an image with only one pixel changed is very similar, but also that an image in which each pixel was altered only very slightly is similar.
-%
-%These different intuitive notions of distance and similarity are captured by different norms.
-%
-%The distance of two images ($x$,$y$) (i.e. vectors) is described by a metric $D$. This metric can be defined via different norms, most commonly the $L^\infty$-, $L^1$- and $L^2$-norms.( The $L^0$-"norm" is also frequently used, though not a norm in the strict sense.) The distance between these the two images, is then defined as the $L^p$-norm of their difference, for a given $p$:
-%
-%\begin{equation}
-%D(x,y) \defneq \norm{y-x}_p % Here the := is fixed and i created a command for the norm. Hope that helps!
-%\end{equation}
-%\begin{equation}
-%D(x,y) := \| y - x \|_p % Previous version for reference
-%\end{equation}
-%
-%
-%\textbf{... Hmmm probably not that important, maybe if there is time and space after everything else in finished.}
+Since adversarial examples have been first introduced in \cite{Szegedy13} a large body of literature has flourished on this topic. We in the following we will briefly introduce the attacks we use.
 
 \subsection{Attacks}\label{sec:Attacks}
 
