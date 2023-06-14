@@ -1,40 +1,20 @@
 # Adversarial Label Flips
 
-![](./Seminar thesis/titlefigure.eps)
+![](./paper/titlefigure.png)
 
-Welcome to our repository that delves into the realm of adversarial examples and their effect on neural network classifiers. Our primary aim is to identify the class an adversarial example falls into post an untargeted evasion attack. For this, we've run several experiments using simple neural network classifiers trained on industry-standard datasets and tested against state-of-the-art attacks. Intriguingly, our preliminary findings indicate that semantically similar classes are more likely to be confused with one another.
+Given a neural network classifier and an untargeted evasion attack, in
+what class does the adversarial example fall post-attack? In the following,
+we will answer this question by evaluating some state of the art attacks
+on simple neural network classifiers trained on industry standard datasets.
+We discover that semantically similar classes are more likely to be confused
+with another, leading us to hypothesise that the convolutional neural
+networks recognise these similarities.
 
-## Introduction
+We will breifly outline our results below. For a thorough description of our methods plsease refer to our [paper](./paper/AdversarialLabelFlips.png).
 
-The phenomenon of adversarial attacks on deep neural networks was brought to light by [Szegedy et al.](https://arxiv.org/abs/1312.6199) in 2013. They found that adversarial examples, which are formed by applying minor perturbations to benign inputs, could lead a neural network astray.
+## Results
 
-This repository mainly deals with image classifiers, more specifically, Convolutional Neural Networks (CNNs). The attacks here involve minimal changes to the input images, with the intention to force the CNN to misclassify them.
-
-We focus on two primary types of attacks:
-
-1. **Targeted Attacks**: Aimed at causing a misclassification into a specific class.
-2. **Untargeted Attacks**: Designed to evade correct classification without having a specific class target.
-
-The objective of our experiments is to identify the class that an adversarial image falls into after an untargeted attack.
-
-## Background and Related Work
-
-Since their discovery by [Szegedy et al.](https://arxiv.org/abs/1312.6199), adversarial examples have been extensively studied. We focus on the following established attacks:
-
-- Fast Gradient Sign Method (FGSM) by [Goodfellow et al.](https://arxiv.org/abs/1412.6572)
-- Projected Gradient Descent (PGD) as introduced by [Madry et al.](https://arxiv.org/abs/1706.06083)
-- Carlini-Wagner Attack by [Carlini and Wagner](https://arxiv.org/abs/1608.04644)
-- Brendel-Bethge Attack by [Brendel and Bethge](https://arxiv.org/abs/1910.09338)
-
-We leveraged the Foolbox framework for generating adversarial examples. Our neural networks, trained on the MNIST, Fashion-MNIST, and CIFAR-10 datasets, were subjected to the aforementioned adversarial attacks.
-
-## Experimental Setup
-
-All experiments were conducted using Python 3.8.5 and PyTorch 1.8.1 on a Windows machine. Adversarial attacks were computed using Foolbox 3.3.1.
-
-## Adversarial Attacks - Results and Analysis
-
-We present the confusion matrices for the **Carlini-Wagner Attack:**.
+We present the confusion matrices for the **Carlini-Wagner Attack:**. The (similar) results of the projected gradient decent attacks can be found in our [paper](./paper/AdversarialLabelFlips.png).
 
 ### CIFAR-10
 
@@ -48,7 +28,6 @@ We present the confusion matrices for the **Carlini-Wagner Attack:**.
 
 ### MNIST
 
-**Carlini-Wagner Attack:**
 ![](./code/results/MNIST/figures/L2CarliniWagnerAttack.png)
 
 
@@ -66,6 +45,16 @@ Adversarial examples created with large perturbation budgets (`𝜖`) are most o
 
 The results indicate that the tested neural networks tend to default to one or multiple outputs for low probability images. This behaviour significantly impacts adversarial examples computed with large perturbation budgets.
 
+## Background and Related Work
+
+Since their discovery by [Szegedy et al.](https://arxiv.org/abs/1312.6199), adversarial examples have been extensively studied. We focus on the following established attacks:
+
+- Fast Gradient Sign Method (FGSM) by [Goodfellow et al.](https://arxiv.org/abs/1412.6572)
+- Projected Gradient Descent (PGD) as introduced by [Madry et al.](https://arxiv.org/abs/1706.06083)
+- Carlini-Wagner Attack by [Carlini and Wagner](https://arxiv.org/abs/1608.04644)
+- Brendel-Bethge Attack by [Brendel and Bethge](https://arxiv.org/abs/1910.09338)
+
+
 ## Conclusion
 
 In conclusion, our studies have uncovered two intriguing patterns:
@@ -73,4 +62,4 @@ In conclusion, our studies have uncovered two intriguing patterns:
 - Adversarial images with small perturbation sizes often lead to surprisingly symmetric confusion matrices, suggesting the classifier's understanding of the relationship between certain classes.
 - Attacks that employ a larger `𝜖` typically cluster into one or multiple specific classes. This can be attributed to the CNN's tendency to use these classes as a catch-all for images it struggles to classify correctly.
 
-We hope our research offers valuable insights into adversarial attacks and inspires further investigations into this fascinating area.
+We hope our research offers valuable insights into adversarial attacks and inspires further investigations into this fascinating area. For more details please read our [paper](./paper/AdversarialLabelFlips.png).
