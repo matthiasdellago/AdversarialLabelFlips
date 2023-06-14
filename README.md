@@ -1,6 +1,6 @@
 # Adversarial Label Flips
 
-![](./code/results/MNIST/figures/L2CarliniWagnerAttack.png)
+![](./Seminar thesis/titlefigure.eps)
 
 Welcome to our repository that delves into the realm of adversarial examples and their effect on neural network classifiers. Our primary aim is to identify the class an adversarial example falls into post an untargeted evasion attack. For this, we've run several experiments using simple neural network classifiers trained on industry-standard datasets and tested against state-of-the-art attacks. Intriguingly, our preliminary findings indicate that semantically similar classes are more likely to be confused with one another.
 
