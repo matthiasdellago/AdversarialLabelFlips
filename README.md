@@ -32,62 +32,56 @@ All experiments were conducted using Python 3.8.5 and PyTorch 1.8.1 on a Windows
 
 ## Adversarial Attacks - Results and Analysis
 
-This repository provides detailed research and findings regarding the impact of adversarial attacks on different datasets: CIFAR-10, FashionMNIST, and MNIST.
-
-### Results
-
-## Results
-
 We present the confusion matrices for all adversarial attacks we tested. Visual representations of the results can be seen in the figures below for each attack type:
 
 ### CIFAR-10
 
 **Carlini-Wagner Attack:**
-![Carlini-Wagner CIFAR-10](../code/results/CIFAR-10/figures/L2CarliniWagnerAttack.pdf)
+![Carlini-Wagner CIFAR-10](./code/results/CIFAR-10/figures/L2CarliniWagnerAttack.pdf)
 
 Confusion matrix for the L2-Carlini-Wagner attack on CIFAR-10. Attacks were computed using the Foolbox default parameters with no early termination.
 
 **PGD Attack:**
-![PGD CIFAR-10](../code/results/CIFAR-10/figures/LinfPGD,epsilon=0.01.pdf) 
-![PGD CIFAR-10](../code/results/CIFAR-10/figures/LinfPGD,epsilon=0.02.pdf)
-![PGD CIFAR-10](../code/results/CIFAR-10/figures/LinfPGD,epsilon=0.05.pdf)
-![PGD CIFAR-10](../code/results/CIFAR-10/figures/LinfPGD,epsilon=0.1.pdf)
-![PGD CIFAR-10](../code/results/CIFAR-10/figures/LinfPGD,epsilon=0.2.pdf)
-![PGD CIFAR-10](../code/results/CIFAR-10/figures/LinfPGD,epsilon=0.5.pdf)
+![PGD CIFAR-10](./code/results/CIFAR-10/figures/LinfPGD,epsilon=0.01.pdf) 
+![PGD CIFAR-10](./code/results/CIFAR-10/figures/LinfPGD,epsilon=0.02.pdf)
+![PGD CIFAR-10](./code/results/CIFAR-10/figures/LinfPGD,epsilon=0.05.pdf)
+![PGD CIFAR-10](./code/results/CIFAR-10/figures/LinfPGD,epsilon=0.1.pdf)
+![PGD CIFAR-10](./code/results/CIFAR-10/figures/LinfPGD,epsilon=0.2.pdf)
+![PGD CIFAR-10](./code/results/CIFAR-10/figures/LinfPGD,epsilon=0.5.pdf)
 
 Confusion matrices for the Linf-PGD attack on CIFAR-10 for varying maximal perturbation sizes per image pixel `𝜖` in [0,1]. Larger `𝜖` corresponds to stronger attacks. Attacks were computed using the Foolbox default parameters.
 
 ### FashionMNIST
 
 **Carlini-Wagner Attack:**
-![Carlini-Wagner FashionMNIST](../code/results/FashionMNIST/figures/L2CarliniWagnerAttack.pdf)
+![Carlini-Wagner FashionMNIST](./code/results/FashionMNIST/figures/L2CarliniWagnerAttack.pdf)
 
 Confusion matrix for the L2-Carlini-Wagner attack on FashionMNIST. Attacks were computed using the Foolbox default parameters with no early termination.
 
 **PGD Attack:**
-![PGD FashionMNIST](../code/results/FashionMNIST/figures/LinfPGD,epsilon=0.01.pdf)
-![PGD FashionMNIST](../code/results/FashionMNIST/figures/LinfPGD,epsilon=0.02.pdf)
-![PGD FashionMNIST](../code/results/FashionMNIST/figures/LinfPGD,epsilon=0.05.pdf)
-![PGD FashionMNIST](../code/results/FashionMNIST/figures/LinfPGD,epsilon=0.1.pdf)
-![PGD FashionMNIST](../code/results/FashionMNIST/figures/LinfPGD,epsilon=0.2.pdf)
-![PGD FashionMNIST](../code/results/FashionMNIST/figures/LinfPGD,epsilon=0.5.pdf)
+![PGD FashionMNIST](./code/results/FashionMNIST/figures/LinfPGD,epsilon=0.01.pdf)
+![PGD FashionMNIST](./code/results/FashionMNIST/figures/LinfPGD,epsilon=0.02.pdf)
+![PGD FashionMNIST](./code/results/FashionMNIST/figures/LinfPGD,epsilon=0.05.pdf)
+![PGD FashionMNIST](./code/results/FashionMNIST/figures/LinfPGD,epsilon=0.1.pdf)
+![PGD FashionMNIST](./code/results/FashionMNIST/figures/LinfPGD,epsilon=0.2.pdf)
+![PGD FashionMNIST](./code/results/FashionMNIST/figures/LinfPGD,epsilon=0.5.pdf)
 
 Confusion matrices for the Linf-PGD attack on FashionMNIST for varying maximal perturbation sizes per image pixel `𝜖` in [0,1]. Larger `𝜖` corresponds to stronger attacks. Attacks were computed using the Foolbox default parameters.
 
 ### MNIST
 
 **Carlini-Wagner Attack:**
-![Carlini-Wagner MNIST](../code/results/MNIST/figures/L2CarliniWagnerAttack.pdf)
+![Carlini-Wagner MNIST](./code/results/MNIST/figures/L2CarliniWagnerAttack.pdf)
 
 Confusion matrix for the L2-Carlini-Wagner attack on MNIST. Attacks were computed using the Foolbox default parameters with no early termination.
 
 **PGD Attack:**
-![PGD MNIST](../code/results/MNIST/figures/LinfPGD,epsilon=0.01.pdf)
-![PGD MNIST](../code/results/MNIST/figures/LinfPGD,epsilon=0.02.pdf)
-![PGD MNIST](../code/results/MNIST/figures/LinfPGD,epsilon=0.05.pdf)
-![PGD MNIST](../code/results/MNIST/figures/LinfPGD,epsilon=0.1.pdf)
-![PGD MNIST](../code/results/MNIST/figures/LinfPGD,epsilon=0.2.pdf)
-![PGD MNIST](../code/results/MNIST/figures/LinfPGD,epsilon=0.5.pdf)
+![PGD MNIST](./code/results/MNIST/figures/LinfPGD,epsilon=0.01.pdf)
+![PGD MNIST](./code/results/MNIST/figures/LinfPGD,epsilon=0.02.pdf)
+![PGD MNIST](./code/results/MNIST/figures/LinfPGD,epsilon=0.05.pdf)
+![PGD MNIST](./code/results/MNIST/figures/LinfPGD,epsilon=0.1.pdf)
+![PGD MNIST](./code/results/MNIST/figures/LinfPGD,epsilon=0.2.pdf)
+![PGD MNIST](./code/results/MNIST/figures/LinfPGD,epsilon=0.5.pdf)
 
 Confusion matrices for the Linf-PGD attack on MNIST for varying maximal perturbation sizes per image pixel `𝜖` in [0,1]. Larger `𝜖` corresponds to stronger attacks. Attacks were computed using the Foolbox default parameters.
 
@@ -101,7 +95,7 @@ However, this hypothesis seems less applicable for the MNIST and FashionMNIST da
 
 Adversarial examples created with large perturbation budgets (`𝜖`) are most often misclassified as "frog", and "8" for MNIST and CIFAR-10 respectively. For FashionMNIST, there are multiple high probability classes. To better understand this phenomenon, we generated and classified 10,000 white noise images sampled from a uniform distribution on the input domain.
 
-![White Noise Classification](../code/results/barplot.png)
+![White Noise Classification](./code/results/barplot.png)
 
 The results indicate that the tested neural networks tend to default to one or multiple outputs for low probability images. This behaviour significantly impacts adversarial examples computed with large perturbation budgets.
 
