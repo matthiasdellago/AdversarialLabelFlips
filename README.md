@@ -101,7 +101,7 @@ However, this hypothesis seems less applicable for the MNIST and FashionMNIST da
 
 Adversarial examples created with large perturbation budgets (`𝜖`) are most often misclassified as "frog", and "8" for MNIST and CIFAR-10 respectively. For FashionMNIST, there are multiple high probability classes. To better understand this phenomenon, we generated and classified 10,000 white noise images sampled from a uniform distribution on the input domain.
 
-![White Noise Classification](../code/results/barplot.pdf})
+![White Noise Classification](../code/results/barplot.pdf)
 
 The results indicate that the tested neural networks tend to default to one or multiple outputs for low probability images. This behaviour significantly impacts adversarial examples computed with large perturbation budgets.
 
