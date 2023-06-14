@@ -10,11 +10,11 @@ We discover that semantically similar classes are more likely to be confused
 with another, leading us to hypothesise that the convolutional neural
 networks recognise these similarities.
 
-We will breifly outline our results below. For a thorough description of our methods plsease refer to our [paper](./paper/AdversarialLabelFlips.png).
+We will breifly outline our results below. For a thorough description of our methods plsease refer to our [paper](./paper/AdversarialLabelFlips.pdf).
 
 ## Results
 
-We present the confusion matrices for the **Carlini-Wagner Attack:**. The (similar) results of the projected gradient decent attacks can be found in our [paper](./paper/AdversarialLabelFlips.png).
+We present the confusion matrices for the **Carlini-Wagner Attack:**. The (similar) results of the projected gradient decent attacks can be found in our [paper](./paper/AdversarialLabelFlips.pdf).
 
 ### CIFAR-10
 
@@ -62,4 +62,4 @@ In conclusion, our studies have uncovered two intriguing patterns:
 - Adversarial images with small perturbation sizes often lead to surprisingly symmetric confusion matrices, suggesting the classifier's understanding of the relationship between certain classes.
 - Attacks that employ a larger `𝜖` typically cluster into one or multiple specific classes. This can be attributed to the CNN's tendency to use these classes as a catch-all for images it struggles to classify correctly.
 
-We hope our research offers valuable insights into adversarial attacks and inspires further investigations into this fascinating area. For more details please read our [paper](./paper/AdversarialLabelFlips.png).
+We hope our research offers valuable insights into adversarial attacks and inspires further investigations into this fascinating area. For more details please read our [paper](./paper/AdversarialLabelFlips.pdf).
